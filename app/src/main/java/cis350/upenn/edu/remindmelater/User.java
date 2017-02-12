@@ -2,8 +2,6 @@ package cis350.upenn.edu.remindmelater;
 
 /**
  * Created by AJNandi on 2/8/17.
- *
- *
  */
 
 public class User {
