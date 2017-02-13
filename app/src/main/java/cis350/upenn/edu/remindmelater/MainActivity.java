@@ -169,8 +169,8 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             //Add user to database
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                            User user = new User(email);
-                            mDatabase.child("users").child(currentUser.getUid()).setValue(user);
+//                            User user = new User();
+//                            mDatabase.child("users").child(currentUser.getUid()).setValue(user);
                         }
 
 
