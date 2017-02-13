@@ -102,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * User Authentication Setup Function
+     *
+     * Checks if the user is already signed in. If the user is not signed in, they should
+     * be prompted to log in or create an account.
      */
     private void setupAuth() {
 
@@ -124,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+    /**
+     * Creates a new user using Firebase authentication
+     * @param email
+     * @param password
+     */
     public void createNewUser(String email, String password) {
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -146,6 +154,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Signs in a user that already has an account using Firebase authentication
+     * @param email
+     * @param password
+     */
     public void signInUser(String email, String password) {
 
         mAuth.signInWithEmailAndPassword(email, password)
