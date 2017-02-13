@@ -11,6 +11,10 @@ import java.util.List;
 
 public class User {
 
+    private String firstname;
+    private String lastname;
+    private String username;
+    private String password;
     private String email;
     private List<Reminder> reminders;
 
@@ -20,13 +24,25 @@ public class User {
 
     }
 
-    public User(String email) {
+    public User(String firstname, String lastname, String username, String password, String email) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
         this.email = email;
         this.reminders = new LinkedList<>();
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
     }
 
     public List<Reminder> getReminders() {
