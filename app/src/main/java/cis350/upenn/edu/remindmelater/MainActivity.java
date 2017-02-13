@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    public void onButtonPress(View v) {
-//        System.out.println("hi");
-//    }
 
 
 }
