@@ -17,24 +17,31 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        createAcctButton = (Button) findViewById(R.id.createAcct);
-        createAcctButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //trigger create account screen
-                System.out.println("create");
-            }
-        });
-        logInButton = (Button) findViewById(R.id.logIn);
-        logInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //trigger create login screen
-                System.out.println("login");
-            }
-        });
+        if (SaveSharedPreference.getUserName(MainActivity.this).length() == 0) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            createAcctButton = (Button) findViewById(R.id.createAcct);
+            createAcctButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //trigger create account screen
+                    System.out.println("create");
+                }
+            });
+            logInButton = (Button) findViewById(R.id.logIn);
+            logInButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //trigger create login screen
+                    System.out.println("login");
+                }
+            });
+        }
+        else {
+            //go to main screen
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.home_screen);
+        }
     }
 
 
