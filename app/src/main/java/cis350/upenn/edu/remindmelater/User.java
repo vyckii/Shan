@@ -2,15 +2,17 @@ package cis350.upenn.edu.remindmelater;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by AJNandi on 2/8/17.
  */
 
 public class User {
 
-    public String username;
-    public String email;
-
+    private String email;
+    private List<Reminder> reminders;
 
 
 
@@ -18,11 +20,16 @@ public class User {
 
     }
 
-    public User(String username, String email) {
-        this.username = username;
+    public User(String email) {
         this.email = email;
+        this.reminders = new LinkedList<>();
     }
 
+    public String getEmail() {
+        return email;
+    }
 
-
+    public List<Reminder> getReminders() {
+        return reminders;
+    }
 }

@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by stephaniefei on 2/12/17.
@@ -27,9 +29,18 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private DatabaseReference mDatabase;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Firebase Authentication setup function
+        setupAuth();
+
+        //Firebase database setup
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         setContentView(R.layout.activity_main);
         createAcctButton = (Button) findViewById(R.id.createAcct);
         createAcctButton.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (SaveSharedPreference.getUserName(MainActivity.this).length() == 0) {
-            super.onCreate(savedInstanceState);
+//            super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             createAcctButton = (Button) findViewById(R.id.createAcct);
             createAcctButton.setOnClickListener(new View.OnClickListener() {
@@ -77,13 +88,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        setupAuth();
 
-//        createNewUser("testksdjflskdjf@gmail.com", "dddoooffff");
+
+        //Example on how to authenticate a new user
+//        createNewUser("testEmail@gmail.com", "password");
+
+        //Example on how to sign in a user
 //        signInUser("testksdjflskdjf@gmail.com", "dddoooffff");
 
 
     }
+
+
+
 
     @Override
     public void onStart() {
@@ -127,13 +144,16 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+
     /**
      * Creates a new user using Firebase authentication
      * @param email
      * @param password
      */
-    public void createNewUser(String email, String password) {
+    public void createNewUser(final String email, String password) {
 
+
+        //Authentication
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -146,11 +166,18 @@ public class MainActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
+                        } else {
+                            //Add user to database
+                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                            User user = new User(email);
+                            mDatabase.child("users").child(currentUser.getUid()).setValue(user);
                         }
 
 
                     }
                 });
+
+
 
     }
 
