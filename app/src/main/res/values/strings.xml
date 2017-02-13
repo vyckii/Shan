@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RemindMeLater</string>
+    <string name="auth_failed">Authentication Failed</string>
 </resources>
