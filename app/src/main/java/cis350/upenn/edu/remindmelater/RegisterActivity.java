@@ -31,8 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
         etpassword = (EditText) findViewById(R.id.Password);
         etemail = (EditText) findViewById(R.id.Email);
 
-        Button register = (Button) findViewById(R.id.RegisterButton);
-        register.setOnClickListener(new View.OnClickListener() {
+        etregister = (Button) findViewById(R.id.RegisterButton);
+        etregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String firstname = etfirstname.getText().toString();
@@ -40,7 +40,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String username = etusername.getText().toString();
                 String email = etemail.getText().toString();
                 String password = etpassword.getText().toString();
-                //MainActivity.createNewUser(firstname, lastname, username, email, password);
+                User user = new User(firstname, lastname, username, email);
+                User.createNewUser(this, mAuth, firstname, lastname, username, email, password);
+
             }
         });
     }
