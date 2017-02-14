@@ -1,4 +1,4 @@
-package com.example.shoryamantry.register;
+package cis350.upenn.edu.remindmelater;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
