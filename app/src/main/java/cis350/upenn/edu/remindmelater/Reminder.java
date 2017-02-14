@@ -23,4 +23,15 @@ public class Reminder {
         this.notes = notes;
     }
 
+    public User getAuthor() {
+        return author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
 }
