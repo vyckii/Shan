@@ -14,7 +14,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -56,43 +58,13 @@ public class MainActivity extends AppCompatActivity {
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //trigger create login screen
+                //trigger login screen
                 System.out.println("login");
             }
         });
 
-//        if (SaveSharedPreference.getUserName(MainActivity.this).length() == 0) {
-////            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.activity_main);
-//            createAcctButton = (Button) findViewById(R.id.createAcct);
-//            createAcctButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    //trigger create account screen
-//                    System.out.println("create");
-//                }
-//            });
-//            logInButton = (Button) findViewById(R.id.logIn);
-//            logInButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    //trigger create login screen
-//                    System.out.println("login");
-//                }
-//            });
-//        }
-//        else {
-//            //go to main screen
-//            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.home_screen);
-//        }
-
-
-
-
-
-
         //Example on how to authenticate a new user
+
 //        createNewUser("testEmail@gmail.com", "password");
 
         //Example on how to sign in a user
@@ -159,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Authentication
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -169,24 +142,33 @@ public class MainActivity extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
-
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthUserCollisionException e){
+                                Toast.makeText(getApplicationContext(), "That email is already being used! Return to the" +
+                                        "login screen or use a different email.", Toast.LENGTH_SHORT).show();
+                                // catch (FirebaseAuthWeakPasswordException e)
+                                // catch (FirebaseAuthInvalidCredentialsException e)
+                            } catch (Exception e) {
+                                Toast.makeText(getApplicationContext(), R.string.auth_failed,
+                                        Toast.LENGTH_SHORT).show();
+                            }
 
 
                         } else {
                             //Add user to database
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//                            User user = new User();
-//                            mDatabase.child("users").child(currentUser.getUid()).setValue(user);
+                            //                            User user = new User();
+                            //                            mDatabase.child("users").child(currentUser.getUid()).setValue(user);
+                            Toast.makeText(getApplicationContext(), "Account created successfully!", Toast.LENGTH_SHORT).show();
+                            //@Christina: uncomment and change to whatever class the home screen is called
+                            //Intent i = new Intent(this, HomeActivity.class)
+                            //startActivity(i)
                         }
 
 
                     }
                 });
-
-
-
     }
 
     /**
