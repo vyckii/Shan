@@ -166,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
+
+
+
                         } else {
                             //Add user to database
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
