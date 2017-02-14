@@ -5,20 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by stephaniefei on 2/12/17.
@@ -32,17 +23,12 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private DatabaseReference mDatabase;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Firebase Authentication setup function
-        setupAuth();
-
-        //Firebase database setup
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        //Firebase Authentication check
+        checkIfUserIsSignedIn();
 
         setContentView(R.layout.activity_main);
         createAcctButton = (Button) findViewById(R.id.createAcct);
@@ -100,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
      * Checks if the user is already signed in. If the user is not signed in, they should
      * be prompted to log in or create an account.
      */
-    private void setupAuth() {
-
+    private void checkIfUserIsSignedIn() {
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -117,8 +102,9 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("onAuthStateChanged:signed_out");
                 }
 
-            }
-        };
+            }};
+
+
     }
 
 
@@ -128,47 +114,7 @@ public class MainActivity extends AppCompatActivity {
      * @param password
      */
     public void createNewUser(String firstname, String lastname, String username, String email, String password) {
-
-
-        //Authentication
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        System.out.println("createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            try {
-                                throw task.getException();
-                            } catch (FirebaseAuthUserCollisionException e){
-                                Toast.makeText(getApplicationContext(), "That email is already being used! Return to the" +
-                                        "login screen or use a different email.", Toast.LENGTH_SHORT).show();
-                                // catch (FirebaseAuthWeakPasswordException e)
-                                // catch (FirebaseAuthInvalidCredentialsException e)
-                            } catch (Exception e) {
-                                Toast.makeText(getApplicationContext(), R.string.auth_failed,
-                                        Toast.LENGTH_SHORT).show();
-                            }
-
-
-                        } else {
-                            //Add user to database
-                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                            //                  User user = new User(firstname, lastname, username, email);
-                            //                            mDatabase.child("users").child(currentUser.getUid()).setValue(user);
-                            Toast.makeText(getApplicationContext(), "Account created successfully!", Toast.LENGTH_SHORT).show();
-                            //@Christina: uncomment and change to whatever class the home screen is called
-                            //Intent i = new Intent(this, HomeActivity.class)
-                            //startActivity(i)
-                        }
-
-
-                    }
-                });
+        User.createNewUser(this, mAuth, firstname, lastname, username, email, password);
     }
 
     /**
@@ -178,25 +124,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void signInUser(String email, String password) {
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        System.out.println("signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            System.out.println("signInWithEmail:failed" + task.getException());
-                            Toast.makeText(getApplicationContext(), R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-
+        User.signInUser(this, mAuth, email, password);
 
     }
 
