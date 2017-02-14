@@ -62,7 +62,11 @@ public class User {
     public String getUsername() {
         return username;
     }
-
+    /**
+     * Static method to sign up a user from other activities and add them to the database
+     * @param activity the current activity trying to sign in, pass in using "this"
+     * @param mAuth the authentication from firebase
+     */
     public static void createNewUser(final Activity activity, FirebaseAuth mAuth, final String firstname, final String lastname, final String username, final String email, String password) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -109,6 +113,13 @@ public class User {
     }
 
 
+    /**
+     * Static method to sign in user from other activities
+     * @param activity the current activity trying to sign in, pass in using "this"
+     * @param mAuth the authentication from firebase
+     * @param email user's email
+     * @param password user's password
+     */
     public static void signInUser(final Activity activity, FirebaseAuth mAuth, String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
