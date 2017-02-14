@@ -1,6 +1,7 @@
 package cis350.upenn.edu.remindmelater;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,7 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
                 User user = new User(firstname, lastname, username, email);
                 System.out.println("in here");
                 User.createNewUser(registerActivity, mAuth, firstname, lastname, username, email, password);
-
+                //Intent myIntent = new Intent(v.getContext(), put class here - Activity2.class);
+                //startActivityForResult(myIntent, 0);
             }
         });
     }
