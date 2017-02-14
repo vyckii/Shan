@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
      * @param email
      * @param password
      */
-    public void createNewUser(final String email, String password) {
+    public void createNewUser(String firstname, String lastname, String username, String email, String password) {
 
 
         //Authentication
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             //Add user to database
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                            //                            User user = new User();
+                            //                  User user = new User(firstname, lastname, username, email);
                             //                            mDatabase.child("users").child(currentUser.getUid()).setValue(user);
                             Toast.makeText(getApplicationContext(), "Account created successfully!", Toast.LENGTH_SHORT).show();
                             //@Christina: uncomment and change to whatever class the home screen is called
