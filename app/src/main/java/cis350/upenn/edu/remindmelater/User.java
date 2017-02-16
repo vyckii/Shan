@@ -26,7 +26,7 @@ public class User {
     private String lastname;
     private String username;
     private String email;
-    private List<Reminder> reminders;
+    private List<String> reminders;
     static DatabaseReference mDatabase;
 
 
@@ -35,7 +35,7 @@ public class User {
 
     }
 
-    public User(String firstname, String lastname, String username, String email) {
+    private User(String firstname, String lastname, String username, String email) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
@@ -55,7 +55,7 @@ public class User {
         return lastname;
     }
 
-    public List<Reminder> getReminders() {
+    public List<String> getReminders() {
         return reminders;
     }
 
@@ -101,6 +101,7 @@ public class User {
                             mDatabase.child("users").child(currentUser.getUid()).setValue(user);
                             Toast.makeText(activity.getApplicationContext(), "Account created successfully!", Toast.LENGTH_SHORT).show();
 
+                            System.out.println("HERE should have made user account");
 
                             //@Christina: uncomment and change to whatever class the home screen is called
                             //Intent i = new Intent(this, HomeActivity.class)

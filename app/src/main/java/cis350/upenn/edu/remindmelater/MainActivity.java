@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser currentUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Example on how to sign in a user
 //        signInUser("testksdjflskdjf@gmail.com", "dddoooffff");
+
+
+
+        User.createNewUser(this, mAuth, "aj", "nandi", "ajnandi", "some@gmail.com", "password");
+
+        checkIfUserIsSignedIn();
+
+
+
 
 
     }
@@ -97,9 +107,17 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
+
+                    currentUser = user;
+
+                    Reminder.createReminderInDatabase(currentUser, "testReminder", "remindMeSomethingTODO");
+
                 } else {
                     // User is signed out
                     System.out.println("onAuthStateChanged:signed_out");
+
+
+
                 }
 
             }};

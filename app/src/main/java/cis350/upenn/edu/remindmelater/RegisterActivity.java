@@ -52,9 +52,10 @@ public class RegisterActivity extends AppCompatActivity {
                 String username = etusername.getText().toString();
                 String email = etemail.getText().toString();
                 String password = etpassword.getText().toString();
-                User user = new User(firstname, lastname, username, email);
                 System.out.println("in here");
                 User.createNewUser(registerActivity, mAuth, firstname, lastname, username, email, password);
+
+
                 //Intent myIntent = new Intent(v.getContext(), put class here - Activity2.class);
                 //startActivityForResult(myIntent, 0);
             }
