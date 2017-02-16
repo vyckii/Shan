@@ -1,5 +1,6 @@
 package cis350.upenn.edu.remindmelater;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -68,8 +69,8 @@ public class Reminder {
 
 
         mDatabase.child("reminders").child(uid).setValue(reminder);
-        mDatabase.child("users").child(user.getUid()).child("reminders").setValue(uid);
-
+        DatabaseReference reminderRef = mDatabase.child("users").child(user.getUid()).child("reminders");
+        reminderRef.push().setValue(uid);
 
     }
 

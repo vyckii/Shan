@@ -58,9 +58,6 @@ public class MainActivity extends AppCompatActivity {
 //        signInUser("testksdjflskdjf@gmail.com", "dddoooffff");
 
 
-
-        User.createNewUser(this, mAuth, "aj", "nandi", "ajnandi", "some@gmail.com", "password");
-
         checkIfUserIsSignedIn();
 
 
@@ -110,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
                     currentUser = user;
 
-                    Reminder.createReminderInDatabase(currentUser, "testReminder", "remindMeSomethingTODO");
+
 
                 } else {
                     // User is signed out

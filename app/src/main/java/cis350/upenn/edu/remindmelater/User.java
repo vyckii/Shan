@@ -103,6 +103,8 @@ public class User {
 
                             System.out.println("HERE should have made user account");
 
+
+
                             //@Christina: uncomment and change to whatever class the home screen is called
                             //Intent i = new Intent(this, HomeActivity.class)
                             //startActivity(i)
