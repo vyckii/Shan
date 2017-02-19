@@ -129,13 +129,14 @@ public class User {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         System.out.println("signInWithEmail:onComplete:" + task.isSuccessful());
+                        // create an intent and pass to MainScreenActivity
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             System.out.println("signInWithEmail:failed" + task.getException());
-                            Toast.makeText(activity.getApplicationContext(), R.string.auth_failed,
+                            Toast.makeText(activity.getApplicationContext(), R.string.login_failed,
                                     Toast.LENGTH_SHORT).show();
                         }
 

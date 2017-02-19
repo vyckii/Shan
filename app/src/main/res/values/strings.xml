@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">RemindMeLater</string>
     <string name="auth_failed">Authentication Failed</string>
+    <string name="login_failed">Invalid username or password. Please try again or signup above.</string>
 </resources>

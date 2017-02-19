@@ -62,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
     }
 
     public void registerScreen() {
@@ -107,14 +105,9 @@ public class MainActivity extends AppCompatActivity {
 
                     currentUser = user;
 
-
-
                 } else {
                     // User is signed out
                     System.out.println("onAuthStateChanged:signed_out");
-
-
-
                 }
 
             }};
@@ -138,9 +131,7 @@ public class MainActivity extends AppCompatActivity {
      * @param password
      */
     public void signInUser(String email, String password) {
-
         User.signInUser(this, mAuth, email, password);
-
     }
 
 
