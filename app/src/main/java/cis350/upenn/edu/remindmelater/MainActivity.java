@@ -125,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
      * @param email
      * @param password
      */
-    public void createNewUser(String firstname, String lastname, String username, String email, String password) {
-        User.createNewUser(this, mAuth, firstname, lastname, username, email, password);
+    public void createNewUser(String firstname, String lastname, String email, String password) {
+        User.createNewUser(this, mAuth, firstname, lastname, email, password);
     }
 
     /**
