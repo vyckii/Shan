@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,7 +54,10 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = etemail.getText().toString().trim();
                 String password = etpassword.getText().toString().trim();
 
-                if(firstname.equals("") || lastname.equals("")  || email.equals("") || password.equals("")) {
+                if(firstname.isEmpty() || lastname.isEmpty()  || email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(registerActivity.getApplicationContext(), "Please fill out everything.", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     System.out.println("in here");
                     User.createNewUser(registerActivity, mAuth, firstname, lastname, email, password);
                     System.out.println("done creating new user");
