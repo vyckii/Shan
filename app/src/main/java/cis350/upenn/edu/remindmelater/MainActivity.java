@@ -105,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
 
                     currentUser = user;
 
+                    //TODO
+                    // IF USER IS SIGNED IN ;; send to main screen
+
+
                 } else {
                     // User is signed out
                     System.out.println("onAuthStateChanged:signed_out");

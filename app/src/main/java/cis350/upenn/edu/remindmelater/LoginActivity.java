@@ -28,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         checkIfUserIsSignedIn();
         setContentView(R.layout.activity_login);
 
@@ -88,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
     private void checkIfUserIsSignedIn() {
 
         mAuth = FirebaseAuth.getInstance();
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override

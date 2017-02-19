@@ -65,6 +65,7 @@ public class Reminder {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         String uid = mDatabase.child("reminders").push().getKey();
 
+
         Reminder reminder = new Reminder(user.getUid(), title, notes);
 
 
@@ -73,5 +74,7 @@ public class Reminder {
         reminderRef.push().setValue(uid);
 
     }
+
+
 
 }

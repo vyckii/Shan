@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         etfirstname = (EditText) findViewById(R.id.FirstName);
         etlastname = (EditText) findViewById(R.id.LastName);
-        etusername = (EditText) findViewById(R.id.UserName);
+//        etusername = (EditText) findViewById(R.id.UserName);
         etpassword = (EditText) findViewById(R.id.Password);
         etemail = (EditText) findViewById(R.id.Email);
 
@@ -47,17 +47,20 @@ public class RegisterActivity extends AppCompatActivity {
         etregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String firstname = etfirstname.getText().toString();
-                String lastname = etlastname.getText().toString();
-                String username = etusername.getText().toString();
-                String email = etemail.getText().toString();
-                String password = etpassword.getText().toString();
-                System.out.println("in here");
-                User.createNewUser(registerActivity, mAuth, firstname, lastname, username, email, password);
+                String firstname = etfirstname.getText().toString().trim();
+                String lastname = etlastname.getText().toString().trim();
+//                String username = etusername.getText().toString().trim();
+                String email = etemail.getText().toString().trim();
+                String password = etpassword.getText().toString().trim();
+
+                if(firstname.equals("") || lastname.equals("")  || email.equals("") || password.equals("")) {
+                    System.out.println("in here");
+                    User.createNewUser(registerActivity, mAuth, firstname, lastname, email, password);
 
 
-                //Intent myIntent = new Intent(v.getContext(), put class here - Activity2.class);
-                //startActivityForResult(myIntent, 0);
+                    //TODO: Intent myIntent = new Intent(v.getContext(), put class here - Activity2.class);
+                    //startActivityForResult(myIntent, 0);
+                }
             }
         });
     }
