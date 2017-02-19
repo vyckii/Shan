@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+    android:layout_height="match_parent">
 
     <cis350.upenn.edu.remindmelater.CustomText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/reminder"
+        android:text="Remind me too..."
         android:textSize="25dp"
         android:textAlignment="center"
         android:layout_margin="30px"
         android:id="@+id/welcome" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/reminderName"
+        android:hint="Reminder" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/dueDate"
+        android:hint="Date" />
 
     <Button
         android:text="Add Reminder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/addReminder"
-        android:onClick="addReminder"/>
-
+        android:onClick="onButtonPress"/>
 
 </LinearLayout>
