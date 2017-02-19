@@ -56,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if(firstname.equals("") || lastname.equals("")  || email.equals("") || password.equals("")) {
                     System.out.println("in here");
                     User.createNewUser(registerActivity, mAuth, firstname, lastname, email, password);
+                    System.out.println("done creating new user");
 
 
                     //TODO: Intent myIntent = new Intent(v.getContext(), put class here - Activity2.class);
