@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //trigger login screen
-                System.out.println("login");
+                Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(i);
             }
         });
 
