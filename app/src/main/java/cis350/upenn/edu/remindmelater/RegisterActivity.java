@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String lastname = etlastname.getText().toString().trim();
 //                String username = etusername.getText().toString().trim();
                 String email = etemail.getText().toString().trim();
-                String password = etpassword.getText().toString().trim();
+                String password = etpassword.getText().toString();
 
                 if(firstname.isEmpty() || lastname.isEmpty()  || email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(registerActivity.getApplicationContext(), "Please fill out everything.", Toast.LENGTH_SHORT).show();
