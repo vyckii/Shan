@@ -127,8 +127,7 @@ public class User {
                         System.out.println("signInWithEmail:onComplete:" + task.isSuccessful());
                         // create an intent and pass to MainScreenActivity
 
-                        Intent myIntent = new Intent(activity.getApplicationContext(), MainScreenActivity.class);
-                        activity.startActivityForResult(myIntent, 0);
+
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -137,6 +136,9 @@ public class User {
                             System.out.println("signInWithEmail:failed" + task.getException());
                             Toast.makeText(activity.getApplicationContext(), R.string.login_failed,
                                     Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent myIntent = new Intent(activity.getApplicationContext(), MainScreenActivity.class);
+                            activity.startActivityForResult(myIntent, 0);
                         }
 
                     }
