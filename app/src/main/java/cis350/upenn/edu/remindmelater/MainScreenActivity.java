@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class MainScreenActivity extends AppCompatActivity {
         }
     }
 
-    private List<Reminder> getRemindersForCurrentUser(User user) {
+    private void getRemindersForCurrentUser(User user) {
         final ArrayList<Reminder> remindersList = new ArrayList<>();
 
         for (String key : user.getReminders()) {
@@ -85,8 +86,6 @@ public class MainScreenActivity extends AppCompatActivity {
                     System.out.println("===============================");
 
                     //TODO: HANDLE REMINDERS AND ADD THEM TO UI
-                    //THEY are sent to the private field reminders after being queried here
-
                     remindersList.add(reminder);
 
 
@@ -96,11 +95,12 @@ public class MainScreenActivity extends AppCompatActivity {
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
+
+
                 }
             };
-            mReminderReference.addListenerForSingleValueEvent(reminderEventListner);
+            mReminderReference.addValueEventListener(reminderEventListner);
         }
-        return remindersList;
     }
 
 
@@ -122,7 +122,7 @@ public class MainScreenActivity extends AppCompatActivity {
                 System.out.println(user.getReminders());
                 System.out.println("===============================");
 
-                reminders = getRemindersForCurrentUser(user);
+                getRemindersForCurrentUser(user);
 
 
             }
