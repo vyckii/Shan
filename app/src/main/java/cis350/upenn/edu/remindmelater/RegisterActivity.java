@@ -63,8 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
                     System.out.println("done creating new user");
 
 
-                    //TODO: Intent myIntent = new Intent(v.getContext(), put class here - Activity2.class);
-                    //startActivityForResult(myIntent, 0);
+                    Intent myIntent = new Intent(v.getContext(), MainScreenActivity.class);
+                    startActivityForResult(myIntent, 0);
                 }
             }
         });

@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         checkIfUserIsSignedIn();
 
-
-
     }
 
     public void registerScreen() {
@@ -105,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
 
                     currentUser = user;
 
-                    //TODO
-                    // IF USER IS SIGNED IN ;; send to main screen
+                    //Intent myIntent = new Intent(context, MainScreenActivity.class);
+                    //startActivityForResult(myIntent, 0);
 
 
                 } else {
