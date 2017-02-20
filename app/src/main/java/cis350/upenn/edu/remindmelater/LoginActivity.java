@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.support.design.widget.TextInputEditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -66,7 +67,14 @@ public class LoginActivity extends AppCompatActivity {
                 String passwordText = password.getText().toString();
                 System.out.println(emailText);
                 System.out.println(passwordText);
-                User.signInUser(loginActivity, mAuth, emailText, passwordText);
+
+                if (emailText.isEmpty() || passwordText.isEmpty() ) {
+                    Toast.makeText(loginActivity.getApplicationContext(), R.string.empty_fields,
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    User.signInUser(loginActivity, mAuth, emailText, passwordText);
+                }
             }
         });
     }

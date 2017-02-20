@@ -3,4 +3,6 @@
     <string name="auth_failed">Authentication Failed</string>
     <string name="login_failed">Invalid username or password. Please try again or signup above.</string>
     <string name="reminder">Reminders</string>
+    <string name="empty_fields">Please fill out all fields before continuing.</string>
+
 </resources>
