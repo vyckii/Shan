@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseUser;
 /**
  * Created by stephaniefei on 2/12/17.
  */
-
 public class MainActivity extends AppCompatActivity {
 
     Button createAcctButton;
@@ -33,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         createAcctButton = (Button) findViewById(R.id.createAcct);
-        boolean create = false;
         createAcctButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
         logInButton = (Button) findViewById(R.id.logIn);
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override

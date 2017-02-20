@@ -30,13 +30,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-
         checkIfUserIsSignedIn();
         setContentView(R.layout.activity_register);
 
         etfirstname = (EditText) findViewById(R.id.FirstName);
         etlastname = (EditText) findViewById(R.id.LastName);
-//        etusername = (EditText) findViewById(R.id.UserName);
         etpassword = (EditText) findViewById(R.id.Password);
         etemail = (EditText) findViewById(R.id.Email);
 
@@ -44,13 +42,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         final Activity registerActivity = this;
 
-
         etregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String firstname = etfirstname.getText().toString().trim();
                 String lastname = etlastname.getText().toString().trim();
-//                String username = etusername.getText().toString().trim();
                 String email = etemail.getText().toString().trim();
                 String password = etpassword.getText().toString();
 
