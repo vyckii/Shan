@@ -156,7 +156,7 @@ public class MainScreenActivity extends AppCompatActivity {
                     mUserReference = FirebaseDatabase.getInstance().getReference("users").child(mCurrentUser.getUid());
 
                     System.out.println("here inside User SIgned In");
-                    getUserReminderIDs();
+//                    getUserReminderIDs();
 
 
                 } else {
@@ -168,4 +168,5 @@ public class MainScreenActivity extends AppCompatActivity {
 
 
     }
+    
 }

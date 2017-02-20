@@ -7,8 +7,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -79,12 +81,19 @@ public class User {
                         if (!task.isSuccessful()) {
                             try {
                                 throw task.getException();
-                            } catch (FirebaseAuthUserCollisionException e){
+                            } catch (FirebaseAuthUserCollisionException e) {
                                 Toast.makeText(activity.getApplicationContext(), "That email is already being used! Return to the" +
                                         "login screen or use a different email.", Toast.LENGTH_SHORT).show();
                                 // catch (FirebaseAuthWeakPasswordException e)
                                 // catch (FirebaseAuthInvalidCredentialsException e)
-                            } catch (Exception e) {
+                            } catch (FirebaseNetworkException e) {
+                                Toast.makeText(activity.getApplicationContext(), "Unable to connect to the internet. " +
+                                                "Please check your internet connection and try again",
+                                        Toast.LENGTH_SHORT).show();
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                Toast.makeText(activity.getApplicationContext(), "Invalid user credentials",
+                                        Toast.LENGTH_SHORT).show();
+                            }catch (Exception e) {
                                 Toast.makeText(activity.getApplicationContext(), R.string.auth_failed,
                                         Toast.LENGTH_SHORT).show();
                             }
@@ -101,9 +110,8 @@ public class User {
 
 
 
-                            //@Christina: uncomment and change to whatever class the home screen is called
-                            //Intent i = new Intent(this, HomeActivity.class)
-                            //startActivity(i)
+                            Intent myIntent = new Intent(activity.getApplicationContext(), MainScreenActivity.class);
+                            activity.startActivityForResult(myIntent, 0);
                         }
 
 
@@ -134,8 +142,17 @@ public class User {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             System.out.println("signInWithEmail:failed" + task.getException());
-                            Toast.makeText(activity.getApplicationContext(), R.string.login_failed,
-                                    Toast.LENGTH_SHORT).show();
+
+                            if (task.getException().getClass() == FirebaseNetworkException.class) {
+                                Toast.makeText(activity.getApplicationContext(), "Unable to connect to the internet. " +
+                                        "Please check your internet connection and try again",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(activity.getApplicationContext(), R.string.login_failed,
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+
                         } else {
                             Intent myIntent = new Intent(activity.getApplicationContext(), MainScreenActivity.class);
                             activity.startActivityForResult(myIntent, 0);

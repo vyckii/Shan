@@ -57,9 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
                     User.createNewUser(registerActivity, mAuth, firstname, lastname, email, password);
                     System.out.println("done creating new user");
 
-
-                    Intent myIntent = new Intent(v.getContext(), MainScreenActivity.class);
-                    startActivityForResult(myIntent, 0);
                 }
             }
         });
