@@ -68,14 +68,12 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        System.out.println("here");
         mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        System.out.println("what about here");
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }

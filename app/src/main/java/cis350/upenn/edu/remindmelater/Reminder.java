@@ -75,6 +75,13 @@ public class Reminder {
 
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Reminder{" +
+                "userIDs=" + userIDs +
+                ", title='" + title + '\'' +
+                ", notes='" + notes + '\'' +
+                ", dueDates=" + dueDates +
+                '}';
+    }
 }
