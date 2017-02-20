@@ -91,7 +91,7 @@ public class User {
                                                 "Please check your internet connection and try again",
                                         Toast.LENGTH_SHORT).show();
                             } catch (FirebaseAuthInvalidCredentialsException e) {
-                                Toast.makeText(activity.getApplicationContext(), "Invalid user credentials",
+                                Toast.makeText(activity.getApplicationContext(), "Invalid user credentials. Please enter a valid email address.",
                                         Toast.LENGTH_SHORT).show();
                             }catch (Exception e) {
                                 Toast.makeText(activity.getApplicationContext(), R.string.auth_failed,
