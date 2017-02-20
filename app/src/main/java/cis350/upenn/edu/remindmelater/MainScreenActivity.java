@@ -89,6 +89,7 @@ public class MainScreenActivity extends AppCompatActivity {
                     remindersList.add(reminder);
 
 
+                    //Added comment
 
                 }
 
