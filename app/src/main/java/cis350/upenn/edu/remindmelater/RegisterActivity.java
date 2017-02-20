@@ -18,7 +18,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Button etregister;
     private EditText etfirstname;
     private EditText etlastname;
-    private EditText etusername;
     private EditText etpassword;
     private EditText etemail;
 
@@ -85,7 +84,6 @@ public class RegisterActivity extends AppCompatActivity {
     private void checkIfUserIsSignedIn() {
 
         mAuth = FirebaseAuth.getInstance();
-
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -97,9 +95,6 @@ public class RegisterActivity extends AppCompatActivity {
                     // User is signed out
                     System.out.println("onAuthStateChanged:signed_out");
                 }
-
             }};
-
-
     }
 }
