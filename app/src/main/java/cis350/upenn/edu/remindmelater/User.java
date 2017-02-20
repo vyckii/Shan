@@ -1,6 +1,7 @@
 package cis350.upenn.edu.remindmelater;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -126,8 +127,8 @@ public class User {
                         System.out.println("signInWithEmail:onComplete:" + task.isSuccessful());
                         // create an intent and pass to MainScreenActivity
 
-                        //TODO add change to Main Screen
-
+                        //Intent myIntent = new Intent(v.getContext(), MainScreenActivity.class);
+                        //startActivityForResult(myIntent, 0);
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the

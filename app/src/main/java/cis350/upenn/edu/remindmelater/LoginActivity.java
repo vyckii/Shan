@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         checkIfUserIsSignedIn();
         setContentView(R.layout.activity_login);
 
@@ -58,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
 //        });
 
         final Activity loginActivity = this;
-
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
