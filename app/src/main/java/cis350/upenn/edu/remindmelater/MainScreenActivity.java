@@ -17,6 +17,7 @@ import java.util.List;
 
 import android.view.View;
 import android.content.Intent;
+import android.widget.TextView;
 
 
 /*
@@ -45,6 +46,16 @@ public class MainScreenActivity extends AppCompatActivity {
         System.out.println("--------------------------");
         System.out.println("ON CREATE");
         System.out.println("--------------------------");
+
+        TextView addReminder = (TextView) findViewById(R.id.addReminder);
+
+        addReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddReminderActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -149,21 +160,12 @@ public class MainScreenActivity extends AppCompatActivity {
                     System.out.println("here inside User SIgned In");
                     //getUserReminderIDs();
 
-
                 } else {
                     // User is signed out
                     System.out.println("onAuthStateChanged:signed_out");
                 }
-
-            }};
-
-
-    }
-
-    // on click function for play button
-    public void playGame(View view) {
-        Intent intent = new Intent(this, AddReminderActivity.class);
-        startActivity(intent);
+            }
+        };
     }
 
 }

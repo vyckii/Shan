@@ -1,21 +1,22 @@
 package cis350.upenn.edu.remindmelater;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
-
 /**
  * Created by cristinabuenahora on 2/20/17.
  */
 
-public class AddReminderActivity extends AppCompatActivity {
+public class EditReminderActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -28,15 +29,13 @@ public class AddReminderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_reminder);
+        setContentView(R.layout.activity_edit_reminder);
 
         checkIfUserIsSignedIn();
 
         System.out.println("--------------------------");
-        System.out.println("in add reminder");
+        System.out.println("in edit reminder");
         System.out.println("--------------------------");
-
-        
 
     }
 
@@ -65,5 +64,6 @@ public class AddReminderActivity extends AppCompatActivity {
             }
         };
     }
+
 
 }
