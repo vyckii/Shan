@@ -13,9 +13,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
+
+import android.view.View;
+import android.content.Intent;
 
 
 /*
@@ -41,16 +42,9 @@ public class MainScreenActivity extends AppCompatActivity {
 
         checkIfUserIsSignedIn();
 
-
-
-
-
-
-//        String userStr = mCurrentUser.getDisplayName();
-
-
-
-
+        System.out.println("--------------------------");
+        System.out.println("ON CREATE");
+        System.out.println("--------------------------");
 
     }
 
@@ -75,7 +69,7 @@ public class MainScreenActivity extends AppCompatActivity {
             mReminderReference = FirebaseDatabase.getInstance()
                     .getReference("reminders").child(key);
 
-            ValueEventListener reminderEventListner = new ValueEventListener() {
+            ValueEventListener reminderEventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -88,9 +82,6 @@ public class MainScreenActivity extends AppCompatActivity {
                     //TODO: HANDLE REMINDERS AND ADD THEM TO UI
                     remindersList.add(reminder);
 
-
-                    //Added comment
-
                 }
 
                 @Override
@@ -100,7 +91,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
                 }
             };
-            mReminderReference.addValueEventListener(reminderEventListner);
+            mReminderReference.addValueEventListener(reminderEventListener);
         }
     }
 
@@ -156,7 +147,7 @@ public class MainScreenActivity extends AppCompatActivity {
                     mUserReference = FirebaseDatabase.getInstance().getReference("users").child(mCurrentUser.getUid());
 
                     System.out.println("here inside User SIgned In");
-//                    getUserReminderIDs();
+                    //getUserReminderIDs();
 
 
                 } else {
@@ -167,6 +158,12 @@ public class MainScreenActivity extends AppCompatActivity {
             }};
 
 
+    }
+
+    // on click function for play button
+    public void playGame(View view) {
+        Intent intent = new Intent(this, AddReminderActivity.class);
+        startActivity(intent);
     }
 
 }
