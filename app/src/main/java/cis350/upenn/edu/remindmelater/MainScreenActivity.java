@@ -68,7 +68,7 @@ public class MainScreenActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        getUserReminderIDs();
+        //TODO: where does currentUser get set?
         listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
@@ -193,7 +193,8 @@ public class MainScreenActivity extends AppCompatActivity {
                     mUserReference = FirebaseDatabase.getInstance().getReference("users").child(mCurrentUser.getUid());
 
                     System.out.println("here inside User SIgned In");
-                    //getUserReminderIDs();
+                    getUserReminderIDs();
+
 
                 } else {
                     // User is signed out
