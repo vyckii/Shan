@@ -1,0 +1,340 @@
+commit a277b4b6cf283f4172797019fe4bcc8fb23326fc
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 20 13:33:26 2017 -0500
+
+    fixed logic for screen changing
+
+commit 25943475d64635b3be4b89af7af41ce6561ad8eb
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 20 13:28:31 2017 -0500
+
+    Comment
+
+commit 6e49b9a99ed99c162e361c0b86f5f828d5ded2ee
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 20 11:57:15 2017 -0500
+
+    removed issue with asynchronous db calls
+
+commit 55ab19e74da4936677affb624cbdd536f373c41b
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 20 11:10:49 2017 -0500
+
+    Added pulling the reminders from firebase based on User ID
+
+commit 8e686bc017da15a7bbf6aa2b3294d3051afdd14b
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Sun Feb 19 23:11:01 2017 -0500
+
+    login page intent created
+
+commit 85ce5eaa8d6cb23f21725e6a725a264b891dde92
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Sun Feb 19 22:32:38 2017 -0500
+
+    more attempted changes to main screen
+
+commit 9bf5079fdc3d73946618185ec5def41e8b2d1fbc
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Sun Feb 19 21:59:00 2017 -0500
+
+    working on main screen
+
+commit 1ecd5a5e3853500776730d7768cd4dd1d6adafec
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Sun Feb 19 21:04:08 2017 -0500
+
+    changes to main screen
+
+commit 8b359a628527cf1e9c4658bae3f626f3501bece0
+Author: connorwen <CWEN@modvvlan503.1359.wlan.wireless-pennnet.upenn.edu>
+Date:   Sun Feb 19 19:52:54 2017 -0500
+
+    Bug #3: throws toast message if log in fields are not filled. does not crash with blank fields
+
+commit 128bab811af6467edc6267a4483da00b2491b153
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Sun Feb 19 18:57:50 2017 -0500
+
+    edge case where nothing is put in lines for register activity
+
+commit 104b1f0d2495f51b64065b762d2e663f4bd2af3a
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Sun Feb 19 18:53:40 2017 -0500
+
+    edge case where nothing is put in lines for register activity
+
+commit 18c65f9a064087d33832add20b77d059490dc6a0
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Sun Feb 19 18:42:54 2017 -0500
+
+    testing for register activity and removed username
+
+commit 2ef65d5a866e06c379aac044c77956e31dbe8ebf
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Sun Feb 19 18:33:16 2017 -0500
+
+    Added main screen activity
+
+commit 8ba3df63733311dfb700d163650d53ee039d3e24
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Sun Feb 19 18:30:50 2017 -0500
+
+    Removed username
+
+commit 6d9c3119831c40451bf90dbffd4e3513a14f6c50
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Sun Feb 19 18:27:58 2017 -0500
+
+    Commented stuff
+    
+    Removed username
+
+commit c4e84120de1ab1595034c78f491bf44f56c1c866
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Sun Feb 19 17:45:46 2017 -0500
+
+    added page to add reminder
+
+commit 28c2bc6befa62a5626698a8ac4a95be5d5899ba7
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Sun Feb 19 17:39:09 2017 -0500
+
+    set up home screen
+
+commit 679677a3fd0c73b81ef52d3f8b5653490751859e
+Author: connorwen <CWEN@hnt_ve600_0672.wireless-pennnet.upenn.edu>
+Date:   Sat Feb 18 23:40:41 2017 -0500
+
+    User Story #6: Login database check (firebase backend enabled). Checks if user/pw entered correctly / user is stored in firebase. Otherwise prompts error message.
+
+commit afa6156f23ed9d436bd4ba5354fe947bf5cf6a7d
+Author: connorwen <CWEN@hnt_ve600_0672.wireless-pennnet.upenn.edu>
+Date:   Sat Feb 18 19:22:00 2017 -0500
+
+    Finished User Story #4: Login. Layout XML created.
+
+commit 38bdcad784ce12018dc738c8fa1fad9131903d28
+Author: connorwen <CWEN@Connors-MacBook-Pro-2.local>
+Date:   Sat Feb 18 00:57:35 2017 -0500
+
+    Testing source tree
+
+commit 37b075b0af130bfa37a3a39d1504d5242ad74640
+Author: connorwen <CWEN@Connors-MacBook-Pro-2.local>
+Date:   Sat Feb 18 00:41:19 2017 -0500
+
+    adding test file to learn git
+
+commit a77420c78ff1eca9b39abfd202adc72efdf6392d
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Thu Feb 16 18:22:35 2017 -0500
+
+    Fixed Database referencing
+    
+    Reminders now are stored in Users by only UIDs and Users are stored in
+    Reminders by UIDs as well
+
+commit eae8baeddf9edbbd2783a8f42d29b7567402a535
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Thu Feb 16 18:03:10 2017 -0500
+
+    Added saving reminder functionality
+    
+    Setup firebase storage for Reminders, still need to fix the cross
+    reference with Users and Reminders and adding to the user data
+
+commit d0a1b48b09c6e3abc282e366e4983a02d9a67466
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Tue Feb 14 18:45:47 2017 -0500
+
+    switching screens after user register in comments for now since we do not have our home screen
+
+commit e34b146a21b08ad59a412b5ec1e9c65c245c34ee
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Tue Feb 14 18:34:37 2017 -0500
+
+    Fixed bugs on Register Activity, added a auth check to Activity
+
+commit 1133088aab0be7d8087d8610b573ef3ae4b8721e
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Tue Feb 14 18:24:08 2017 -0500
+
+    having an error with createNewUser call from Register Activity
+
+commit 530a92ab4c17f93d7757800ba24e36e76e190714
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Tue Feb 14 18:16:47 2017 -0500
+
+    Added comments for new static functions
+
+commit 63fb621efdfb7d50f29c74c55fdc0d4c46afd84e
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Tue Feb 14 18:14:22 2017 -0500
+
+    added mAuth to register Activity
+
+commit a4750021851b3c0f42e0ce97e7706e0ea170daa0
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Tue Feb 14 18:12:34 2017 -0500
+
+    Changed sign in user and create user functions and made them static functions of the User Class
+
+commit 649a16f931990ffda51b1ccdb631834aba4044a0
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Tue Feb 14 16:44:55 2017 -0500
+
+    adding register details
+
+commit 44b08cf702e7d3d107a7b7705016b25d2697f26d
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Tue Feb 14 00:46:27 2017 -0500
+
+    checks if account already exists
+
+commit fde020f366e214b3cac4c4091fcbaad040a3fb2d
+Merge: 5c03fd3 b606c61
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Feb 13 23:50:10 2017 -0500
+
+    Merge branch 'master' of https://github.com/cis-upenn/350S17-2-RemindMeLater
+
+commit 5c03fd3c1e33ad6123eeca40d3a5bc7e23a9e6ed
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Feb 13 23:49:57 2017 -0500
+
+    linked home screen and register
+
+commit b606c6187dded0a14d3883530ecf602a32ef95e3
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 13 22:49:47 2017 -0500
+
+    Added spaces for no reason
+
+commit c12a632a201cd59ef0356a0277487f8237da1902
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 13 22:44:39 2017 -0500
+
+    Added getters
+
+commit fec7ebe02fc468d7dee91d41b3c229055b680be0
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 13 21:57:29 2017 -0500
+
+    Removed password field on User Class
+    
+    Is not needed / probably should not store locally when Firebase/Andriod
+    can handle securely
+
+commit e30adaa287171afa81cb933ee2ff3d197fbf3dbe
+Author: mantrys <shoryamantry@levyvlan502.1414.wlan.wireless-resnet.upenn.edu>
+Date:   Mon Feb 13 21:17:02 2017 -0500
+
+    adding dimes file
+
+commit d543cbd89423ef77bfdf7bd6c6c98a26fbb32be8
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Feb 13 21:09:08 2017 -0500
+
+    fixed package naming
+
+commit 9688ddf329ede7a4d20d6f7fd6fc31f5dd8affc6
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 13 18:51:59 2017 -0500
+
+    Removed dependency on User constructor
+
+commit 1bca8aca538fab850d6f3da13db5c0d6a38ba2c3
+Author: mantrys <shoryamantry@levyvlan502.1414.wlan.wireless-resnet.upenn.edu>
+Date:   Mon Feb 13 17:50:52 2017 -0500
+
+    added more fields to user
+
+commit e2cc082141058404e514e4ae640467b9a35216ad
+Author: mantrys <shoryamantry@levyvlan502.1414.wlan.wireless-resnet.upenn.edu>
+Date:   Mon Feb 13 17:43:11 2017 -0500
+
+    Register files
+
+commit 5baf2451083118fa50c711979f6126c13467e2b4
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 13 11:16:16 2017 -0500
+
+    Added write user to database on new user creation
+
+commit 2f644c5e4611021572b0475cd67fc3c2c7a961de
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 13 10:45:39 2017 -0500
+
+    Added comments explaining Firebase functions
+
+commit 88e547517261bc13536e1af603afffcc02f3a24d
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 13 10:17:30 2017 -0500
+
+    Fixed conflict error
+
+commit 06663794309278efd41766b1777f63f889cfe846
+Merge: 3cdb1e4 1569162
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 13 10:15:11 2017 -0500
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       app/src/main/java/cis350/upenn/edu/remindmelater/MainActivity.java
+
+commit 3cdb1e46c5cbfa5230d71b09e7cc4b277d3acb57
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 13 00:42:08 2017 -0500
+
+    Added Firebase User Authentication
+
+commit 1569162a7fe684cc45ab153256df55dc982f82c6
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Feb 13 00:21:01 2017 -0500
+
+    auto-login goes to main screen
+
+commit f21372397107e27621936d9517cf9640f457aa69
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Feb 12 23:48:18 2017 -0500
+
+    welcome screen with image
+
+commit 7632de318a9104d0cc529ddb12690fede256c5f5
+Merge: f2bde36 971069d
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Feb 12 22:56:35 2017 -0500
+
+    Merge brancrster' of https://github.com/cis-upenn/350S17-2-RemindMeLater
+
+commit f2bde36c947c9b282853bb4e6471b86e9f9e545d
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Feb 12 22:55:54 2017 -0500
+
+    updated welcome screen
+
+commit 971069dddd5432a12adc79d9eef08f3ce4f35a33
+Author: Shorya Mantry <shoryamantry@MacBook-Pro-2.local>
+Date:   Sun Feb 12 18:40:56 2017 -0500
+
+    deleted part of comment
+
+commit 589af1bcd2937326db96c0296426e74181dd7576
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Feb 12 17:25:47 2017 -0500
+
+    basic welcome screen
+
+commit 925177ca63fd98c15c092dd56d5ce2f23efb112a
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Wed Feb 8 11:21:46 2017 -0500
+
+    Added Reminder and User Class
+
+commit 0fc53742b8b0288f9a7c6fd5a13aee61678f7850
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Wed Feb 8 10:49:34 2017 -0500
+
+    Initial commit with android studio skeleton

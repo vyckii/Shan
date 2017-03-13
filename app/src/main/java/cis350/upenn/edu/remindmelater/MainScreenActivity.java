@@ -1,5 +1,6 @@
 package cis350.upenn.edu.remindmelater;
 
+import android.app.ListActivity;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +18,13 @@ import java.util.List;
 
 import android.view.View;
 import android.content.Intent;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
 /*
@@ -35,6 +42,10 @@ public class MainScreenActivity extends AppCompatActivity {
 
     private FirebaseUser mCurrentUser;
     private User currentUser;
+
+    //for scrollable list
+    ArrayAdapter adapter;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +67,17 @@ public class MainScreenActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //TODO: where does currentUser get set?
+        getRemindersForCurrentUser(currentUser);
+        listView = (ListView) findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
+        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO: open up reminder in response to click
+            }
+        };
+        listView.setOnItemClickListener(mMessageClickedHandler);
     }
 
     @Override
@@ -104,6 +125,20 @@ public class MainScreenActivity extends AppCompatActivity {
             };
             mReminderReference.addValueEventListener(reminderEventListener);
         }
+        //TODO: remindersList vs reminders?
+        adapter = new ArrayAdapter<Reminder>(this, android.R.layout.simple_list_item_2, android.R.id.text1, remindersList) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+                //set the first line of text to be reminder title
+                text1.setText(reminders.get(position).getTitle());
+                //set the second line of text to be reminder's first due date
+                text2.setText(reminders.get(position).getDueDates().get(0).toString());
+                return view;
+            }
+        };
     }
 
 

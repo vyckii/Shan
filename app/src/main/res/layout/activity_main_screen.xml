@@ -28,52 +28,62 @@
         android:id="@+id/remindersText"
         android:layout_centerHorizontal="true" />
 
-    <Button
+    <ListView
+        android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DueDate: Reminder 1 \n Notes..."
-        android:textSize="20dp"
-        android:textStyle="normal"
-        android:textAllCaps="false"
-        android:id="@+id/reminder1"
         android:layout_below="@+id/remindersText"
-        android:layout_alignStart="@+id/remindersText"
-        android:layout_marginTop="15dp" />
+        android:layout_above="@+id/addReminder">
+    </ListView>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="DueDate: Reminder 2 \n Notes..."
-        android:textSize="20dp"
-        android:textStyle="normal"
-        android:textAllCaps="false"
-        android:id="@+id/reminder2"
-        android:layout_below="@+id/reminder1"
-        android:layout_alignStart="@+id/reminder1"
-        android:layout_marginTop="15dp" />
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="DueDate: Reminder 1 \n Notes..."-->
+        <!--android:textSize="20dp"-->
+        <!--android:textStyle="normal"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:id="@+id/reminder1"-->
+        <!--android:layout_below="@+id/remindersText"-->
+        <!--android:layout_alignStart="@+id/remindersText"-->
+        <!--android:layout_marginTop="15dp" />-->
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="DueDate: Reminder 3 \n Notes..."
-        android:textSize="20dp"
-        android:textStyle="normal"
-        android:textAllCaps="false"
-        android:id="@+id/reminder3"
-        android:layout_below="@+id/reminder2"
-        android:layout_alignStart="@+id/reminder2"
-        android:layout_marginTop="15dp" />
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="DueDate: Reminder 2 \n Notes..."-->
+        <!--android:textSize="20dp"-->
+        <!--android:textStyle="normal"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:id="@+id/reminder2"-->
+        <!--android:layout_below="@+id/reminder1"-->
+        <!--android:layout_alignStart="@+id/reminder1"-->
+        <!--android:layout_marginTop="15dp" />-->
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="DueDate: Reminder 3 \n Notes..."
-        android:textSize="20dp"
-        android:textStyle="normal"
-        android:textAllCaps="false"
-        android:id="@+id/reminder4"
-        android:layout_below="@+id/reminder3"
-        android:layout_alignStart="@+id/reminder3"
-        android:layout_marginTop="15dp" />
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="DueDate: Reminder 3 \n Notes..."-->
+        <!--android:textSize="20dp"-->
+        <!--android:textStyle="normal"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:id="@+id/reminder3"-->
+        <!--android:layout_below="@+id/reminder2"-->
+        <!--android:layout_alignStart="@+id/reminder2"-->
+        <!--android:layout_marginTop="15dp" />-->
+
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="DueDate: Reminder 3 \n Notes..."-->
+        <!--android:textSize="20dp"-->
+        <!--android:textStyle="normal"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:id="@+id/reminder4"-->
+        <!--android:layout_below="@+id/reminder3"-->
+        <!--android:layout_alignStart="@+id/reminder3"-->
+        <!--android:layout_marginTop="15dp" />-->
+
+
 
 </RelativeLayout>
