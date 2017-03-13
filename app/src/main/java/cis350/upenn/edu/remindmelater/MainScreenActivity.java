@@ -69,15 +69,7 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         });
         //TODO: where does currentUser get set?
-        listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(adapter);
-        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: open up reminder in response to click
-            }
-        };
-        listView.setOnItemClickListener(mMessageClickedHandler);
+
     }
 
     @Override
@@ -92,6 +84,18 @@ public class MainScreenActivity extends AppCompatActivity {
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+    }
+
+    private void setListView() {
+        listView = (ListView) findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
+        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO: open up reminder in response to click
+            }
+        };
+        listView.setOnItemClickListener(mMessageClickedHandler);
     }
 
     private void getRemindersForCurrentUser(User user) {
@@ -125,7 +129,7 @@ public class MainScreenActivity extends AppCompatActivity {
             };
             mReminderReference.addValueEventListener(reminderEventListener);
         }
-        //TODO: remindersList vs reminders?
+        //TODO: need to call this after all reminders are pulled - loader / cursor instead?
         adapter = new ArrayAdapter<Reminder>(this, android.R.layout.simple_list_item_2, android.R.id.text1, remindersList) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
