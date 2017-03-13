@@ -27,6 +27,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 
+
 /*
  * activity of main screen that pulls up reminders
  */
