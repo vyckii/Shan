@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.widget.TextView;
 
 
+
 /*
  * activity of main screen that pulls up reminders
  */

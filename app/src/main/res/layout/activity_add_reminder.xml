@@ -13,7 +13,7 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
     <cis350.upenn.edu.remindmelater.CustomText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Remind me too..."
+        android:text="Remind me to..."
         android:textSize="25dp"
         android:textAlignment="center"
         android:layout_margin="30px"
@@ -42,12 +42,44 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="date"
         android:ems="10"
         android:id="@+id/dueDate"
         android:hint="Date"
         android:layout_below="@+id/notes"
         android:layout_alignStart="@+id/notes"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/recurring"
+        android:entries="@array/RecurringOptions"
+        android:layout_below="@+id/dueDate"
+        android:layout_alignStart="@+id/dueDate"
+        android:layout_alignEnd="@+id/dueDate" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/category"
+        android:entries="@array/CategoryOptions"
+        android:layout_below="@+id/recurring"
+        android:layout_alignStart="@+id/recurring"
+        android:layout_alignEnd="@+id/recurring" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/location"
+        android:hint="Location"
+        android:layout_below="@+id/category"
+        android:layout_alignStart="@+id/category"/>
 
     <Button
         android:text="Add Reminder"
@@ -55,7 +87,7 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:layout_height="wrap_content"
         android:id="@+id/addReminder"
         android:onClick="onButtonPress"
-        android:layout_below="@+id/dueDate"
-        android:layout_alignStart="@+id/dueDate" />
+        android:layout_below="@+id/location"
+        android:layout_alignStart="@+id/location" />
 
 </RelativeLayout>
