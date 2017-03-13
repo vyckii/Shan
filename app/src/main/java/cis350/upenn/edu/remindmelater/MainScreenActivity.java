@@ -69,8 +69,7 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         });
         //TODO: where does currentUser get set?
-        getRemindersForCurrentUser(currentUser);
-        listView = (ListView) findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
             @Override
@@ -195,6 +194,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
                     System.out.println("here inside User SIgned In");
                     getUserReminderIDs();
+
 
                 } else {
                     // User is signed out
