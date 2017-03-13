@@ -20,7 +20,7 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:id="@+id/welcome"/>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
@@ -30,7 +30,7 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:layout_alignStart="@+id/welcome"/>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
@@ -40,7 +40,7 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:layout_alignStart="@+id/reminderName"/>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
@@ -50,7 +50,7 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:layout_alignStart="@+id/notes"/>
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
@@ -61,7 +61,7 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:layout_alignEnd="@+id/dueDate" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
@@ -72,7 +72,7 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:layout_alignEnd="@+id/recurring" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
