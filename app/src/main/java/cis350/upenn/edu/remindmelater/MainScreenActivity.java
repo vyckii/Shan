@@ -68,8 +68,7 @@ public class MainScreenActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //TODO: where does currentUser get set?
-        getRemindersForCurrentUser(currentUser);
+        getUserReminderIDs();
         listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
