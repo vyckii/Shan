@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,6 +17,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.content.Intent;
 import android.view.ViewGroup;
@@ -48,18 +51,45 @@ public class MainScreenActivity extends AppCompatActivity {
     ArrayAdapter adapter;
     ListView listView;
 
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        checkIfUserIsSignedIn();
+        //checkIfUserIsSignedIn();
 
         System.out.println("--------------------------");
         System.out.println("ON CREATE");
         System.out.println("--------------------------");
 
         TextView addReminder = (TextView) findViewById(R.id.addReminder);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+
+
+        //TODO: Update proper mDatabaseRef
+        //TODO: Finish editing adapter
+        mAdapter = new FirebaseRecyclerAdapter<Reminder, ReminderHolder>(Reminder.class,
+                R.id.reminder_layout_needTOMAKE, ReminderHolder.class, mReminderReference) {
+
+
+            @Override
+            public void populateViewHolder(ReminderHolder reminderMessageViewHolder, Reminder reminder, int position) {
+                reminderMessageViewHolder.setReminderTitle(reminder.getTitle());
+                reminderMessageViewHolder.setReminderDesc(reminder.getNotes());
+            }
+
+        };
+
+        mRecyclerView.setAdapter(mAdapter);
+
+
 
         addReminder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +98,6 @@ public class MainScreenActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //TODO: where does currentUser get set?
 
     }
 
@@ -86,17 +115,17 @@ public class MainScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void setListView() {
-        listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(adapter);
-        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: open up reminder in response to click
-            }
-        };
-        listView.setOnItemClickListener(mMessageClickedHandler);
-    }
+//    private void setListView() {
+//        listView = (ListView) findViewById(R.id.list_view);
+//        listView.setAdapter(adapter);
+//        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //TODO: open up reminder in response to click
+//            }
+//        };
+//        listView.setOnItemClickListener(mMessageClickedHandler);
+//    }
 
     private void getRemindersForCurrentUser(User user) {
         final ArrayList<Reminder> remindersList = new ArrayList<>();
@@ -183,6 +212,8 @@ public class MainScreenActivity extends AppCompatActivity {
 
     private void checkIfUserIsSignedIn() {
 
+        System.out.println("SIGN IN USER!!!!!!!!!!!!!!!!!!!!!!!");
+
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -198,6 +229,8 @@ public class MainScreenActivity extends AppCompatActivity {
 
                     System.out.println("here inside User SIgned In");
                     getUserReminderIDs();
+
+
 
 
                 } else {
