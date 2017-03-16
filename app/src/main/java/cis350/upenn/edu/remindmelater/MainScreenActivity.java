@@ -74,9 +74,8 @@ public class MainScreenActivity extends AppCompatActivity {
 
 
         //TODO: Update proper mDatabaseRef
-        //TODO: Finish editing adapter
         mAdapter = new FirebaseRecyclerAdapter<Reminder, ReminderHolder>(Reminder.class,
-                R.id.reminder_layout_needTOMAKE, ReminderHolder.class, mReminderReference) {
+                R.id.reminder_view, ReminderHolder.class, mReminderReference) {
 
 
             @Override

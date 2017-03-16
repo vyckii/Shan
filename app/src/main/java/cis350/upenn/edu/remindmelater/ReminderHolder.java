@@ -23,8 +23,8 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
     public ReminderHolder(View itemView) {
         super(itemView);
         //TODO: Add views for this and put their IDs in place
-        reminderTitle = (TextView) itemView.findViewById(1);
-        reminderDesc = (TextView) itemView.findViewById(1);
+        reminderTitle = (TextView) itemView.findViewById(R.id.reminder_title);
+        reminderDesc = (TextView) itemView.findViewById(R.id.reminder_desc);
     }
 
     public void setReminderTitle(String name) {
