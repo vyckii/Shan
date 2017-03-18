@@ -85,6 +85,7 @@ public class MainScreenActivity extends AppCompatActivity {
             public void populateViewHolder(ReminderHolder reminderMessageViewHolder, Reminder reminder, int position) {
                 reminderMessageViewHolder.setReminderTitle(reminder.getTitle());
                 reminderMessageViewHolder.setReminderDesc(reminder.getNotes());
+                reminderMessageViewHolder.setReminderTime(reminder.getDueDate());
             }
 
         };
