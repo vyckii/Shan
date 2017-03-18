@@ -98,29 +98,7 @@ public class AddReminderActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
 
-                // check that date is valid
-//                String[] dateArr = dateText.split("/");
-//                if (dateArr.length != 3 || dateArr[0].length() > 2 || dateArr[1].length() > 2
-//                        || dateArr[2].length() > 4) {
-//                    allGood = false;
-//                    Toast.makeText(addReminderActivity.getApplicationContext(), R.string.valid_date,
-//                            Toast.LENGTH_SHORT).show();
-//                } else {
-//                    int month = Integer.parseInt(dateArr[0]);
-//                    int day = Integer.parseInt(dateArr[1]);
-//                    int year = Integer.parseInt(dateArr[2]);
-//                    Date reminderDate = new Date(month, day, year);
-//                    Date currDate = new Date();
-//                    if (!reminderDate.after(currDate)) {
-//                        allGood = false;
-//                        Toast.makeText(addReminderActivity.getApplicationContext(), R.string.valid_date,
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-
-                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.US);
-
-                String dateToSaveToDB = format1.format(myCalendar.getTime());
+                Long dateToSaveToDB = myCalendar.getTimeInMillis();
 
                 System.out.println(dateToSaveToDB);
 

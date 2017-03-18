@@ -19,7 +19,7 @@ public class Reminder {
     public List<String> userIDs;
     public String title;
     public String notes;
-    public String dueDate;
+    public Long dueDate;
 
     static DatabaseReference mDatabase;
 
@@ -28,7 +28,7 @@ public class Reminder {
 
     }
 
-    private Reminder(String uid, String title, String notes, String duedate) {
+    private Reminder(String uid, String title, String notes, Long duedate) {
 
         this.userIDs = new LinkedList<>();
         this.userIDs.add(uid);
@@ -50,12 +50,12 @@ public class Reminder {
         return notes;
     }
 
-    public String getDueDate() {
+    public Long getDueDate() {
         return dueDate;
     }
 
 
-    public static void createReminderInDatabase(FirebaseUser user, String title, String notes, String duedate) {
+    public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         String uid = mDatabase.child("reminders").push().getKey();

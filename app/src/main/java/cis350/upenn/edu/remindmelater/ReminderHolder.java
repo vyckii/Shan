@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -42,20 +43,17 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
         reminderDesc.setText(text);
     }
 
-    public void setReminderTime(String dateStr) {
+    public void setReminderTime(Long dateStr) {
+
+        System.out.println("setting date");
 
         if (dateStr != null) {
-            SimpleDateFormat f1 = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.US);
+            SimpleDateFormat f1 = new SimpleDateFormat("hh:mm a", Locale.US);
             SimpleDateFormat f2 = new SimpleDateFormat("EEEE, MMMM d", Locale.US);
-            SimpleDateFormat f3 = new SimpleDateFormat("hh:mm a", Locale.US);
-            Date date;
-            try {
-                date = f1.parse(dateStr);
-                reminderTime.setText("" + f3.format(date.getTime()) + "\n" + f2.format(date.getTime()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-                reminderTime.setText("No Date Set");
-            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(dateStr);
+            reminderTime.setText("" + f1.format(calendar.getTime()) + "\n" + f2.format(calendar.getTime()));
+
         } else {
             reminderTime.setText("No Date Set");
         }

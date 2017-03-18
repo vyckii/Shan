@@ -12,6 +12,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -71,6 +72,8 @@ public class MainScreenActivity extends AppCompatActivity {
 
         mReminderReference = FirebaseDatabase.getInstance().getReference("reminders");
 
+        Query query = mReminderReference.orderByChild("dueDate");
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -78,7 +81,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
 
         mAdapter = new FirebaseRecyclerAdapter<Reminder, ReminderHolder>(Reminder.class,
-                R.layout.reminder_view, ReminderHolder.class, mReminderReference) {
+                R.layout.reminder_view, ReminderHolder.class, query) {
 
 
             @Override
