@@ -5,8 +5,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by AJNandi on 2/8/17.
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class Reminder {
 
-    public List<String> userIDs;
+    public Map<String, Boolean> userIDs;
     public String title;
     public String notes;
     public Long dueDate;
@@ -30,15 +32,15 @@ public class Reminder {
 
     private Reminder(String uid, String title, String notes, Long duedate) {
 
-        this.userIDs = new LinkedList<>();
-        this.userIDs.add(uid);
+        this.userIDs = new HashMap<>();
+        this.userIDs.put(uid, true);
         this.title = title;
         this.notes = notes;
 
         this.dueDate = duedate;
     }
 
-    public List<String> userIDs() {
+    public Map<String, Boolean> userIDs() {
         return userIDs;
     }
 
@@ -64,9 +66,10 @@ public class Reminder {
         Reminder reminder = new Reminder(user.getUid(), title, notes, duedate);
 
 
-        mDatabase.child("reminders").child(uid).setValue(reminder);
-        DatabaseReference reminderRef = mDatabase.child("users").child(user.getUid()).child("reminders");
-        reminderRef.push().setValue(uid);
+        mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
+
+        DatabaseReference reminderRef = mDatabase.child("reminders");
+        reminderRef.push().setValue(user.getUid());
 
     }
 

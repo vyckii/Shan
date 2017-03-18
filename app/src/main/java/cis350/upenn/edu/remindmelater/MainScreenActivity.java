@@ -53,10 +53,6 @@ public class MainScreenActivity extends AppCompatActivity {
     ArrayAdapter adapter;
     ListView listView;
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,17 +66,21 @@ public class MainScreenActivity extends AppCompatActivity {
         System.out.println("--------------------------");
 
 
-        mReminderReference = FirebaseDatabase.getInstance().getReference("reminders");
+        String UID = getIntent().getStringExtra("uid");
+
+
+        mReminderReference = FirebaseDatabase.getInstance().getReference("users").child(UID).child("reminders");
+
 
         Query query = mReminderReference.orderByChild("dueDate");
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
 
-        mAdapter = new FirebaseRecyclerAdapter<Reminder, ReminderHolder>(Reminder.class,
+        RecyclerView.Adapter mAdapter = new FirebaseRecyclerAdapter<Reminder, ReminderHolder>(Reminder.class,
                 R.layout.reminder_view, ReminderHolder.class, query) {
 
 
@@ -141,7 +141,7 @@ public class MainScreenActivity extends AppCompatActivity {
                     mCurrentUser = user;
                     mUserReference = FirebaseDatabase.getInstance().getReference("users").child(mCurrentUser.getUid());
 
-                    System.out.println("here inside User SIgned In");
+                    System.out.println("user Signed in inside Main Screen Activity");
 
                 } else {
                     // User is signed out

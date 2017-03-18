@@ -107,6 +107,7 @@ public class AddReminderActivity extends AppCompatActivity {
                     System.out.println("adding rmeindmer do db");
                     Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB);
                     System.out.println("done adding reminder");
+                    finish();
                 }
             }
         });

@@ -127,7 +127,7 @@ public class User {
      * @param email user's email
      * @param password user's password
      */
-    public static void signInUser(final Activity activity, FirebaseAuth mAuth, String email, String password) {
+    public static void signInUser(final Activity activity, FirebaseAuth mAuth, String email, String password, final FirebaseUser user) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -155,7 +155,13 @@ public class User {
 
                         } else {
                             Intent myIntent = new Intent(activity.getApplicationContext(), MainScreenActivity.class);
+
+                            myIntent.putExtra("uid", user.getUid());
+
                             activity.startActivityForResult(myIntent, 0);
+
+
+
                         }
 
                     }
