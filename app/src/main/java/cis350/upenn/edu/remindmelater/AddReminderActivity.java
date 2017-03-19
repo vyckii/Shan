@@ -30,6 +30,8 @@ import java.util.TimeZone;
  * Created by cristinabuenahora on 2/20/17.
  */
 
+//TODO add a stop date for recurring
+    //TODO if not stop date populate infinitely
 public class AddReminderActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;

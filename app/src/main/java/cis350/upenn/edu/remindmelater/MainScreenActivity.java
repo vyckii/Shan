@@ -32,6 +32,8 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 
+//TODO: crashes when no reminders stored
+//TODO: back button doesn't log you out?
 
 /*
  * activity of main screen that pulls up reminders
