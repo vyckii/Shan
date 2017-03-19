@@ -32,7 +32,6 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
         reminderTitle = (TextView) itemView.findViewById(R.id.reminder_title);
         reminderDesc = (TextView) itemView.findViewById(R.id.reminder_desc);
         reminderTime =  (TextView) itemView.findViewById(R.id.due_date_label);
-
     }
 
     public void setReminderTitle(String name) {

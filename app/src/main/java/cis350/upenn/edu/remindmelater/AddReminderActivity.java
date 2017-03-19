@@ -104,8 +104,9 @@ public class AddReminderActivity extends AppCompatActivity {
 
                 if (allGood && mCurrentUser != null) {
                     // add reminder to database
-                    System.out.println("adding rmeindmer do db");
-                    Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB);
+                    System.out.println("adding reminder to db");
+                    Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
+                            locationText,categoryText, recurringText);
                     System.out.println("done adding reminder");
                     finish();
                 }
