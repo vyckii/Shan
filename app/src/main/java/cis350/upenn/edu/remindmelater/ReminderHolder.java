@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.text.ParseException;
@@ -20,7 +21,7 @@ import java.util.Locale;
  *
  */
 
-public class ReminderHolder extends RecyclerView.ViewHolder {
+public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private final TextView reminderTitle;
     private final TextView reminderDesc;
@@ -32,6 +33,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
         reminderTitle = (TextView) itemView.findViewById(R.id.reminder_title);
         reminderDesc = (TextView) itemView.findViewById(R.id.reminder_desc);
         reminderTime =  (TextView) itemView.findViewById(R.id.due_date_label);
+        itemView.setOnClickListener(this);
 
     }
 
@@ -57,14 +59,11 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
         } else {
             reminderTime.setText("No Date Set");
         }
-
-
-
-
-
-
-
     }
 
+    //TODO
+    public void onClick(View view) {
+        System.out.println("click!");
+    }
 
 }
