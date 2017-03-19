@@ -32,7 +32,6 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 
-
 /*
  * activity of main screen that pulls up reminders
  */
@@ -89,12 +88,25 @@ public class MainScreenActivity extends AppCompatActivity {
                 reminderMessageViewHolder.setReminderTitle(reminder.getTitle());
                 reminderMessageViewHolder.setReminderDesc(reminder.getNotes());
                 reminderMessageViewHolder.setReminderTime(reminder.getDueDate());
+
+//                reminderMessageViewHolder.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        System.out.println("click!");
+//                    }
+//                });
             }
+
 
         };
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+//        mRecyclerView.addOnItemTouchListener(
+//                new RecyclerView.OnItemTouchListener(this, mRecyclerView, new RecyclerView.OnItemTouchListener() {
+//
+//                })
+//        );
 
         TextView addReminder = (TextView) findViewById(R.id.addReminder);
 
