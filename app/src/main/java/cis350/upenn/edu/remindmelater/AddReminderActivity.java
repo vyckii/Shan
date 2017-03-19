@@ -1,15 +1,18 @@
 package cis350.upenn.edu.remindmelater;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,8 +20,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by cristinabuenahora on 2/20/17.
@@ -37,12 +43,16 @@ public class AddReminderActivity extends AppCompatActivity {
     private Button addReminder;
     private TextView reminder;
     private TextView notes;
-    private TextView date;
+    private Button timeButton;
+    private Button dateButton;
     private Spinner recurring;
     private Spinner category;
     private TextView location;
 
     final Activity addReminderActivity = this;
+
+    Calendar myCalendar = Calendar.getInstance();
+    String timeDueLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +69,8 @@ public class AddReminderActivity extends AppCompatActivity {
         addReminder = (Button) findViewById((R.id.addReminder));
         reminder = (TextView) findViewById(R.id.reminderName);
         notes = (TextView) findViewById(R.id.notes);
-        date = (TextView) findViewById(R.id.dueDate);
+        timeButton = (Button) findViewById(R.id.timeDue);
+        dateButton = (Button) findViewById(R.id.dateDue);
         recurring = (Spinner) findViewById(R.id.recurring);
         category = (Spinner) findViewById(R.id.category);
         location = (TextView) findViewById(R.id.location);
@@ -71,7 +82,8 @@ public class AddReminderActivity extends AppCompatActivity {
                 // get user inputs
                 String reminderText = reminder.getText().toString();
                 String notesText = notes.getText().toString();
-                String dateText = date.getText().toString();
+                String time = timeButton.getText().toString();
+                String date = dateButton.getText().toString();
                 String recurringText = recurring.getSelectedItem().toString();
                 String categoryText = category.getSelectedItem().toString();
                 String locationText = location.getText().toString();
@@ -86,35 +98,36 @@ public class AddReminderActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
 
-                // check that date is valid
-                String[] dateArr = dateText.split("/");
-                if (dateArr.length != 3 || dateArr[0].length() > 2 || dateArr[1].length() > 2
-                        || dateArr[2].length() > 4) {
-                    allGood = false;
-                    Toast.makeText(addReminderActivity.getApplicationContext(), R.string.valid_date,
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    int month = Integer.parseInt(dateArr[0]);
-                    int day = Integer.parseInt(dateArr[1]);
-                    int year = Integer.parseInt(dateArr[2]);
-                    Date reminderDate = new Date(month, day, year);
-                    Date currDate = new Date();
-                    if (!reminderDate.after(currDate)) {
-                        allGood = false;
-                        Toast.makeText(addReminderActivity.getApplicationContext(), R.string.valid_date,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
+                Long dateToSaveToDB = myCalendar.getTimeInMillis();
 
-                if (allGood) {
+                System.out.println(dateToSaveToDB);
+
+                if (allGood && mCurrentUser != null) {
                     // add reminder to database
-                    Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText);
+                    System.out.println("adding rmeindmer do db");
+                    Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB);
                     System.out.println("done adding reminder");
+                    finish();
                 }
             }
         });
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
 
     private void checkIfUserIsSignedIn() {
 
@@ -142,4 +155,67 @@ public class AddReminderActivity extends AppCompatActivity {
         };
     }
 
+
+
+    public void showTimePickerDialog(View v) {
+
+        TimePickerDialog tpd = new TimePickerDialog(AddReminderActivity.this, time,
+                myCalendar.get(Calendar.HOUR_OF_DAY),
+                myCalendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this));
+
+        tpd.show();
+    }
+
+    public void showDatePickerDialog(View v) {
+
+        DatePickerDialog dpd = new DatePickerDialog(AddReminderActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+
+        dpd.show();
+    }
+
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateDateLabel();
+        }
+
+    };
+
+    private void updateDateLabel() {
+
+        String myFormat = "EEEE, MMMM d"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        dateButton.setText(sdf.format(myCalendar.getTime()));
+    }
+
+
+    TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
+
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+
+            myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            myCalendar.set(Calendar.MINUTE, minute);
+
+            updateTimeLabel();
+        }
+
+    };
+
+    private void updateTimeLabel() {
+        String myFormat = "h:mm a"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        timeButton.setText(sdf.format(myCalendar.getTime()));
+    }
 }

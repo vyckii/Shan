@@ -11,6 +11,8 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Date;
+
 /**
  * Created by stephaniefei on 2/12/17.
  */
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         checkIfUserIsSignedIn();
 
+
     }
 
     public void registerScreen() {
@@ -103,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
 
                     currentUser = user;
 
-                    //Intent myIntent = new Intent(context, MainScreenActivity.class);
-                    //startActivityForResult(myIntent, 0);
 
 
                 } else {
@@ -118,23 +119,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Creates a new user using Firebase authentication
-     * @param email
-     * @param password
-     */
-    public void createNewUser(String firstname, String lastname, String email, String password) {
-        User.createNewUser(this, mAuth, firstname, lastname, email, password);
-    }
-
-    /**
-     * Signs in a user that already has an account using Firebase authentication
-     * @param email
-     * @param password
-     */
-    public void signInUser(String email, String password) {
-        User.signInUser(this, mAuth, email, password);
-    }
 
 
 

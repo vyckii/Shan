@@ -26,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private FirebaseUser mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    User.signInUser(loginActivity, mAuth, emailText, passwordText);
+                    User.signInUser(loginActivity, mAuth, emailText, passwordText, mUser);
                 }
             }
         });
@@ -103,6 +105,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
+
+                    mUser = user;
+
                 } else {
                     // User is signed out
                     System.out.println("onAuthStateChanged:signed_out");

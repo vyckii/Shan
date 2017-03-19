@@ -39,15 +39,25 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:layout_below="@+id/reminderName"
         android:layout_alignStart="@+id/reminderName"/>
 
-    <EditText
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="date"
         android:ems="10"
-        android:id="@+id/dueDate"
-        android:hint="Date"
+        android:text="@string/pick_time"
+        android:id="@+id/timeDue"
         android:layout_below="@+id/notes"
-        android:layout_alignStart="@+id/notes"/>
+        android:layout_alignStart="@+id/notes"
+        android:onClick="showTimePickerDialog"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="@string/pick_date"
+        android:id="@+id/dateDue"
+        android:layout_below="@+id/timeDue"
+        android:layout_alignStart="@+id/timeDue"
+        android:onClick="showDatePickerDialog"/>
 
     <Spinner
         android:layout_width="match_parent"
@@ -56,9 +66,9 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:ems="10"
         android:id="@+id/recurring"
         android:entries="@array/RecurringOptions"
-        android:layout_below="@+id/dueDate"
-        android:layout_alignStart="@+id/dueDate"
-        android:layout_alignEnd="@+id/dueDate" />
+        android:layout_below="@+id/dateDue"
+        android:layout_alignStart="@+id/dateDue"
+        android:layout_alignEnd="@+id/dateDue" />
 
     <Spinner
         android:layout_width="match_parent"
