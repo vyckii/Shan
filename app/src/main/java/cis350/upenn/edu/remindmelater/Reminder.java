@@ -69,7 +69,7 @@ public class Reminder {
         mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
 
         DatabaseReference reminderRef = mDatabase.child("reminders");
-        reminderRef.push().setValue(user.getUid());
+        reminderRef.child(uid).setValue(user.getUid());
 
     }
 
