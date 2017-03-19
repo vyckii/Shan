@@ -97,6 +97,11 @@ public class MainScreenActivity extends AppCompatActivity {
 //                });
             }
 
+//            @Override
+//            public void onBindViewHolder(ReminderHolder reminderMessageViewHolder, int position) {
+//                reminderMessageViewHolder.
+//            }
+
 
         };
 

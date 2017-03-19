@@ -1,5 +1,6 @@
 package cis350.upenn.edu.remindmelater;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +30,13 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     public ReminderHolder(View itemView) {
         super(itemView);
+
+        itemView.setOnClickListener(this);
+
         //TODO: Add views for this and put their IDs in place
         reminderTitle = (TextView) itemView.findViewById(R.id.reminder_title);
         reminderDesc = (TextView) itemView.findViewById(R.id.reminder_desc);
         reminderTime =  (TextView) itemView.findViewById(R.id.due_date_label);
-        itemView.setOnClickListener(this);
 
     }
 
@@ -61,9 +64,10 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         }
     }
 
-    //TODO
+    //TODO need to call activity to start EditReminderActivity
     public void onClick(View view) {
         System.out.println("click!");
+
     }
 
 }
