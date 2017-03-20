@@ -107,7 +107,6 @@ public class AddReminderActivity extends AppCompatActivity {
                 Long dateToSaveToDB = myCalendar.getTimeInMillis();
                 Long dateToRecur = recurringCal.getTimeInMillis();
 
-                System.out.println(dateToSaveToDB);
 
                 if (allGood && mCurrentUser != null) {
                     // add reminder to database
@@ -116,6 +115,7 @@ public class AddReminderActivity extends AppCompatActivity {
                             locationText,categoryText, recurringText, dateToRecur);
 
                     //TODO add multiple for recurring
+
                     System.out.println("done adding reminder");
                     finish();
                 }
