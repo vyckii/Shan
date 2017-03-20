@@ -22,6 +22,9 @@ public class Reminder {
     public String title;
     public String notes;
     public Long dueDate;
+    public String location;
+    public String category;
+    public String recurring;
 
     static DatabaseReference mDatabase;
 
@@ -30,12 +33,16 @@ public class Reminder {
 
     }
 
-    private Reminder(String uid, String title, String notes, Long duedate) {
+    private Reminder(String uid, String title, String notes, Long duedate, String location, String category,
+                     String recurring) {
 
         this.userIDs = new HashMap<>();
         this.userIDs.put(uid, true);
         this.title = title;
         this.notes = notes;
+        this.location = location;
+        this.category = category;
+        this.recurring = recurring;
 
         this.dueDate = duedate;
     }
@@ -56,14 +63,27 @@ public class Reminder {
         return dueDate;
     }
 
+    public String getLocation() {
+        return location;
+    }
 
-    public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate) {
+    public String getCategory() {
+        return category;
+    }
+
+    public String getRecurring() {
+        return recurring;
+    }
+
+
+    public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate,
+                                                String location, String category, String recurring) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         String uid = mDatabase.child("reminders").push().getKey();
 
 
-        Reminder reminder = new Reminder(user.getUid(), title, notes, duedate);
+        Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring);
 
 
         mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);

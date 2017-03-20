@@ -89,29 +89,13 @@ public class MainScreenActivity extends AppCompatActivity {
                 reminderMessageViewHolder.setReminderDesc(reminder.getNotes());
                 reminderMessageViewHolder.setReminderTime(reminder.getDueDate());
 
-//                reminderMessageViewHolder.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        System.out.println("click!");
-//                    }
-//                });
             }
-
-//            @Override
-//            public void onBindViewHolder(ReminderHolder reminderMessageViewHolder, int position) {
-//                reminderMessageViewHolder.
-//            }
-
 
         };
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-//        mRecyclerView.addOnItemTouchListener(
-//                new RecyclerView.OnItemTouchListener(this, mRecyclerView, new RecyclerView.OnItemTouchListener() {
-//
-//                })
-//        );
+
 
         TextView addReminder = (TextView) findViewById(R.id.addReminder);
 
