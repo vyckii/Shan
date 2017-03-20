@@ -1,10 +1,13 @@
 package cis350.upenn.edu.remindmelater;
 
+import android.text.format.DateUtils;
+
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -82,33 +85,37 @@ public class Reminder {
                                                 String location, String category, String recurring, Long recurringDate) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        String uid = mDatabase.child("reminders").push().getKey();
+
+
+        long delta = 0;
 
         switch (recurring) {
             case "Once":
+                recurringDate = duedate;
+                delta = recurringDate;
                 break;
             case "Daily":
+                delta = DateUtils.DAY_IN_MILLIS;
                 break;
             case "Weekly":
-                break;
-            case "Monthly":
+                delta = DateUtils.WEEK_IN_MILLIS;
                 break;
             case "Yearly":
+                delta = DateUtils.YEAR_IN_MILLIS;
                 break;
             default:
+                delta = recurringDate;
                 break;
 
         }
 
-        
+        for (Long i = duedate; i <= recurringDate; i += delta) {
+            String uid = mDatabase.child("reminders").push().getKey();
+            Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate);
+            mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
 
-        Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate);
-
-
-        mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
-
-        DatabaseReference reminderRef = mDatabase.child("reminders");
-        reminderRef.child(uid).setValue(user.getUid());
+            duedate += delta;
+        }
 
     }
 
@@ -122,7 +129,4 @@ public class Reminder {
                 '}';
     }
 
-    public enum Recurring {
-        Once, Daily, Weekly, Monthly, Yearly
-    }
 }
