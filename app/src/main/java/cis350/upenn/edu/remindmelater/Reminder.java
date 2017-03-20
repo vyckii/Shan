@@ -77,11 +77,28 @@ public class Reminder {
 
 
     public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate,
-                                                String location, String category, String recurring) {
+                                                String location, String category, String recurring, Long enddate) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         String uid = mDatabase.child("reminders").push().getKey();
 
+        switch (recurring) {
+            case "Once":
+                break;
+            case "Daily":
+                break;
+            case "Weekly":
+                break;
+            case "Monthly":
+                break;
+            case "Yearly":
+                break;
+            default:
+                break;
+
+        }
+
+        
 
         Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring);
 
@@ -101,5 +118,9 @@ public class Reminder {
                 ", notes='" + notes + '\'' +
                 ", dueDate=" + dueDate +
                 '}';
+    }
+
+    public enum Recurring {
+        Once, Daily, Weekly, Monthly, Yearly
     }
 }

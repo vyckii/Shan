@@ -100,15 +100,15 @@ public class AddReminderActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
 
-                Long dateToSaveToDB = myCalendar.getTimeInMillis();
+                Long dateOfFirstReminder = myCalendar.getTimeInMillis();
 
-                System.out.println(dateToSaveToDB);
+                System.out.println(dateOfFirstReminder);
 
                 if (allGood && mCurrentUser != null) {
                     // add reminder to database
                     System.out.println("adding reminder to db");
-                    Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
-                            locationText,categoryText, recurringText);
+                    Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateOfFirstReminder,
+                            locationText,categoryText, recurringText, dateOfFirstReminder);
                     System.out.println("done adding reminder");
                     finish();
                 }
