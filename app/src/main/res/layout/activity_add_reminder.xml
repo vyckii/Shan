@@ -77,9 +77,8 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:ems="10"
         android:id="@+id/category"
         android:entries="@array/CategoryOptions"
-        android:layout_below="@+id/recurring"
-        android:layout_alignStart="@+id/recurring"
-        android:layout_alignEnd="@+id/recurring" />
+        android:layout_below="@+id/recurringUntil"
+        android:layout_alignStart="@+id/recurring" />
 
     <EditText
         android:layout_width="match_parent"
@@ -99,5 +98,15 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:onClick="onButtonPress"
         android:layout_below="@+id/location"
         android:layout_alignStart="@+id/location" />
+
+    <Button
+        android:id="@+id/recurringUntil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/recurring"
+        android:layout_below="@+id/recurring"
+        android:text="Recurring Until..."
+        android:onClick="showRecurringDatePickerDialog"/>
 
 </RelativeLayout>

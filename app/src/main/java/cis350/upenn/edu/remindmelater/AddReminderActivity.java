@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -30,8 +31,7 @@ import java.util.TimeZone;
  * Created by cristinabuenahora on 2/20/17.
  */
 
-//TODO add a stop date for recurring
-    //TODO if not stop date populate infinitely
+
 public class AddReminderActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -48,12 +48,14 @@ public class AddReminderActivity extends AppCompatActivity {
     private Button timeButton;
     private Button dateButton;
     private Spinner recurring;
+    private Button recurringUntil;
     private Spinner category;
     private TextView location;
 
     final Activity addReminderActivity = this;
 
     Calendar myCalendar = Calendar.getInstance();
+    Calendar recurringCal = new GregorianCalendar();
     String timeDueLabel;
 
     @Override
@@ -74,6 +76,7 @@ public class AddReminderActivity extends AppCompatActivity {
         timeButton = (Button) findViewById(R.id.timeDue);
         dateButton = (Button) findViewById(R.id.dateDue);
         recurring = (Spinner) findViewById(R.id.recurring);
+        recurringUntil = (Button) findViewById(R.id.recurringUntil);
         category = (Spinner) findViewById(R.id.category);
         location = (TextView) findViewById(R.id.location);
 
@@ -87,6 +90,7 @@ public class AddReminderActivity extends AppCompatActivity {
                 String time = timeButton.getText().toString();
                 String date = dateButton.getText().toString();
                 String recurringText = recurring.getSelectedItem().toString();
+                String recurringUntilDate = recurringUntil.getText().toString();
                 String categoryText = category.getSelectedItem().toString();
                 String locationText = location.getText().toString();
 
@@ -101,6 +105,7 @@ public class AddReminderActivity extends AppCompatActivity {
                 }
 
                 Long dateToSaveToDB = myCalendar.getTimeInMillis();
+                Long dateToRecur = recurringCal.getTimeInMillis();
 
                 System.out.println(dateToSaveToDB);
 
@@ -108,7 +113,9 @@ public class AddReminderActivity extends AppCompatActivity {
                     // add reminder to database
                     System.out.println("adding reminder to db");
                     Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
-                            locationText,categoryText, recurringText);
+                            locationText,categoryText, recurringText, dateToRecur);
+
+                    //TODO add multiple for recurring
                     System.out.println("done adding reminder");
                     finish();
                 }
@@ -178,6 +185,15 @@ public class AddReminderActivity extends AppCompatActivity {
         dpd.show();
     }
 
+    public void showRecurringDatePickerDialog(View v) {
+
+        DatePickerDialog dpd = new DatePickerDialog(AddReminderActivity.this, recurringDate, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+
+        dpd.show();
+    }
+
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -187,17 +203,30 @@ public class AddReminderActivity extends AppCompatActivity {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateDateLabel();
+            updateDateLabel(dateButton, myCalendar);
         }
 
     };
 
-    private void updateDateLabel() {
+    DatePickerDialog.OnDateSetListener recurringDate = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            recurringCal.set(Calendar.YEAR, year);
+            recurringCal.set(Calendar.MONTH, monthOfYear);
+            recurringCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateDateLabel(recurringUntil, recurringCal);
+        }
+
+    };
+
+    private void updateDateLabel(Button b, Calendar c) {
 
         String myFormat = "EEEE, MMMM d"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-        dateButton.setText(sdf.format(myCalendar.getTime()));
+        b.setText(sdf.format(c.getTime()));
     }
 
 
