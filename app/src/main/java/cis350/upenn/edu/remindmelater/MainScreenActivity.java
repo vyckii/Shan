@@ -26,7 +26,9 @@ import android.content.Intent;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -48,6 +50,8 @@ public class MainScreenActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
     private User currentUser;
 
+    private final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
     //for scrollable list
     ArrayAdapter adapter;
     ListView listView;
@@ -64,20 +68,34 @@ public class MainScreenActivity extends AppCompatActivity {
         System.out.println("ON CREATE");
         System.out.println("--------------------------");
 
-
         String UID = getIntent().getStringExtra("uid");
-
 
         mReminderReference = FirebaseDatabase.getInstance().getReference("users").child(UID).child("reminders");
 
-
         Query query = mReminderReference.orderByChild("dueDate");
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int itemPosition = mRecyclerView.getChildLayoutPosition(v);
+
+                Intent intent = new Intent(getApplicationContext(), EditReminderActivity.class);
+//                intent.putExtra("reminderName");
+//                intent.putExtra("notes");
+//                intent.putExtra("timeButton");
+//                intent.putExtra("dateButton");
+//                intent.putExtra("recurring");
+//                intent.putExtra("recurringUntil");
+//                intent.putExtra("category");
+//                intent.putExtra("location");
+
+                startActivity(intent);
+            }
+        });
+
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
 
         RecyclerView.Adapter mAdapter = new FirebaseRecyclerAdapter<Reminder, ReminderHolder>(Reminder.class,
                 R.layout.reminder_view, ReminderHolder.class, query) {
@@ -88,14 +106,12 @@ public class MainScreenActivity extends AppCompatActivity {
                 reminderMessageViewHolder.setReminderTitle(reminder.getTitle());
                 reminderMessageViewHolder.setReminderDesc(reminder.getNotes());
                 reminderMessageViewHolder.setReminderTime(reminder.getDueDate());
-
             }
 
         };
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
 
         TextView addReminder = (TextView) findViewById(R.id.addReminder);
 
@@ -122,10 +138,6 @@ public class MainScreenActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
-
-
-
 
     private void checkIfUserIsSignedIn() {
 

@@ -10,4 +10,103 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="cis350.upenn.edu.remindmelater.EditReminderActivity">
 
+    <cis350.upenn.edu.remindmelater.CustomText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remind me to..."
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:layout_margin="30px"
+        android:id="@+id/welcome"/>
+
+    <EditText
+        android:id="@+id/eReminderName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/welcome"
+        android:layout_below="@+id/welcome"
+        android:ems="10"
+        android:hint="Title"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/eNotes"
+        android:hint="Notes"
+        android:layout_below="@+id/eReminderName"
+        android:layout_alignStart="@+id/eReminderName"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="@string/pick_time"
+        android:id="@+id/eTimeDue"
+        android:layout_below="@+id/eNotes"
+        android:layout_alignStart="@+id/eNotes"
+        android:onClick="showTimePickerDialog"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="@string/pick_date"
+        android:id="@+id/eDateDue"
+        android:layout_below="@+id/eTimeDue"
+        android:layout_alignStart="@+id/eTimeDue"
+        android:onClick="showDatePickerDialog"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/eRecurring"
+        android:entries="@array/RecurringOptions"
+        android:layout_below="@+id/eDateDue"
+        android:layout_alignStart="@+id/eDateDue"
+        android:layout_alignEnd="@+id/eDateDue" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/eCategory"
+        android:entries="@array/CategoryOptions"
+        android:layout_below="@+id/eRecurringUntil"
+        android:layout_alignStart="@+id/eRecurring" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/eLocation"
+        android:hint="Location"
+        android:layout_below="@+id/eCategory"
+        android:layout_alignStart="@+id/eCategory"/>
+
+    <Button
+        android:text="Save Reminder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveReminder"
+        android:onClick="onButtonPress"
+        android:layout_below="@+id/eLocation"
+        android:layout_alignStart="@+id/eLocation" />
+
+    <Button
+        android:id="@+id/eRecurringUntil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/eRecurring"
+        android:layout_below="@+id/eRecurring"
+        android:text="Recurring Until..."
+        android:onClick="showRecurringDatePickerDialog"/>
+
 </RelativeLayout>

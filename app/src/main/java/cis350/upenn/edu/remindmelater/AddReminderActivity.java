@@ -56,7 +56,6 @@ public class AddReminderActivity extends AppCompatActivity {
 
     Calendar myCalendar = Calendar.getInstance();
     Calendar recurringCal = new GregorianCalendar();
-    String timeDueLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +86,7 @@ public class AddReminderActivity extends AppCompatActivity {
                 // get user inputs
                 String reminderText = reminder.getText().toString();
                 String notesText = notes.getText().toString();
-                String time = timeButton.getText().toString();
-                String date = dateButton.getText().toString();
                 String recurringText = recurring.getSelectedItem().toString();
-                String recurringUntilDate = recurringUntil.getText().toString();
                 String categoryText = category.getSelectedItem().toString();
                 String locationText = location.getText().toString();
 
