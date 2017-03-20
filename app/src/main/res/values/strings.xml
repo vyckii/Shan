@@ -3,7 +3,7 @@
     <string name="auth_failed">Authentication Failed</string>
     <string name="login_failed">Invalid username or password. Please try again or signup above.</string>
     <string name="reminder">Upcoming Reminders</string>
-    <string name="empty_fields">Please fill out the title, time, and date before continuing.</string>
+    <string name="empty_fields">Please fill out all fields before continuing.</string>
     <string name="valid_date">Please enter a valid upcoming date.</string>
     <string name="pick_time">Pick Time</string>
     <string name="pick_date">Pick Date</string>
