@@ -111,7 +111,6 @@ public class EditReminderActivity extends AppCompatActivity {
 
         location.setText(intent.getStringExtra("location"));
 
-
         saveReminder.setOnClickListener(new View.OnClickListener() {
 
             @Override

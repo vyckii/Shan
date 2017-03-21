@@ -15,7 +15,7 @@ import java.util.Locale;
  *
  */
 
-public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class ReminderHolder extends RecyclerView.ViewHolder {
 
     private final TextView reminderTitle;
     private final TextView reminderDesc;
@@ -26,16 +26,12 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
     public ReminderHolder(View itemView) {
         super(itemView);
 
-        itemView.setOnClickListener(this);
-
         //TODO: Add views for this and put their IDs in place
         reminderTitle = (TextView) itemView.findViewById(R.id.reminder_title);
         reminderDesc = (TextView) itemView.findViewById(R.id.reminder_desc);
         reminderTime =  (TextView) itemView.findViewById(R.id.due_date_label);
         reminderType =  (TextView) itemView.findViewById(R.id.reminder_type);
         reminderLoc =  (TextView) itemView.findViewById(R.id.reminder_loc);
-
-
     }
 
     public void setReminderTitle(String name) {
@@ -71,7 +67,6 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
     }
 
 
-    //TODO need to call activity to start EditReminderActivity
     public void onClick(View view) {
         System.out.println("clicked " + reminderTitle.getText());
     }

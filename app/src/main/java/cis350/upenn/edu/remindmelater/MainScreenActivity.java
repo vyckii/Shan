@@ -1,6 +1,5 @@
 package cis350.upenn.edu.remindmelater;
 
-import android.app.ListActivity;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,30 +7,17 @@ import android.os.Bundle;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.content.Intent;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 
 /*
@@ -51,10 +37,6 @@ public class MainScreenActivity extends AppCompatActivity {
     private User currentUser;
 
     private RecyclerView mRecyclerView;
-
-    //for scrollable list
-    ArrayAdapter adapter;
-    ListView listView;
 
 
     @Override
@@ -76,21 +58,22 @@ public class MainScreenActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
+
         mRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("CLICKED ITEM");
                 int itemPosition = mRecyclerView.getChildLayoutPosition(v);
+                Reminder r = reminders.get(itemPosition);
 
                 Intent intent = new Intent(getApplicationContext(), EditReminderActivity.class);
-//                intent.putExtra("reminderName");
-//                intent.putExtra("notes");
-//                intent.putExtra("timeButton");
-//                intent.putExtra("dateButton");
-//                intent.putExtra("recurring");
-//                intent.putExtra("recurringUntil");
-//                intent.putExtra("category");
-//                intent.putExtra("location");
-
+                intent.putExtra(r.getTitle(), "reminderName");
+                intent.putExtra(r.getNotes(), "notes");
+                intent.putExtra(r.getDueDate().toString(), "dueDate");
+                intent.putExtra(r.getRecurring(), "recurring");
+                intent.putExtra(r.getRecurringDate().toString(), "recurringUntil");
+                intent.putExtra(r.getCategory(), "category");
+                intent.putExtra(r.getLocation(), "location");
                 startActivity(intent);
             }
         });
@@ -101,12 +84,13 @@ public class MainScreenActivity extends AppCompatActivity {
         RecyclerView.Adapter mAdapter = new FirebaseRecyclerAdapter<Reminder, ReminderHolder>(Reminder.class,
                 R.layout.reminder_view, ReminderHolder.class, query) {
 
-
             @Override
             public void populateViewHolder(ReminderHolder reminderMessageViewHolder, Reminder reminder, int position) {
                 reminderMessageViewHolder.setReminderTitle(reminder.getTitle());
                 reminderMessageViewHolder.setReminderDesc(reminder.getNotes());
                 reminderMessageViewHolder.setReminderTime(reminder.getDueDate());
+                reminderMessageViewHolder.setReminderType(reminder.getCategory());
+                reminderMessageViewHolder.setReminderLoc(reminder.getLocation());
             }
 
         };
@@ -165,4 +149,65 @@ public class MainScreenActivity extends AppCompatActivity {
         };
     }
 
+//    private class RHolder extends RecyclerView.ViewHolder {
+//
+//        private final TextView reminderTitle;
+//        private final TextView reminderDesc;
+//        private final TextView reminderTime;
+//        private final TextView reminderType;
+//        private final TextView reminderLoc;
+//
+//        public RHolder(View itemView) {
+//            super(itemView);
+//
+//            //TODO: Add views for this and put their IDs in place
+//            reminderTitle = (TextView) itemView.findViewById(R.id.reminder_title);
+//            reminderDesc = (TextView) itemView.findViewById(R.id.reminder_desc);
+//            reminderTime =  (TextView) itemView.findViewById(R.id.due_date_label);
+//            reminderType =  (TextView) itemView.findViewById(R.id.reminder_type);
+//            reminderLoc =  (TextView) itemView.findViewById(R.id.reminder_loc);
+//        }
+//
+//        public void setReminderTitle(String name) {
+//            reminderTitle.setText(name);
+//        }
+//
+//        public void setReminderDesc(String text) {
+//            reminderDesc.setText(text);
+//        }
+//
+//        public void setReminderTime(Long dateStr) {
+//
+//            System.out.println("setting date");
+//
+//            if (dateStr != null) {
+//                SimpleDateFormat f1 = new SimpleDateFormat("hh:mm a", Locale.US);
+//                SimpleDateFormat f2 = new SimpleDateFormat("EEEE, MMMM d", Locale.US);
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTimeInMillis(dateStr);
+//                reminderTime.setText("" + f1.format(calendar.getTime()) + "\n" + f2.format(calendar.getTime()));
+//
+//            } else {
+//                reminderTime.setText("No Date Set");
+//            }
+//        }
+//
+//        public void setReminderType(String text) {
+//            reminderType.setText(text);
+//        }
+//
+//        public void setReminderLoc(String text) {
+//            reminderLoc.setText(text);
+//        }
+//
+//
+//        public void onClick(View view) {
+//            System.out.println("clicked " + reminderTitle.getText());
+//        }
+//
+//    }
+
 }
+
+
+
