@@ -50,7 +50,7 @@ public class MainScreenActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
     private User currentUser;
 
-    private final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+    private RecyclerView mRecyclerView;
 
     //for scrollable list
     ArrayAdapter adapter;
@@ -74,6 +74,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
         Query query = mReminderReference.orderByChild("dueDate");
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override

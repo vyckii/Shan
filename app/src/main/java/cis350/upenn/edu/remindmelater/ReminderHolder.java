@@ -1,20 +1,11 @@
 package cis350.upenn.edu.remindmelater;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -29,6 +20,8 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
     private final TextView reminderTitle;
     private final TextView reminderDesc;
     private final TextView reminderTime;
+    private final TextView reminderType;
+    private final TextView reminderLoc;
 
     public ReminderHolder(View itemView) {
         super(itemView);
@@ -39,6 +32,9 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         reminderTitle = (TextView) itemView.findViewById(R.id.reminder_title);
         reminderDesc = (TextView) itemView.findViewById(R.id.reminder_desc);
         reminderTime =  (TextView) itemView.findViewById(R.id.due_date_label);
+        reminderType =  (TextView) itemView.findViewById(R.id.reminder_type);
+        reminderLoc =  (TextView) itemView.findViewById(R.id.reminder_loc);
+
 
     }
 
@@ -65,6 +61,15 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
             reminderTime.setText("No Date Set");
         }
     }
+
+    public void setReminderType(String text) {
+        reminderType.setText(text);
+    }
+
+    public void setReminderLoc(String text) {
+        reminderLoc.setText(text);
+    }
+
 
     //TODO need to call activity to start EditReminderActivity
     public void onClick(View view) {
