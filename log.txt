@@ -1,3 +1,297 @@
+commit d19f49e4faa7501acbee32fc19281ad433b79a99
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Mon Mar 20 21:07:56 2017 -0400
+
+    app works again - sorry guys
+
+commit d46fdc7c98f2bf09518e4ed1089eb75e99374720
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Mon Mar 20 18:45:37 2017 -0400
+
+    edit reminder stuff
+
+commit c74041bb0d7b3641b81f645b98f6425a42f53e24
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Mar 20 15:54:37 2017 -0400
+
+    backend reminder recurring functionality fixed
+
+commit 57d585671bb01871d2f61758908a4c4b1dba0b8b
+Merge: 47853c2 3ec431f
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Mar 20 15:36:09 2017 -0400
+
+    recurring date, merge conflict fixed
+
+commit 47853c221f8181519f1d7f75373f819a373f3e21
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Mar 20 15:33:12 2017 -0400
+
+    recurring date store
+
+commit 3ec431f11b6c070be9cbe06aa574ec4b4a9fef33
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Mar 20 15:30:51 2017 -0400
+
+    adding recurring functionality
+
+commit 6da5dde987b409512133ac7c241251c6d61d5304
+Author: connorwen <CWEN@hnt.1793.wlan.wireless-pennnet.upenn.edu>
+Date:   Mon Mar 20 14:26:37 2017 -0400
+
+    Wrong toasts being thrown
+
+commit f63279d8457107f2facc85fa9385b690bc5d8fd8
+Merge: aa5c77c 6615ec3
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 19 23:26:12 2017 -0400
+
+    removed extra code
+
+commit aa5c77c63608a60269102d042082d42d0318b421
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 19 14:53:48 2017 -0400
+
+    on click
+
+commit 6615ec30470827203a9620cddcfa6e18d9526b23
+Merge: bb7c351 4f290b9
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Sun Mar 19 14:33:14 2017 -0400
+
+    updated reminder
+
+commit bb7c35183c045cde6d69ade8221d347f39a4a5d4
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Sun Mar 19 14:31:08 2017 -0400
+
+    updated fields to Reminder
+
+commit 4f290b993ab936a373c74c232f032d81b220dc5a
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 19 14:25:52 2017 -0400
+
+    clicks still testing
+
+commit 676651d20e24aa11f9c62fa954f7e6ecc66917d1
+Merge: be2c503 dbf3996
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 19 14:25:08 2017 -0400
+
+    adding click listenerMerge branch 'master' of https://github.com/cis-upenn/350S17-2-RemindMeLater
+
+commit be2c503b5de41a48b85cb4ea10da799fe2357a8b
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 19 13:56:37 2017 -0400
+
+    changed fields and fixed list loading bug
+
+commit dbf399634e35397826136aea03e183667a188586
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Sun Mar 19 13:21:04 2017 -0400
+
+    Changed db schema for reminder storage
+
+commit e99a60a04f0235979f89070e365881276bb78420
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Sun Mar 19 13:13:07 2017 -0400
+
+    Some IDE error
+
+commit f843865352511cba0d4e73dff857eb14029cda59
+Merge: dcf39d4 564f796
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 19 12:57:19 2017 -0400
+
+     iml conflict fix Merge branch 'master' of https://github.com/cis-upenn/350S17-2-RemindMeLater
+
+commit dcf39d44f5b21f5c9d4b0a4e71f2e8945c9f3e02
+Merge: d651406 29561cc
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 19 12:57:12 2017 -0400
+
+    scrolling list
+
+commit 564f7967d9469f611a49988ead62acf8e964883b
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Sat Mar 18 00:30:40 2017 -0400
+
+    Only display reminders for user logged in
+
+commit bfbeebc155bce50d568c2563e6ae648b5adda5c1
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Fri Mar 17 22:42:30 2017 -0400
+
+    Sorted reminders by date
+
+commit e4b40939404a416803b575c38980152ded7f9e12
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Fri Mar 17 22:02:57 2017 -0400
+
+    Added date functionality to reminders
+
+commit d14906b8bfad7f3771a379a99322921c1587d1af
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Thu Mar 16 19:06:09 2017 -0400
+
+    Added some UI to reminders page
+
+commit bfac0de449a9d86491a783c410876e339291ada8
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Thu Mar 16 13:18:26 2017 -0400
+
+    Got reminders to show up on screen!!!!!
+
+commit 76370ad08070b480a80c0dc88e8b0e8eb53ea790
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Thu Mar 16 12:40:51 2017 -0400
+
+    Added new View for reminders
+
+commit d651406a288831948670e254d4fecd27626a13d6
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Wed Mar 15 22:07:01 2017 -0400
+
+    scrolling list
+
+commit 29561cc7e08d2f1936cf3737180ddb6e9feec8a7
+Merge: ef5c1bf 36298b2
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Wed Mar 15 19:55:22 2017 -0400
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       .idea/modules.xml
+
+commit ef5c1bf249d3e3b965a4d2d866b0c5f1957f1338
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Wed Mar 15 19:54:32 2017 -0400
+
+    Added RecycleView and Holder classes
+
+commit 36298b250d24da3f210fb515c569b884692ea0f5
+Merge: a78fb64 873474c
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Tue Mar 14 17:20:20 2017 -0400
+
+    merge conflict
+
+commit a78fb6450a23388f44baace71f51f416253509b0
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Tue Mar 14 17:16:23 2017 -0400
+
+    get reminder input and add to database
+
+commit 873474c2835049fcc97302958075ef2f92eada6f
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Mon Mar 13 22:21:15 2017 -0400
+
+    gradle updates
+
+commit 32256c5608251a84a4766678f3cd857d3444c808
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Mar 13 16:51:43 2017 -0400
+
+    list view need to load partial
+
+commit b4d3efb546ebb97989a583d4893250076df29ab4
+Merge: 224a434 345fcfc
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Mar 13 16:39:44 2017 -0400
+
+    list view fix
+
+commit 224a434c229bc995389c16f9e8208478f12ea9a8
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Mar 13 16:38:35 2017 -0400
+
+    list view
+
+commit 345fcfca196bed1e915869b523f290d32ef09a50
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Mar 13 16:37:42 2017 -0400
+
+    got rid of user auth bug
+
+commit ce2705472cc7bc724db10d76d2f27e666b3ebc6e
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Mar 13 16:33:48 2017 -0400
+
+    trying to fix bugs
+
+commit 877c96165f9bce9f8004b99159dfe5066df5df6d
+Merge: 7f3fc4a 49a85a6
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Mar 13 16:27:59 2017 -0400
+
+    i list view
+    
+    erge branch 'master' of https://github.com/cis-upenn/350S17-2-RemindMeLater
+
+commit 7f3fc4a4b851d134486b4c301539eaff006734df
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Mon Mar 13 16:27:45 2017 -0400
+
+    list view
+
+commit 49a85a65ddea95b5c55fec19b70e31c8f865081b
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Mon Mar 13 16:20:07 2017 -0400
+
+    wrapping
+
+commit 23eac92409cd1ce9d59d9ad5dafef27141fca01e
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Mon Mar 13 16:12:30 2017 -0400
+
+    adding reminder
+
+commit 953291f765071b1e765bf98e79faaac4fd024785
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Mon Mar 13 14:08:06 2017 -0400
+
+    lol other test
+
+commit 6ef8ae1e8e0ad320b57fb0a1e16b8e83d89b834c
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Mon Mar 13 14:07:11 2017 -0400
+
+    test
+
+commit 560e468937ec2a4721d6f16d6028f2d3f559fe0f
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 20 23:18:41 2017 -0500
+
+    iml issue
+
+commit 47bc89b6e5c96a1c598832905b2d6a359a6febd7
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Mon Feb 20 20:45:47 2017 -0500
+
+    linked add reminder button to add reminder page and created edit reminder page
+
+commit 769f6f629b40f0ea4ddbcea1e80934bc16e00d29
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Mon Feb 20 20:11:01 2017 -0500
+
+    added add reminder activity and screen
+
+commit 38dbaa8cd07b58956ed27fec609fbe935e114589
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 20 15:15:16 2017 -0500
+
+    Added email auth error catch
+
+commit 2d871cf98edaa3c77e58ae46ee994199750cd2d9
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Feb 20 15:11:20 2017 -0500
+
+    Fixed network connectivity issues for database pulling
+    
+    Make sure to restart your device if changing wifi networks otherwise
+    simulator will not work
+
 commit a277b4b6cf283f4172797019fe4bcc8fb23326fc
 Author: AJNandi <ajnandi@gmail.com>
 Date:   Mon Feb 20 13:33:26 2017 -0500
