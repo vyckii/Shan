@@ -3,8 +3,11 @@ package cis350.upenn.edu.remindmelater;
 import android.text.format.DateUtils;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,7 +50,6 @@ public class Reminder {
         this.location = location;
         this.category = category;
         this.recurring = recurring;
-
         this.dueDate = duedate;
         this.recurringDate = recurringDate;
     }
@@ -86,7 +88,6 @@ public class Reminder {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-
         long delta = 0;
 
         switch (recurring) {
@@ -113,11 +114,28 @@ public class Reminder {
             String uid = mDatabase.child("reminders").push().getKey();
             Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate);
             mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
-
             duedate += delta;
         }
-
     }
+
+
+    public static void deleteReminderFromDatabase(FirebaseUser user, String title) {
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(user.getUid()).child("reminders").orderByChild("title").equalTo(title).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot.getKey());
+                dataSnapshot.getRef().removeValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("Firebase error finding reminder to delete");
+            }
+        });
+    }
+
 
     @Override
     public String toString() {
@@ -125,7 +143,11 @@ public class Reminder {
                 "userIDs=" + userIDs +
                 ", title='" + title + '\'' +
                 ", notes='" + notes + '\'' +
-                ", dueDate=" + dueDate +
+                ", dueDate=" + dueDate + '\'' +
+                ", location='" + location + '\'' +
+                ", category='" + category + '\'' +
+                ", recurring='" + recurring + '\'' +
+                ", recurringUntil='" + recurringDate + '\'' +
                 '}';
     }
 

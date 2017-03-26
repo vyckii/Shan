@@ -109,4 +109,13 @@
         android:text="Recurring Until..."
         android:onClick="showRecurringDatePickerDialog"/>
 
+    <Button
+        android:text="Delete Reminder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/deleteReminder"
+        android:onClick="onButtonPress"
+        android:layout_below="@+id/saveReminder"
+        android:layout_alignStart="@+id/saveReminder" />
+
 </RelativeLayout>

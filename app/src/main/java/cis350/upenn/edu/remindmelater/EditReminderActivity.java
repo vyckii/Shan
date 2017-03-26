@@ -15,8 +15,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -34,6 +36,7 @@ public class EditReminderActivity extends AppCompatActivity {
 
     // variables for reminder input
     private Button saveReminder;
+    private Button deleteReminder;
     private TextView reminder;
     private TextView notes;
     private Button timeButton;
@@ -61,7 +64,8 @@ public class EditReminderActivity extends AppCompatActivity {
         System.out.println("--------------------------");
 
         // grab reminder fields
-        saveReminder = (Button) findViewById((R.id.saveReminder));
+        saveReminder = (Button) findViewById(R.id.saveReminder);
+        deleteReminder = (Button) findViewById(R.id.deleteReminder);
         reminder = (TextView) findViewById(R.id.eReminderName);
         notes = (TextView) findViewById(R.id.eNotes);
         timeButton = (Button) findViewById(R.id.eTimeDue);
@@ -73,15 +77,24 @@ public class EditReminderActivity extends AppCompatActivity {
 
         // set reminder details on screen
         Intent intent = getIntent();
-        reminder.setText(intent.getStringExtra("reminderName"));
+        final String reminderName = intent.getStringExtra("reminderName");
+        reminder.setText(reminderName);
         notes.setText(intent.getStringExtra("notes"));
+
         // TODO: check this
-        timeButton.setHint(intent.getStringExtra("timeButton"));
-        dateButton.setHint(intent.getStringExtra("dateButton"));
+        System.out.println("dueDate: " + intent.getStringExtra("dueDate"));
+        System.out.println("recurring: " + intent.getStringExtra("recurring"));
+        System.out.println("recurringUntil: " + intent.getStringExtra("recurringUntil"));
+        System.out.println("category: " + intent.getStringExtra("category"));
+
+        String dueDateStr = intent.getStringExtra("dueDate");
 
         int selected = 0;
         String recurringText = intent.getStringExtra("recurring");
-        if (recurringText.equals("Once")) {
+        System.out.println("RECURRING TEXT = " + recurringText);
+        if (recurringText == null) {
+
+        } else if (recurringText.equals("Once")) {
             selected = 0;
         } else if (recurringText.equals("Daily")) {
             selected = 1;
@@ -92,11 +105,14 @@ public class EditReminderActivity extends AppCompatActivity {
         }
         recurring.setSelection(selected);
 
-        // TODO: check this
-        recurringUntil.setText(intent.getStringExtra("recurringUntil"));
+//        // TODO: check this
+//        recurringUntil.setText(intent.getStringExtra("recurringUntil"));
+
         selected = 0;
         String categoryText = intent.getStringExtra("recurring");
-        if (categoryText.equals("School")) {
+        if (categoryText == null) {
+
+        } else if (categoryText.equals("School")) {
             selected = 0;
         } else if (categoryText.equals("Work")) {
             selected = 1;
@@ -110,7 +126,6 @@ public class EditReminderActivity extends AppCompatActivity {
         category.setSelection(selected);
 
         location.setText(intent.getStringExtra("location"));
-
 
         saveReminder.setOnClickListener(new View.OnClickListener() {
 
@@ -153,6 +168,14 @@ public class EditReminderActivity extends AppCompatActivity {
             }
         });
 
+
+        deleteReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Reminder.deleteReminderFromDatabase(mCurrentUser, reminderName);
+            }
+        });
+
     }
 
     private void checkIfUserIsSignedIn() {
@@ -170,7 +193,7 @@ public class EditReminderActivity extends AppCompatActivity {
                     mCurrentUser = user;
                     mUserReference = FirebaseDatabase.getInstance().getReference("users").child(mCurrentUser.getUid());
 
-                    System.out.println("here inside User SIgned In");
+                    System.out.println("here inside User Signed In");
 
                 } else {
                     // User is signed out

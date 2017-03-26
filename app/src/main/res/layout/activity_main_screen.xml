@@ -28,12 +28,22 @@
         android:id="@+id/remindersText"
         android:layout_centerHorizontal="true" />
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/completed"
+        android:entries="@array/CompletedOptions"
+        android:layout_below="@+id/remindersText"
+        android:layout_alignStart="@+id/remindersText" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignStart="@+id/remindersText"
-        android:layout_below="@+id/remindersText"
+        android:layout_alignStart="@+id/completed"
+        android:layout_below="@+id/completed"
     >
 
     </android.support.v7.widget.RecyclerView>
