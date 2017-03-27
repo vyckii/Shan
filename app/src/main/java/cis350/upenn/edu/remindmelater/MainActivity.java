@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
         checkIfUserIsSignedIn();
 
+        Notification.triggerNotification(this);
+
 
     }
 
