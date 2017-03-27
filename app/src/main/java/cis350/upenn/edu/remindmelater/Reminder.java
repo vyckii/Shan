@@ -1,5 +1,6 @@
 package cis350.upenn.edu.remindmelater;
 
+import android.content.Intent;
 import android.text.format.DateUtils;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -129,14 +130,21 @@ public class Reminder {
     }
 
 
-    public static void deleteReminderFromDatabase(FirebaseUser user, String title) {
+    public static void deleteReminderFromDatabase(FirebaseUser user, String title, String date) {
+
+        final String rTitle = title;
+        final String rDate = date;
+        System.out.println("looking for reminder " + rTitle + " due on " + rDate);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(user.getUid()).child("reminders").orderByChild("title").equalTo(title).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("users").child(user.getUid()).child("reminders").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.getKey());
-                dataSnapshot.getRef().removeValue();
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    if (d.child("title").getValue().equals(rTitle) && d.child("dueDate").getValue().toString().equals(rDate)) {
+                        d.getRef().removeValue();
+                    }
+                }
             }
 
             @Override

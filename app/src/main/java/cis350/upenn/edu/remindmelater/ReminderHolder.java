@@ -21,6 +21,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     private final TextView reminderTitle;
     private final TextView reminderDesc;
+    private String reminderDueDate;
     private final TextView reminderTime;
     private final TextView reminderType;
     private final TextView reminderLoc;
@@ -53,7 +54,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     public void setReminderTime(Long dateStr) {
 
-        System.out.println("setting date");
+        reminderDueDate = dateStr.toString();
 
         if (dateStr != null) {
             SimpleDateFormat f1 = new SimpleDateFormat("hh:mm a", Locale.US);
@@ -89,7 +90,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         Intent intent = new Intent(context, EditReminderActivity.class);
         intent.putExtra("reminderName", reminderTitle.getText());
         intent.putExtra("notes", reminderDesc.getText());
-        intent.putExtra("dueDate", reminderTime.toString());
+        intent.putExtra("dueDate", reminderDueDate);
         intent.putExtra("recurring", reminderRec);
         intent.putExtra("recurringUntil", reminderRecDate);
         intent.putExtra("category", reminderType.getText());

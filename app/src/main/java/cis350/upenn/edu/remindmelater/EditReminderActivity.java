@@ -88,13 +88,7 @@ public class EditReminderActivity extends AppCompatActivity {
         reminder.setText(reminderName);
         notes.setText(intent.getStringExtra("notes"));
 
-        // TODO: check this
-        System.out.println("dueDate: " + intent.getStringExtra("dueDate"));
-        System.out.println("recurring: " + intent.getStringExtra("recurring"));
-        System.out.println("recurringUntil: " + intent.getStringExtra("recurringUntil"));
-        System.out.println("category: " + intent.getStringExtra("category"));
-
-        String dueDateStr = intent.getStringExtra("dueDate");
+        final String dueDateStr = intent.getStringExtra("dueDate");
 
         int selected = 0;
         String recurringText = intent.getStringExtra("recurring");
@@ -179,7 +173,12 @@ public class EditReminderActivity extends AppCompatActivity {
         deleteReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Reminder.deleteReminderFromDatabase(mCurrentUser, reminderName);
+                Reminder.deleteReminderFromDatabase(mCurrentUser, reminderName, dueDateStr);
+
+                Toast.makeText(editReminderActivity.getApplicationContext(), "Deleted reminder",
+                        Toast.LENGTH_SHORT).show();
+
+                finish();
             }
         });
 
