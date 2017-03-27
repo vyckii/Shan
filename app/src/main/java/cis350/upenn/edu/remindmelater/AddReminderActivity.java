@@ -3,6 +3,7 @@ package cis350.upenn.edu.remindmelater;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -51,6 +52,7 @@ public class AddReminderActivity extends AppCompatActivity {
     private Button recurringUntil;
     private Spinner category;
     private TextView location;
+    private Button addPicture;
 
     final Activity addReminderActivity = this;
 
@@ -78,6 +80,15 @@ public class AddReminderActivity extends AppCompatActivity {
         recurringUntil = (Button) findViewById(R.id.recurringUntil);
         category = (Spinner) findViewById(R.id.category);
         location = (TextView) findViewById(R.id.location);
+        addPicture = (Button) findViewById(R.id.addPicture);
+
+        addPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AddReminderActivity.this, CameraActivity.class);
+                startActivity(i);
+            }
+        });
 
         addReminder.setOnClickListener(new View.OnClickListener() {
 
@@ -245,5 +256,10 @@ public class AddReminderActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         timeButton.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    public void startCamera(View v) {
+        Intent i = new Intent(this, CameraActivity.class);
+        startActivity(i);
     }
 }

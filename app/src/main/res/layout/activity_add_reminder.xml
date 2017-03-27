@@ -96,8 +96,8 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:layout_height="wrap_content"
         android:id="@+id/addReminder"
         android:onClick="onButtonPress"
-        android:layout_below="@+id/location"
-        android:layout_alignStart="@+id/location" />
+        android:layout_below="@+id/addPicture"
+        android:layout_alignStart="@+id/addPicture" />
 
     <Button
         android:id="@+id/recurringUntil"
@@ -108,5 +108,13 @@ tools:context="cis350.upenn.edu.remindmelater.AddReminderActivity">
         android:layout_below="@+id/recurring"
         android:text="Recurring Until..."
         android:onClick="showRecurringDatePickerDialog"/>
+
+    <Button
+        android:text="Add Picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addPicture"
+        android:layout_below="@+id/location"
+        android:layout_alignStart="@+id/location" />
 
 </RelativeLayout>

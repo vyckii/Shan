@@ -20,6 +20,7 @@
         <activity android:name=".MainScreenActivity"></activity>
         <activity android:name=".AddReminderActivity"></activity>
         <activity android:name=".EditReminderActivity"></activity>
+        <activity android:name=".CameraActivity"></activity>
     </application>
 
 </manifest>
