@@ -32,6 +32,7 @@ public class Reminder {
     public String category;
     public String recurring;
     public Long recurringDate;
+    public String uid;
 
     static DatabaseReference mDatabase;
 
@@ -82,6 +83,14 @@ public class Reminder {
 
     public Long getRecurringDate() { return recurringDate; }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
 
     public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate,
                                                 String location, String category, String recurring, Long recurringDate) {
@@ -113,6 +122,7 @@ public class Reminder {
         for (Long i = duedate; i <= recurringDate; i += delta) {
             String uid = mDatabase.child("reminders").push().getKey();
             Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate);
+            reminder.setUid(uid);
             mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
             duedate += delta;
         }
