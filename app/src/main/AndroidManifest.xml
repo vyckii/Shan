@@ -20,7 +20,12 @@
         <activity android:name=".MainScreenActivity"></activity>
         <activity android:name=".AddReminderActivity"></activity>
         <activity android:name=".EditReminderActivity"></activity>
-        <activity android:name=".CameraActivity"></activity>
+        <activity android:name=".CameraActivity">
+        </activity>
     </application>
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
 
 </manifest>

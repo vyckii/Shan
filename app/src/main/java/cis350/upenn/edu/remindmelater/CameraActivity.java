@@ -27,6 +27,15 @@ public class CameraActivity extends AppCompatActivity {
             camera_view.addView(mCameraView);
         } catch (Exception e) {
             Log.d("ERROR", "Camera error in onCreate " + e.getMessage());
+            //TODO: getting error "fail to connect to camera service"
+        }
+    }
+
+    private void releaseCameraAndPreview() {
+        //mCameraView.setCamera(null);
+        if (mCamera != null) {
+            mCamera.release();
+            mCamera = null;
         }
     }
 
