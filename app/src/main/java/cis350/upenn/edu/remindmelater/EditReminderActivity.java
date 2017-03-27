@@ -1,14 +1,19 @@
 package cis350.upenn.edu.remindmelater;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,9 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Created by cristinabuenahora on 2/20/17.
@@ -178,6 +185,20 @@ public class EditReminderActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
     private void checkIfUserIsSignedIn() {
 
         mAuth = FirebaseAuth.getInstance();
@@ -202,6 +223,95 @@ public class EditReminderActivity extends AppCompatActivity {
 
             }
         };
+    }
+
+    public void showTimePickerDialog(View v) {
+
+        TimePickerDialog tpd = new TimePickerDialog(EditReminderActivity.this, time,
+                myCalendar.get(Calendar.HOUR_OF_DAY),
+                myCalendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this));
+
+        tpd.show();
+    }
+
+    public void showDatePickerDialog(View v) {
+
+        DatePickerDialog dpd = new DatePickerDialog(EditReminderActivity.this, date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+
+        dpd.show();
+    }
+
+    public void showRecurringDatePickerDialog(View v) {
+
+        DatePickerDialog dpd = new DatePickerDialog(EditReminderActivity.this, recurringDate, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+
+        dpd.show();
+    }
+
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateDateLabel(dateButton, myCalendar);
+        }
+
+    };
+
+    DatePickerDialog.OnDateSetListener recurringDate = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            recurringCal.set(Calendar.YEAR, year);
+            recurringCal.set(Calendar.MONTH, monthOfYear);
+            recurringCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateDateLabel(recurringUntil, recurringCal);
+        }
+
+    };
+
+    private void updateDateLabel(Button b, Calendar c) {
+
+        String myFormat = "EEEE, MMMM d"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        b.setText(sdf.format(c.getTime()));
+    }
+
+
+    TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
+
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+
+            myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            myCalendar.set(Calendar.MINUTE, minute);
+
+            updateTimeLabel();
+        }
+
+    };
+
+    private void updateTimeLabel() {
+        String myFormat = "h:mm a"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        timeButton.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    public void startCamera(View v) {
+        Intent i = new Intent(this, CameraActivity.class);
+        startActivity(i);
     }
 
 
