@@ -20,11 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -90,6 +88,13 @@ public class EditReminderActivity extends AppCompatActivity {
 
         final String dueDateStr = intent.getStringExtra("dueDate");
 
+        SimpleDateFormat f1 = new SimpleDateFormat("hh:mm a", Locale.US);
+        SimpleDateFormat f2 = new SimpleDateFormat("EEEE, MMMM d", Locale.US);
+        myCalendar = Calendar.getInstance();
+        myCalendar.setTimeInMillis(Long.parseLong(dueDateStr));
+        timeButton.setText(f1.format(myCalendar.getTime()));
+        dateButton.setText(f2.format(myCalendar.getTime()));
+
         int selected = 0;
         String recurringText = intent.getStringExtra("recurring");
         System.out.println("RECURRING TEXT = " + recurringText);
@@ -106,8 +111,9 @@ public class EditReminderActivity extends AppCompatActivity {
         }
         recurring.setSelection(selected);
 
-//        // TODO: check this
-//        recurringUntil.setText(intent.getStringExtra("recurringUntil"));
+        final String recDateStr = intent.getStringExtra("recurringUntil");
+        recurringCal.setTimeInMillis(Long.parseLong(recDateStr));
+        recurringUntil.setText(f2.format(recurringCal.getTime()));
 
         selected = 0;
         String categoryText = intent.getStringExtra("recurring");
@@ -158,7 +164,7 @@ public class EditReminderActivity extends AppCompatActivity {
                     System.out.println("adding reminder to db");
 
                     //TODO: edit reminder, not create reminder
-                    Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
+                    Reminder.updateReminderInDatabase(mCurrentUser,reminderName, reminderText, notesText, dateToSaveToDB,
                             locationText,categoryText, recurringText, dateToRecur);
 
                     //TODO add multiple for recurring
@@ -291,7 +297,6 @@ public class EditReminderActivity extends AppCompatActivity {
 
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
 
             myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             myCalendar.set(Calendar.MINUTE, minute);

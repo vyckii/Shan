@@ -22,6 +22,6 @@
     </string-array>
     <string-array name="CompletedOptions">
         <item>Completed</item>
-        <item>Not Completed</item>
+        <item>Upcoming</item>
     </string-array>
 </resources>

@@ -121,8 +121,6 @@ public class AddReminderActivity extends AppCompatActivity {
                     Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
                             locationText, categoryText, recurringText, dateToRecur);
 
-                    //TODO add multiple for recurring
-
                     System.out.println("done adding reminder");
                     finish();
                 }
