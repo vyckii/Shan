@@ -22,6 +22,8 @@
         <activity android:name=".EditReminderActivity"></activity>
         <activity android:name=".CameraActivity">
         </activity>
+        <service android:name=".Notification.ScheduleService" />
+        <service android:name=".Notification.NotifyService" />
     </application>
 
     <uses-permission android:name="android.permission.CAMERA"/>

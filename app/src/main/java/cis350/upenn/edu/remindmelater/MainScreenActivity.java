@@ -19,6 +19,8 @@ import android.view.View;
 import android.content.Intent;
 import android.widget.TextView;
 
+import cis350.upenn.edu.remindmelater.Notification.ScheduleClient;
+
 
 /*
  * activity of main screen that pulls up reminders
@@ -37,6 +39,7 @@ public class MainScreenActivity extends AppCompatActivity {
     private User currentUser;
 
     private RecyclerView mRecyclerView;
+    private ScheduleClient scheduleClient;
 
 
     @Override
@@ -49,6 +52,10 @@ public class MainScreenActivity extends AppCompatActivity {
         System.out.println("--------------------------");
         System.out.println("ON CREATE");
         System.out.println("--------------------------");
+
+        scheduleClient = new ScheduleClient(this);
+        Reminder.setScheduleClient(scheduleClient);
+        scheduleClient.doBindService();
 
         String UID = getIntent().getStringExtra("uid");
 
@@ -108,6 +115,10 @@ public class MainScreenActivity extends AppCompatActivity {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
+        }
+
+        if(scheduleClient != null) {
+            scheduleClient.doUnbindService();
         }
     }
 
