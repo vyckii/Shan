@@ -12,6 +12,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import cis350.upenn.edu.remindmelater.Activities.EditReminderActivity;
+import cis350.upenn.edu.remindmelater.Activities.ReminderActivity;
 import cis350.upenn.edu.remindmelater.R;
 
 /**
@@ -74,19 +75,32 @@ public class NotifyService extends Service {
                         .setContentText(intent.getStringExtra("notes"))
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setWhen(intent.getLongExtra("time", System.currentTimeMillis()));
-        Intent resultIntent = new Intent(this, EditReminderActivity.class);
+        Intent resultIntent = new Intent(this, ReminderActivity.class);
+
+        resultIntent.putExtra("reminderName", intent.getStringExtra("reminderName"));
+        resultIntent.putExtra("notes", intent.getStringExtra("notes"));
+        resultIntent.putExtra("dueDate", intent.getLongExtra("dueDate", System.currentTimeMillis()));
+        resultIntent.putExtra("recurring", intent.getStringExtra("recurring"));
+        resultIntent.putExtra("recurringUntil", intent.getLongExtra("recurringUntil", System.currentTimeMillis()));
+        resultIntent.putExtra("category", intent.getStringExtra("category"));
+        resultIntent.putExtra("location", intent.getStringExtra("location"));
+
+        int id = intent.getIntExtra("id", 12345);
+
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(EditReminderActivity.class);
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(
-                        0,
+                        id,
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
+
+
         mBuilder.setContentIntent(resultPendingIntent);
         mNM = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        int id = intent.getIntExtra("id", 12345);
+
         mNM.notify(id, mBuilder.build());
         System.out.println("---------------------------");
         System.out.println("Notified!! " + id);

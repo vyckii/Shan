@@ -32,6 +32,7 @@ public class Reminder {
     public String recurring;
     public Long recurringDate;
     public String uid;
+    private boolean isComplete;
 
     static DatabaseReference mDatabase;
     static ScheduleClient scheduleClient;
@@ -53,6 +54,7 @@ public class Reminder {
         this.recurring = recurring;
         this.dueDate = dueDate;
         this.recurringDate = recurringDate;
+        this.isComplete = false;
     }
 
     public Map<String, Boolean> userIDs() {
@@ -91,6 +93,13 @@ public class Reminder {
         this.uid = uid;
     }
 
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete() {
+        isComplete = true;
+    }
 
     public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate,
                                                 String location, String category, String recurring, Long recurringDate, Context context) {

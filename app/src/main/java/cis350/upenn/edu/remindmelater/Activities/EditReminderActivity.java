@@ -94,7 +94,12 @@ public class EditReminderActivity extends AppCompatActivity {
         SimpleDateFormat f1 = new SimpleDateFormat("hh:mm a", Locale.US);
         SimpleDateFormat f2 = new SimpleDateFormat("EEEE, MMMM d", Locale.US);
         myCalendar = Calendar.getInstance();
-        myCalendar.setTimeInMillis(Long.parseLong(dueDateStr));
+        try {
+            myCalendar.setTimeInMillis(Long.parseLong(dueDateStr));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            myCalendar.setTimeInMillis(System.currentTimeMillis());
+        }
         timeButton.setText(f1.format(myCalendar.getTime()));
         dateButton.setText(f2.format(myCalendar.getTime()));
 

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="cis350.upenn.edu.remindmelater.Activities.AddReminderActivity">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hello World"
+            android:textSize="25dp"
+            android:layout_margin="30px"
+            android:textAlignment="center"
+            tools:layout_editor_absoluteX="93dp"
+            tools:layout_editor_absoluteY="115dp" />
+
+        <TextView
+            android:id="@+id/notes"
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/title"
+            android:layout_below="@+id/title"
+            android:ems="10"/>
+
+        <TextView
+            android:id="@+id/dateDue"
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/notes"
+            android:layout_below="@+id/notes"
+            android:ems="10"/>
+
+        <TextView
+            android:id="@+id/location"
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/dateDue"
+            android:layout_below="@+id/dateDue"
+            android:ems="10"/>
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/location"
+            android:layout_below="@+id/location"
+            android:ems="10"/>
+
+        <Button
+            android:id="@+id/doneButton"
+            android:layout_weight="1"
+            android:onClick="onCompleteButtonClicked"
+            android:text="Done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/category"
+            android:layout_below="@+id/category"/>
+
+
+  </RelativeLayout>

@@ -113,6 +113,7 @@ public class User {
 
 
                             Intent myIntent = new Intent(activity.getApplicationContext(), MainScreenActivity.class);
+                            myIntent.putExtra("uid", currentUser.getUid());
                             activity.startActivityForResult(myIntent, 0);
                         }
 

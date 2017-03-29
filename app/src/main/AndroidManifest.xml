@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cis350.upenn.edu.remindmelater">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,22 +17,21 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="cis350.upenn.edu.remindmelater" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.LoginActivity"></activity>
-        <activity android:name=".Activities.MainScreenActivity"></activity>
-        <activity android:name=".Activities.AddReminderActivity"></activity>
-        <activity android:name=".Activities.EditReminderActivity"></activity>
-        <activity android:name=".Activities.CameraActivity">
-        </activity>
+        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.MainScreenActivity" />
+        <activity android:name=".Activities.AddReminderActivity" />
+        <activity android:name=".Activities.EditReminderActivity" />
+        <activity android:name=".Activities.CameraActivity"></activity>
+
         <service android:name=".Notification.ScheduleService" />
         <service android:name=".Notification.NotifyService" />
-    </application>
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+        <activity android:name=".Activities.ReminderActivity"></activity>
+    </application>
 
 </manifest>

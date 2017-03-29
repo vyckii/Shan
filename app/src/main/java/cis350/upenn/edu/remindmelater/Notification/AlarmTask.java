@@ -36,6 +36,13 @@ public class AlarmTask implements Runnable {
         intent.putExtra("time", reminder.getDueDate());
         intent.putExtra("id", id);
 
+        intent.putExtra("reminderName", reminder.getTitle());
+        intent.putExtra("dueDate", reminder.getDueDate());
+        intent.putExtra("recurring", reminder.getRecurring());
+        intent.putExtra("recurringUntil", reminder.getRecurringDate());
+        intent.putExtra("category", reminder.getCategory());
+        intent.putExtra("location", reminder.getLocation());
+
 
         PendingIntent pendingIntent = PendingIntent.getService(context, id, intent, 0);
         am.set(AlarmManager.RTC, reminder.getDueDate(), pendingIntent);
