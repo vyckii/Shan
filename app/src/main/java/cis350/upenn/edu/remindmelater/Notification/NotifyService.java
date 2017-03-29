@@ -74,6 +74,7 @@ public class NotifyService extends Service {
                         .setContentTitle(intent.getStringExtra("title"))
                         .setContentText(intent.getStringExtra("notes"))
                         .setSmallIcon(R.drawable.completed)
+                        .setPriority(5)
                         .setWhen(intent.getLongExtra("time", System.currentTimeMillis()));
         Intent resultIntent = new Intent(this, ReminderActivity.class);
 
@@ -85,22 +86,12 @@ public class NotifyService extends Service {
         resultIntent.putExtra("category", intent.getStringExtra("category"));
         resultIntent.putExtra("location", intent.getStringExtra("location"));
 
-        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(pendingIntent);
 
         int id = intent.getIntExtra("id", 12345);
 
-
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(EditReminderActivity.class);
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        id,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-
-
-        mBuilder.setContentIntent(resultPendingIntent);
         mBuilder.setAutoCancel(true);
         mNM = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
