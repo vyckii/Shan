@@ -1,8 +1,9 @@
-package cis350.upenn.edu.remindmelater;
+package cis350.upenn.edu.remindmelater.Activities;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,10 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.TimeZone;
+
+import cis350.upenn.edu.remindmelater.R;
+import cis350.upenn.edu.remindmelater.Reminder;
 
 /**
  * Created by cristinabuenahora on 2/20/17.
@@ -90,6 +92,8 @@ public class AddReminderActivity extends AppCompatActivity {
             }
         });
 
+        final Context context = this;
+
         addReminder.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -119,7 +123,7 @@ public class AddReminderActivity extends AppCompatActivity {
                     // add reminder to database
                     System.out.println("adding reminder to db");
                     Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
-                            locationText, categoryText, recurringText, dateToRecur);
+                            locationText, categoryText, recurringText, dateToRecur, context);
 
                     System.out.println("done adding reminder");
                     finish();

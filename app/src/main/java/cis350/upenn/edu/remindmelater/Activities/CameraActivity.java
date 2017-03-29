@@ -1,10 +1,13 @@
-package cis350.upenn.edu.remindmelater;
+package cis350.upenn.edu.remindmelater.Activities;
 
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.FrameLayout;
+
+import cis350.upenn.edu.remindmelater.CameraView;
+import cis350.upenn.edu.remindmelater.R;
 
 /**
  * Created by stephaniefei on 3/26/17.

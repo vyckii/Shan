@@ -1,4 +1,4 @@
-package cis350.upenn.edu.remindmelater;
+package cis350.upenn.edu.remindmelater.Activities;
 
 
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Date;
+import cis350.upenn.edu.remindmelater.R;
 
 /**
  * Created by stephaniefei on 2/12/17.
@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         checkIfUserIsSignedIn();
-
-        Notification.triggerNotification(this);
 
 
     }

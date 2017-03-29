@@ -1,6 +1,6 @@
 package cis350.upenn.edu.remindmelater;
 
-import android.content.Intent;
+import android.content.Context;
 import android.text.format.DateUtils;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -10,12 +10,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
+
+import cis350.upenn.edu.remindmelater.Notification.ScheduleClient;
 
 /**
  * Created by AJNandi on 2/8/17.
@@ -36,6 +34,7 @@ public class Reminder {
     public String uid;
 
     static DatabaseReference mDatabase;
+    static ScheduleClient scheduleClient;
 
 
     public Reminder() {
@@ -94,7 +93,7 @@ public class Reminder {
 
 
     public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate,
-                                                String location, String category, String recurring, Long recurringDate) {
+                                                String location, String category, String recurring, Long recurringDate, Context context) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -125,7 +124,13 @@ public class Reminder {
             Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate);
             reminder.setUid(uid);
             mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
+
+
+
+
             duedate += delta;
+
+
         }
     }
 
@@ -179,6 +184,10 @@ public class Reminder {
                             Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate);
                             reminder.setUid(uid);
                             mDatabase.child("users").child(rUser.getUid()).child("reminders").child(uid).setValue(reminder);
+
+
+                            //TODO: Add notification for reminders updated
+
                         }
                     }
                 }
@@ -230,6 +239,10 @@ public class Reminder {
                 ", recurring='" + recurring + '\'' +
                 ", recurringUntil='" + recurringDate + '\'' +
                 '}';
+    }
+
+    public static void setScheduleClient(ScheduleClient scheduleClient) {
+        Reminder.scheduleClient = scheduleClient;
     }
 
 }

@@ -1,4 +1,4 @@
-package cis350.upenn.edu.remindmelater;
+package cis350.upenn.edu.remindmelater.Activities;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -7,17 +7,29 @@ import android.os.Bundle;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import cis350.upenn.edu.remindmelater.Notification.ScheduleClient;
+import cis350.upenn.edu.remindmelater.R;
+import cis350.upenn.edu.remindmelater.Reminder;
+import cis350.upenn.edu.remindmelater.ReminderHolder;
+import cis350.upenn.edu.remindmelater.User;
 
 
 /*
@@ -35,8 +47,10 @@ public class MainScreenActivity extends AppCompatActivity {
 
     private FirebaseUser mCurrentUser;
     private User currentUser;
+    private String uid;
 
     private RecyclerView mRecyclerView;
+    private ScheduleClient scheduleClient;
 
 
     @Override
@@ -50,9 +64,14 @@ public class MainScreenActivity extends AppCompatActivity {
         System.out.println("ON CREATE");
         System.out.println("--------------------------");
 
-        String UID = getIntent().getStringExtra("uid");
+        scheduleClient = new ScheduleClient(this);
+        Reminder.setScheduleClient(scheduleClient);
+        scheduleClient.doBindService();
 
-        mReminderReference = FirebaseDatabase.getInstance().getReference("users").child(UID).child("reminders");
+
+        uid = getIntent().getStringExtra("uid");
+
+        mReminderReference = FirebaseDatabase.getInstance().getReference("users").child(uid).child("reminders");
 
         Query query = mReminderReference.orderByChild("dueDate");
 
@@ -67,6 +86,9 @@ public class MainScreenActivity extends AppCompatActivity {
 
             @Override
             public void populateViewHolder(ReminderHolder reminderMessageViewHolder, Reminder reminder, int position) {
+
+
+
                 System.out.println("-------------------------------");
                 reminder.toString();
                 reminderMessageViewHolder.setReminderTitle(reminder.getTitle());
@@ -109,6 +131,10 @@ public class MainScreenActivity extends AppCompatActivity {
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+
+        if(scheduleClient != null) {
+            scheduleClient.doUnbindService();
+        }
     }
 
     private void checkIfUserIsSignedIn() {
@@ -125,6 +151,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
                     mCurrentUser = user;
                     mUserReference = FirebaseDatabase.getInstance().getReference("users").child(mCurrentUser.getUid());
+                    addReminderNotifications();
 
                     System.out.println("user Signed in inside Main Screen Activity");
 
@@ -134,6 +161,67 @@ public class MainScreenActivity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    private void addReminderNotifications() {
+
+        DatabaseReference remindersRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("reminders");
+
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                System.out.println("onChildAdded:" + dataSnapshot.getKey());
+
+                Reminder reminder = dataSnapshot.getValue(Reminder.class);
+                scheduleClient.setAlarmForNotification(reminder);
+                System.out.println("Set notification for: " + reminder.getTitle());
+
+                // ...
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                System.out.println("onChildChanged:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so displayed the changed comment.
+                Reminder reminder = dataSnapshot.getValue(Reminder.class);
+                String commentKey = dataSnapshot.getKey();
+
+                // ...
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                System.out.println("onChildRemoved:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so remove it.
+                String commentKey = dataSnapshot.getKey();
+
+                // ...
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                System.out.println("onChildMoved:" + dataSnapshot.getKey());
+
+                // A comment has changed position, use the key to determine if we are
+                // displaying this comment and if so move it.
+                Reminder movedComment = dataSnapshot.getValue(Reminder.class);
+                String commentKey = dataSnapshot.getKey();
+
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("postComments:onCancelled "+ databaseError.toException());
+                System.out.println("Failed to load comments.");
+            }
+        };
+        remindersRef.addChildEventListener(childEventListener);
+
     }
 
 }
