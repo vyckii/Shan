@@ -21,7 +21,10 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         try {
+            releaseCameraAndPreview();
             mCamera = Camera.open();
+            //mCamera.unlock();
+            System.out.println("hi you opened a camera");
             mCameraView = new CameraView(this, mCamera);
             FrameLayout camera_view = (FrameLayout) findViewById(R.id.camera_view);
             camera_view.addView(mCameraView);
