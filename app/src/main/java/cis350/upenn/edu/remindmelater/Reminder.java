@@ -1,6 +1,6 @@
 package cis350.upenn.edu.remindmelater;
 
-import android.content.Intent;
+import android.content.Context;
 import android.text.format.DateUtils;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -10,12 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import cis350.upenn.edu.remindmelater.Notification.ScheduleClient;
@@ -98,7 +93,7 @@ public class Reminder {
 
 
     public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate,
-                                                String location, String category, String recurring, Long recurringDate) {
+                                                String location, String category, String recurring, Long recurringDate, Context context) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -130,9 +125,7 @@ public class Reminder {
             reminder.setUid(uid);
             mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
 
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(duedate);
-            scheduleClient.setAlarmForNotification(cal, reminder);
+
 
 
             duedate += delta;
@@ -191,6 +184,10 @@ public class Reminder {
                             Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate);
                             reminder.setUid(uid);
                             mDatabase.child("users").child(rUser.getUid()).child("reminders").child(uid).setValue(reminder);
+
+
+                            //TODO: Add notification for reminders updated
+
                         }
                     }
                 }

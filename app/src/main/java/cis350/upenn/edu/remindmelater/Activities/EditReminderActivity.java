@@ -1,4 +1,4 @@
-package cis350.upenn.edu.remindmelater;
+package cis350.upenn.edu.remindmelater.Activities;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -25,6 +25,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+
+import cis350.upenn.edu.remindmelater.R;
+import cis350.upenn.edu.remindmelater.Reminder;
 
 /**
  * Created by cristinabuenahora on 2/20/17.

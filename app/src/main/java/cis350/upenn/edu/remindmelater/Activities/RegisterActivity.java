@@ -1,4 +1,4 @@
-package cis350.upenn.edu.remindmelater;
+package cis350.upenn.edu.remindmelater.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import cis350.upenn.edu.remindmelater.R;
+import cis350.upenn.edu.remindmelater.User;
 
 public class RegisterActivity extends AppCompatActivity {
 

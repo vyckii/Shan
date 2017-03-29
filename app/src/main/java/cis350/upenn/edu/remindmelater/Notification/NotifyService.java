@@ -11,9 +11,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
-import cis350.upenn.edu.remindmelater.EditReminderActivity;
+import cis350.upenn.edu.remindmelater.Activities.EditReminderActivity;
 import cis350.upenn.edu.remindmelater.R;
-import cis350.upenn.edu.remindmelater.Reminder;
 
 /**
  * Created by AJNandi on 3/27/17.
@@ -23,7 +22,6 @@ import cis350.upenn.edu.remindmelater.Reminder;
 
 public class NotifyService extends Service {
 
-    private static int idCount = 0;
 
 
     /**
@@ -35,10 +33,8 @@ public class NotifyService extends Service {
         }
     }
 
-    // Unique id to identify the notification.
-    private static final int NOTIFICATION = 123;
     // Name of an intent extra we can use to identify if this service was started to create a notification
-    public static final String INTENT_NOTIFY = "com.blundell.tut.service.INTENT_NOTIFY";
+    public static final String INTENT_NOTIFY = "cis350.upenn.edu.remindmelater";
     // The system notification manager
     private NotificationManager mNM;
 
@@ -54,7 +50,7 @@ public class NotifyService extends Service {
 
         // If this service was started by out AlarmTask intent then we want to show our notification
         if(intent.getBooleanExtra(INTENT_NOTIFY, false))
-            showNotification();
+            showNotification(intent);
 
         // We don't care if this service is stopped as we have already delivered our notification
         return START_NOT_STICKY;
@@ -71,13 +67,13 @@ public class NotifyService extends Service {
     /**
      * Creates a notification and shows it in the OS drag-down status bar
      */
-    private void showNotification() {
+    private void showNotification(Intent intent) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setContentTitle("hello world")
-                        .setContentText("this is the body of the notification")
-                        .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
-                        .setWhen(System.currentTimeMillis());
+                        .setContentTitle(intent.getStringExtra("title"))
+                        .setContentText(intent.getStringExtra("notes"))
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setWhen(intent.getLongExtra("time", System.currentTimeMillis()));
         Intent resultIntent = new Intent(this, EditReminderActivity.class);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -90,12 +86,15 @@ public class NotifyService extends Service {
                 );
         mBuilder.setContentIntent(resultPendingIntent);
         mNM = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNM.notify(getID(), mBuilder.build());
+        int id = intent.getIntExtra("id", 12345);
+        mNM.notify(id, mBuilder.build());
+        System.out.println("---------------------------");
+        System.out.println("Notified!! " + id);
+        System.out.println(intent.getStringExtra("title"));
+        System.out.println(intent.getStringExtra("notes"));
 
         mBuilder.setAutoCancel(true);
     }
 
-    public static int getID() {
-        return idCount++;
-    }
+
 }

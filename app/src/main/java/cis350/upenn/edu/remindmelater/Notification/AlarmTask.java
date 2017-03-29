@@ -15,19 +15,15 @@ import cis350.upenn.edu.remindmelater.Reminder;
 
 
 public class AlarmTask implements Runnable {
-    // The date selected for the alarm
-    private final Calendar date;
-    // The android system alarm manager
     private final AlarmManager am;
-    // Your context to retrieve the alarm manager from
     private final Context context;
-    // Reminder for alarm
     private final Reminder reminder;
 
-    public AlarmTask(Context context, Calendar date, Reminder reminder) {
+    private static int id = 0;
+
+    public AlarmTask(Context context, Reminder reminder) {
         this.context = context;
         this.am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        this.date = date;
         this.reminder = reminder;
     }
 
@@ -35,8 +31,19 @@ public class AlarmTask implements Runnable {
     public void run() {
         Intent intent = new Intent(context, NotifyService.class);
         intent.putExtra(NotifyService.INTENT_NOTIFY, true);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
+        intent.putExtra("title", reminder.getTitle());
+        intent.putExtra("notes", reminder.getNotes());
+        intent.putExtra("time", reminder.getDueDate());
+        intent.putExtra("id", id);
 
-        am.set(AlarmManager.RTC, date.getTimeInMillis(), pendingIntent);
+
+        PendingIntent pendingIntent = PendingIntent.getService(context, id, intent, 0);
+        am.set(AlarmManager.RTC, reminder.getDueDate(), pendingIntent);
+        System.out.println("Alarm set for : " + id + ": " + reminder.getTitle());
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(reminder.getDueDate());
+        System.out.println(cal.getTime());
+        id++;
+
     }
 }
