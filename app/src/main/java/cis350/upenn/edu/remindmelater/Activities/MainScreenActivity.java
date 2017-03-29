@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cis350.upenn.edu.remindmelater.Notification.FirebaseNotificationHandler;
 import cis350.upenn.edu.remindmelater.Notification.ScheduleClient;
 import cis350.upenn.edu.remindmelater.R;
 import cis350.upenn.edu.remindmelater.Reminder;
@@ -151,7 +152,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
                     mCurrentUser = user;
                     mUserReference = FirebaseDatabase.getInstance().getReference("users").child(mCurrentUser.getUid());
-                    addReminderNotifications();
+                    FirebaseNotificationHandler.addReminderNotifications(scheduleClient, uid);
 
                     System.out.println("user Signed in inside Main Screen Activity");
 
@@ -163,66 +164,7 @@ public class MainScreenActivity extends AppCompatActivity {
         };
     }
 
-    private void addReminderNotifications() {
 
-        DatabaseReference remindersRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("reminders");
-
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                System.out.println("onChildAdded:" + dataSnapshot.getKey());
-
-                Reminder reminder = dataSnapshot.getValue(Reminder.class);
-                scheduleClient.setAlarmForNotification(reminder);
-                System.out.println("Set notification for: " + reminder.getTitle());
-
-                // ...
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                System.out.println("onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-                Reminder reminder = dataSnapshot.getValue(Reminder.class);
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                System.out.println("onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                System.out.println("onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
-                Reminder movedComment = dataSnapshot.getValue(Reminder.class);
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("postComments:onCancelled "+ databaseError.toException());
-                System.out.println("Failed to load comments.");
-            }
-        };
-        remindersRef.addChildEventListener(childEventListener);
-
-    }
 
 }
 

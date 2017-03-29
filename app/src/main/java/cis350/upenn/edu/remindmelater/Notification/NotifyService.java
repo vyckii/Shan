@@ -99,6 +99,7 @@ public class NotifyService extends Service {
 
 
         mBuilder.setContentIntent(resultPendingIntent);
+        mBuilder.setAutoCancel(true);
         mNM = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         mNM.notify(id, mBuilder.build());
@@ -107,7 +108,7 @@ public class NotifyService extends Service {
         System.out.println(intent.getStringExtra("title"));
         System.out.println(intent.getStringExtra("notes"));
 
-        mBuilder.setAutoCancel(true);
+
     }
 
 
