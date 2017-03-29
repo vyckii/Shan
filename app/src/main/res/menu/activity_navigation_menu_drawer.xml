@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/scheduled_category"
+            android:icon="@drawable/scheduled"
+            android:title="Scheduled" />
+        <item
+            android:id="@+id/complete_category"
+            android:icon="@drawable/completed"
+            android:title="Completed" />
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/school_category"
+            android:icon="@drawable/school"
+            android:title="School" />
+        <item
+            android:id="@+id/work_category"
+            android:icon="@drawable/work"
+            android:title="Work" />
+        <item
+            android:id="@+id/extracurricular_category"
+            android:icon="@drawable/extra"
+            android:title="Extracurricular" />
+        <item
+            android:id="@+id/personal_category"
+            android:icon="@drawable/personal"
+            android:title="Personal" />
+
+        <item
+            android:id="@+id/other_category"
+            android:icon="@drawable/other"
+            android:title="Other" />
+    </group>
+
+
+
+</menu>

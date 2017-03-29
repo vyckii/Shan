@@ -73,7 +73,7 @@ public class NotifyService extends Service {
                 new NotificationCompat.Builder(this)
                         .setContentTitle(intent.getStringExtra("title"))
                         .setContentText(intent.getStringExtra("notes"))
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.completed)
                         .setWhen(intent.getLongExtra("time", System.currentTimeMillis()));
         Intent resultIntent = new Intent(this, ReminderActivity.class);
 
@@ -84,6 +84,8 @@ public class NotifyService extends Service {
         resultIntent.putExtra("recurringUntil", intent.getLongExtra("recurringUntil", System.currentTimeMillis()));
         resultIntent.putExtra("category", intent.getStringExtra("category"));
         resultIntent.putExtra("location", intent.getStringExtra("location"));
+
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         int id = intent.getIntExtra("id", 12345);
 

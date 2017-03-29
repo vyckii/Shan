@@ -195,7 +195,7 @@ public class Reminder {
                             mDatabase.child("users").child(rUser.getUid()).child("reminders").child(uid).setValue(reminder);
 
 
-                            //TODO: Add notification for reminders updated
+
 
                         }
                     }

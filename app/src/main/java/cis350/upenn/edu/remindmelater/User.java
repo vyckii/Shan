@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cis350.upenn.edu.remindmelater.Activities.MainScreenActivity;
+import cis350.upenn.edu.remindmelater.Activities.NavigationMenu;
 
 /**
  * Created by AJNandi on 2/8/17.
@@ -112,7 +113,7 @@ public class User {
 
 
 
-                            Intent myIntent = new Intent(activity.getApplicationContext(), MainScreenActivity.class);
+                            Intent myIntent = new Intent(activity.getApplicationContext(), NavigationMenu.class);
                             myIntent.putExtra("uid", currentUser.getUid());
                             activity.startActivityForResult(myIntent, 0);
                         }
@@ -157,7 +158,7 @@ public class User {
 
 
                         } else {
-                            Intent myIntent = new Intent(activity.getApplicationContext(), MainScreenActivity.class);
+                            Intent myIntent = new Intent(activity.getApplicationContext(), NavigationMenu.class);
 
                             myIntent.putExtra("uid", user.getUid());
 

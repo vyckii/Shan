@@ -44,10 +44,8 @@ public class MainScreenActivity extends AppCompatActivity {
     private DatabaseReference mReminderReference;
     private DatabaseReference mUserReference;
 
-    private List<Reminder> reminders;
 
     private FirebaseUser mCurrentUser;
-    private User currentUser;
     private String uid;
 
     private RecyclerView mRecyclerView;

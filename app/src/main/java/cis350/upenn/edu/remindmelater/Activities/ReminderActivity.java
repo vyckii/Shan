@@ -45,10 +45,7 @@ public class ReminderActivity extends AppCompatActivity {
 
     public void onCompleteButtonClicked(View v) {
 
-        Intent myIntent = new Intent(this.getApplicationContext(), MainScreenActivity.class);
-        myIntent.putExtra("uid", mCurrentUser.getUid());
-        this.startActivityForResult(myIntent, 0);
-
+        this.finish();
 
     }
 

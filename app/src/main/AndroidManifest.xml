@@ -26,12 +26,17 @@
         <activity android:name=".Activities.MainScreenActivity" />
         <activity android:name=".Activities.AddReminderActivity" />
         <activity android:name=".Activities.EditReminderActivity" />
-        <activity android:name=".Activities.CameraActivity"></activity>
+        <activity android:name=".Activities.CameraActivity" />
 
         <service android:name=".Notification.ScheduleService" />
         <service android:name=".Notification.NotifyService" />
 
-        <activity android:name=".Activities.ReminderActivity"></activity>
+        <activity android:name=".Activities.ReminderActivity"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".Activities.NavigationMenu"
+            android:label="@string/title_activity_navigation_menu"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
