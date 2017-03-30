@@ -31,6 +31,7 @@ public class Reminder {
     public String category;
     public String recurring;
     public Long recurringDate;
+    public String image;
     public String uid;
     private boolean isComplete;
 
@@ -43,7 +44,7 @@ public class Reminder {
     }
 
     private Reminder(String uid, String title, String notes, Long dueDate, String location, String category,
-                     String recurring, Long recurringDate) {
+                     String recurring, Long recurringDate, String image) {
 
         this.userIDs = new HashMap<>();
         this.userIDs.put(uid, true);
@@ -54,6 +55,7 @@ public class Reminder {
         this.recurring = recurring;
         this.dueDate = dueDate;
         this.recurringDate = recurringDate;
+        this.image = image;
         this.isComplete = false;
     }
 
@@ -85,6 +87,8 @@ public class Reminder {
 
     public Long getRecurringDate() { return recurringDate; }
 
+    public String getImage() { return image; }
+
     public String getUid() {
         return uid;
     }
@@ -102,7 +106,8 @@ public class Reminder {
     }
 
     public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate,
-                                                String location, String category, String recurring, Long recurringDate, Context context) {
+                                                String location, String category, String recurring, Long recurringDate,
+                                                String image, Context context) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -130,22 +135,17 @@ public class Reminder {
 
         for (Long i = duedate; i <= recurringDate; i += delta) {
             String uid = mDatabase.child("reminders").push().getKey();
-            Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate);
+            Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate, image);
             reminder.setUid(uid);
             mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
 
-
-
-
             duedate += delta;
-
-
         }
     }
 
 
     public static void updateReminderInDatabase(FirebaseUser user, String oldTitle, String title, String notes, Long dueDate,
-                                                String location, String category, String recurring, Long recurringDate) {
+                                                String location, String category, String recurring, Long recurringDate, String image) {
 
         final String rOldTitle = oldTitle;
         final FirebaseUser rUser = user;
@@ -156,6 +156,7 @@ public class Reminder {
         final String rCategory = category;
         final String rRecurring = recurring;
         final Long rRecurringDate = recurringDate;
+        final String rImage = image;
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -190,13 +191,9 @@ public class Reminder {
                             d.getRef().removeValue();
                             System.out.println("deleted");
                             String uid = mDatabase.child("reminders").push().getKey();
-                            Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate);
+                            Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate, rImage);
                             reminder.setUid(uid);
                             mDatabase.child("users").child(rUser.getUid()).child("reminders").child(uid).setValue(reminder);
-
-
-
-
                         }
                     }
                 }
@@ -247,6 +244,7 @@ public class Reminder {
                 ", category='" + category + '\'' +
                 ", recurring='" + recurring + '\'' +
                 ", recurringUntil='" + recurringDate + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 

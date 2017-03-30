@@ -104,6 +104,8 @@ public class AddReminderActivity extends AppCompatActivity {
                 String recurringText = recurring.getSelectedItem().toString();
                 String categoryText = category.getSelectedItem().toString();
                 String locationText = location.getText().toString();
+                // TODO: is this the right way to get the image name????
+                String image = addPicture.getText().toString();
 
                 // lol
                 boolean allGood = true;
@@ -118,12 +120,11 @@ public class AddReminderActivity extends AppCompatActivity {
                 Long dateToSaveToDB = myCalendar.getTimeInMillis();
                 Long dateToRecur = recurringCal.getTimeInMillis();
 
-
                 if (allGood && mCurrentUser != null) {
                     // add reminder to database
                     System.out.println("adding reminder to db");
                     Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
-                            locationText, categoryText, recurringText, dateToRecur, context);
+                            locationText, categoryText, recurringText, dateToRecur, image, context);
 
                     System.out.println("done adding reminder");
                     finish();

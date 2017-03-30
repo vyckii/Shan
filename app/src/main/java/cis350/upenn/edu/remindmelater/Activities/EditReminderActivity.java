@@ -53,6 +53,7 @@ public class EditReminderActivity extends AppCompatActivity {
     private Button recurringUntil;
     private Spinner category;
     private TextView location;
+    private Button addPicture;
 
     Calendar myCalendar = Calendar.getInstance();
     Calendar recurringCal = new GregorianCalendar();
@@ -82,6 +83,16 @@ public class EditReminderActivity extends AppCompatActivity {
         recurringUntil = (Button) findViewById(R.id.eRecurringUntil);
         category = (Spinner) findViewById(R.id.eCategory);
         location = (TextView) findViewById(R.id.eLocation);
+
+        addPicture = (Button) findViewById(R.id.eAddPicture);
+
+        addPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EditReminderActivity.this, CameraActivity.class);
+                startActivity(i);
+            }
+        });
 
         // set reminder details on screen
         Intent intent = getIntent();
@@ -153,6 +164,9 @@ public class EditReminderActivity extends AppCompatActivity {
                 String categoryText = category.getSelectedItem().toString();
                 String locationText = location.getText().toString();
 
+                // TODO: is this the right way to get the image name????
+                String image = addPicture.getText().toString();
+
                 // lol
                 boolean allGood = true;
 
@@ -173,7 +187,7 @@ public class EditReminderActivity extends AppCompatActivity {
 
                     //TODO: edit reminder, not create reminder
                     Reminder.updateReminderInDatabase(mCurrentUser,reminderName, reminderText, notesText, dateToSaveToDB,
-                            locationText,categoryText, recurringText, dateToRecur);
+                            locationText,categoryText, recurringText, dateToRecur, image);
 
                     //TODO add multiple for recurring
 
