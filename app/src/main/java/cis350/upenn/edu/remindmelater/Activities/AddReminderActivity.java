@@ -5,7 +5,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -109,22 +111,23 @@ public class AddReminderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Intent i = new Intent(AddReminderActivity.this, CameraActivity.class);
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(i, REQUEST_TAKE_PHOTO);
-                    // Create the File where the photo should go
-//                File photoFile = null;
-//                try {
-//                    photoFile = createImageFile();
-//                } catch (IOException ex) {
-//                        // Error occurred while creating the File
-//                    ex.printStackTrace();
-//                }
-//                // Continue only if the File was successfully created
-//                if (photoFile != null) {
-//                    Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this,
-//                            "com.example.android.fileprovider", photoFile);
-//                    i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                    startActivityForResult(i, REQUEST_TAKE_PHOTO);
-//                }
+
+                if (i.resolveActivity(getPackageManager()) != null) {
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException e) {
+                        System.out.println("oh no!");
+                        e.printStackTrace();
+                    }
+                    if (photoFile != null) {
+                        Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this, "com.example.android.fileprovider", photoFile);
+                        i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(i, REQUEST_TAKE_PHOTO);
+                    }
+                }
+
+                //startActivityForResult(i, REQUEST_TAKE_PHOTO);
             }
         });
 
@@ -307,35 +310,17 @@ public class AddReminderActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap pic = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(pic);
-            //galleryAddPic();
-            encodeBitmapAndSaveToFirebase(pic);
+            setPic();
             System.out.println("got image");
         }
-//        else {
-//            System.out.println("ideal RIC: " + REQUEST_IMAGE_CAPTURE);
-//            System.out.println("actual RIC: " + requestCode);
-//            System.out.println("ideal RO: " + RESULT_OK);
-//            System.out.println("actual RO: " + resultCode);
-//        }
     }
 
 
-
     private File createImageFile() throws IOException {
-        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
@@ -348,20 +333,35 @@ public class AddReminderActivity extends AppCompatActivity {
         this.sendBroadcast(mediaScanIntent);
     }
 
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = 1250;
+        int targetH = 700;
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        imageView.setImageBitmap(bitmap);
+        encodeBitmapAndSaveToFirebase(bitmap);
+    }
+
     //TODO how to get reference to current user in firebase
     public void encodeBitmapAndSaveToFirebase(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         image = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
-        System.out.println("hello");
-        //System.out.println(image);
-        //DatabaseReference ref = mUserReference.child("image");
-                //FirebaseDatabase.getInstance().getReference("users").child(mCurrentUser.getUid()).child("image");
-//                .getReference(SyncStateContract.Constants.FIREBASE_CHILD_RESTAURANTS)
-//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                .child(mRestaurant.getPushId())
-//                .child("imageUrl");
-        //ref.setValue(imageEncoded);
-        System.out.println("this is done");
     }
 }

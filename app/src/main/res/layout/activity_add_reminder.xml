@@ -126,12 +126,14 @@
             android:layout_alignStart="@+id/addPicture" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/addPicture"
             android:layout_alignStart="@+id/addPicture"
             android:id="@+id/imageView1"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"/>
 
         </RelativeLayout>
  </ScrollView>
