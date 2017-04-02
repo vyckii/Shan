@@ -33,7 +33,7 @@ public class Reminder {
     public Long recurringDate;
     public String image;
     public String uid;
-    private boolean isComplete;
+    private static boolean isComplete;
 
     static DatabaseReference mDatabase;
     static ScheduleClient scheduleClient;
@@ -101,7 +101,7 @@ public class Reminder {
         return isComplete;
     }
 
-    public void setComplete() {
+    public static void setComplete() {
         isComplete = true;
     }
 

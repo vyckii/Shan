@@ -10,6 +10,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="cis350.upenn.edu.remindmelater.Activities.EditReminderActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
     <cis350.upenn.edu.remindmelater.CustomText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -104,7 +112,7 @@
 
     <Button
         android:id="@+id/eRecurringUntil"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/eRecurring"
@@ -122,11 +130,21 @@
         android:layout_alignStart="@+id/saveReminder" />
 
     <Button
+        android:text="Complete Reminder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ecompleteReminder"
+        android:layout_below="@+id/deleteReminder"
+        android:layout_alignStart="@+id/deleteReminder" />
+
+    <Button
         android:text="Add Picture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/eAddPicture"
         android:layout_below="@+id/eLocation"
         android:layout_alignStart="@+id/eLocation" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -54,6 +54,7 @@ public class EditReminderActivity extends AppCompatActivity {
     private Spinner category;
     private TextView location;
     private Button addPicture;
+    private Button completeReminder;
 
     Calendar myCalendar = Calendar.getInstance();
     Calendar recurringCal = new GregorianCalendar();
@@ -85,6 +86,7 @@ public class EditReminderActivity extends AppCompatActivity {
         location = (TextView) findViewById(R.id.eLocation);
 
         addPicture = (Button) findViewById(R.id.eAddPicture);
+        completeReminder = (Button) findViewById(R.id.ecompleteReminder);
 
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,6 +208,14 @@ public class EditReminderActivity extends AppCompatActivity {
                 Toast.makeText(editReminderActivity.getApplicationContext(), "Deleted reminder",
                         Toast.LENGTH_SHORT).show();
 
+                finish();
+            }
+        });
+
+        completeReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Reminder.setComplete();
                 finish();
             }
         });

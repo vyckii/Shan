@@ -199,6 +199,15 @@ public class NavigationMenu extends AppCompatActivity
 
         } else if (id == R.id.complete_category) {
 
+            Query query = mReminderReference.orderByChild("isComplete").startAt(true).endAt(true);
+            mAdapter = getAdapter(query);
+
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+
+            setTitle("Completed");
+
+
         } else if (id == R.id.school_category) {
 
 
