@@ -10,10 +10,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -28,6 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -74,6 +77,7 @@ public class AddReminderActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
     private ImageView imageView;
     String mCurrentPhotoPath;
+    private String image = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,17 +110,16 @@ public class AddReminderActivity extends AppCompatActivity {
                 //Intent i = new Intent(AddReminderActivity.this, CameraActivity.class);
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(i, REQUEST_TAKE_PHOTO);
-                //startActivity(i);
                     // Create the File where the photo should go
 //                File photoFile = null;
 //                try {
 //                    photoFile = createImageFile();
 //                } catch (IOException ex) {
 //                        // Error occurred while creating the File
+//                    ex.printStackTrace();
 //                }
 //                // Continue only if the File was successfully created
 //                if (photoFile != null) {
-//
 //                    Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this,
 //                            "com.example.android.fileprovider", photoFile);
 //                    i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
@@ -138,7 +141,7 @@ public class AddReminderActivity extends AppCompatActivity {
                 String categoryText = category.getSelectedItem().toString();
                 String locationText = location.getText().toString();
                 // TODO: is this the right way to get the image name????
-                String image = addPicture.getText().toString();
+                        //addPicture.getText().toString();
 
                 // lol
                 boolean allGood = true;
@@ -158,6 +161,8 @@ public class AddReminderActivity extends AppCompatActivity {
                     System.out.println("adding reminder to db");
                     Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
                             locationText, categoryText, recurringText, dateToRecur, image, context);
+
+                    System.out.println(mUserReference.child("image").toString());
 
                     System.out.println("done adding reminder");
                     finish();
@@ -306,14 +311,15 @@ public class AddReminderActivity extends AppCompatActivity {
             Bitmap pic = (Bitmap) extras.get("data");
             imageView.setImageBitmap(pic);
             //galleryAddPic();
+            encodeBitmapAndSaveToFirebase(pic);
             System.out.println("got image");
         }
-        else {
-            System.out.println("ideal RIC: " + REQUEST_IMAGE_CAPTURE);
-            System.out.println("actual RIC: " + requestCode);
-            System.out.println("ideal RO: " + RESULT_OK);
-            System.out.println("actual RO: " + resultCode);
-        }
+//        else {
+//            System.out.println("ideal RIC: " + REQUEST_IMAGE_CAPTURE);
+//            System.out.println("actual RIC: " + requestCode);
+//            System.out.println("ideal RO: " + RESULT_OK);
+//            System.out.println("actual RO: " + resultCode);
+//        }
     }
 
 
@@ -340,5 +346,22 @@ public class AddReminderActivity extends AppCompatActivity {
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
+    }
+
+    //TODO how to get reference to current user in firebase
+    public void encodeBitmapAndSaveToFirebase(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        image = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+        System.out.println("hello");
+        //System.out.println(image);
+        //DatabaseReference ref = mUserReference.child("image");
+                //FirebaseDatabase.getInstance().getReference("users").child(mCurrentUser.getUid()).child("image");
+//                .getReference(SyncStateContract.Constants.FIREBASE_CHILD_RESTAURANTS)
+//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                .child(mRestaurant.getPushId())
+//                .child("imageUrl");
+        //ref.setValue(imageEncoded);
+        System.out.println("this is done");
     }
 }
