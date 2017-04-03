@@ -15,7 +15,7 @@
         android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        card_view:cardBackgroundColor="@android:color/holo_blue_dark"
+        card_view:cardBackgroundColor="#d7d7d7"
         card_view:cardCornerRadius="16dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -54,6 +54,13 @@
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/reminder_image"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/reminder_type"

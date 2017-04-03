@@ -2,10 +2,15 @@ package cis350.upenn.edu.remindmelater;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -29,6 +34,8 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
     private final TextView reminderLoc;
     private String reminderRec;
     private String reminderRecDate;
+    private ImageView reminderImage;
+    private byte[] imageAsBytes;
 
     private Context context;
 
@@ -44,6 +51,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         reminderTime =  (TextView) itemView.findViewById(R.id.due_date_label);
         reminderType =  (TextView) itemView.findViewById(R.id.reminder_type);
         reminderLoc =  (TextView) itemView.findViewById(R.id.reminder_loc);
+        reminderImage = (ImageView) itemView.findViewById(R.id.reminder_image);
     }
 
     public void setReminderTitle(String name) {
@@ -85,6 +93,18 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         reminderRecDate = text;
     }
 
+    public void setReminderImage(String text) {
+        if (!text.equals("")) {
+            Bitmap image = decodeFromFirebaseBase64(text);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            imageAsBytes = stream.toByteArray();
+
+            reminderImage.setImageBitmap(image);
+        }
+    }
+
 
     public void onClick(View view) {
         System.out.println("clicked " + reminderTitle.getText());
@@ -97,7 +117,14 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         intent.putExtra("recurringUntil", reminderRecDate);
         intent.putExtra("category", reminderType.getText());
         intent.putExtra("location", reminderLoc.getText());
+        intent.putExtra("imageBytes", imageAsBytes);
+        //intent.putExtra("image", imageText);
         context.startActivity(intent);
+    }
+
+    public static Bitmap decodeFromFirebaseBase64(String image) {
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
     }
 
 }

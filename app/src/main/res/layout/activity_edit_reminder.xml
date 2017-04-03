@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_screen"
     android:layout_width="match_parent"
@@ -10,13 +11,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="cis350.upenn.edu.remindmelater.Activities.EditReminderActivity">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+
+        <Button
+            android:text="Mark as Completed"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:id="@+id/ecompleteReminder"
+            android:layout_alignStart="@+id/deleteReminder"
+            android:layout_below="@+id/welcome"
+            android:textColor="#50a6fc"
+            android:textStyle="bold"/>
 
     <cis350.upenn.edu.remindmelater.CustomText
         android:layout_width="match_parent"
@@ -27,15 +34,16 @@
         android:id="@+id/welcome"
         android:layout_marginLeft="30px"
         android:layout_marginRight="30px"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true" />
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"/>
 
     <EditText
         android:id="@+id/eReminderName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/welcome"
-        android:layout_below="@+id/welcome"
+        android:layout_below="@+id/ecompleteReminder"
         android:ems="10"
         android:hint="Title"
         android:inputType="textPersonName" />
@@ -102,12 +110,12 @@
         android:layout_alignStart="@+id/eCategory"/>
 
     <Button
-        android:text="Save Reminder"
+        android:text="Save Changes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/saveReminder"
         android:onClick="onButtonPress"
-        android:layout_below="@+id/eAddPicture"
+        android:layout_below="@+id/eImageView1"
         android:layout_alignStart="@+id/eAddPicture" />
 
     <Button
@@ -127,15 +135,10 @@
         android:id="@+id/deleteReminder"
         android:onClick="onButtonPress"
         android:layout_below="@+id/saveReminder"
-        android:layout_alignStart="@+id/saveReminder" />
+        android:layout_alignStart="@+id/saveReminder"
+        android:textColor="#ff0000"
+        android:textStyle="bold"/>
 
-    <Button
-        android:text="Complete Reminder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ecompleteReminder"
-        android:layout_below="@+id/deleteReminder"
-        android:layout_alignStart="@+id/deleteReminder" />
 
     <Button
         android:text="Add Picture"
@@ -144,7 +147,17 @@
         android:id="@+id/eAddPicture"
         android:layout_below="@+id/eLocation"
         android:layout_alignStart="@+id/eLocation" />
-        </LinearLayout>
-    </ScrollView>
 
-</RelativeLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/eAddPicture"
+            android:layout_alignStart="@+id/eAddPicture"
+            android:id="@+id/eImageView1"
+            android:adjustViewBounds="true"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"/>
+
+    </RelativeLayout>
+
+</ScrollView>

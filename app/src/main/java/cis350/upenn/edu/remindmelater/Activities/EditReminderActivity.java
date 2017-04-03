@@ -4,13 +4,21 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -21,8 +29,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -55,17 +67,24 @@ public class EditReminderActivity extends AppCompatActivity {
     private TextView location;
     private Button addPicture;
     private Button completeReminder;
+    private ImageView imageView;
+    private byte[] imageAsBytes;
+
 
     Calendar myCalendar = Calendar.getInstance();
     Calendar recurringCal = new GregorianCalendar();
 
     final Activity editReminderActivity = this;
 
+    static final int REQUEST_TAKE_PHOTO = 1;
+    private String mCurrentPhotoPath;
+    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_reminder);
+        image = "";
 
         checkIfUserIsSignedIn();
 
@@ -85,14 +104,31 @@ public class EditReminderActivity extends AppCompatActivity {
         category = (Spinner) findViewById(R.id.eCategory);
         location = (TextView) findViewById(R.id.eLocation);
 
+        imageView = (ImageView) findViewById(R.id.eImageView1);
+        imageView.setImageDrawable(null);
+
         addPicture = (Button) findViewById(R.id.eAddPicture);
         completeReminder = (Button) findViewById(R.id.ecompleteReminder);
 
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(EditReminderActivity.this, CameraActivity.class);
-                startActivity(i);
+                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                if (i.resolveActivity(getPackageManager()) != null) {
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException e) {
+                        System.out.println("oh no!");
+                        e.printStackTrace();
+                    }
+                    if (photoFile != null) {
+                        Uri photoURI = FileProvider.getUriForFile(EditReminderActivity.this, "com.example.android.fileprovider", photoFile);
+                        i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(i, REQUEST_TAKE_PHOTO);
+                    }
+                }
             }
         });
 
@@ -101,6 +137,13 @@ public class EditReminderActivity extends AppCompatActivity {
         final String reminderName = intent.getStringExtra("reminderName");
         reminder.setText(reminderName);
         notes.setText(intent.getStringExtra("notes"));
+        imageAsBytes = intent.getByteArrayExtra("imageBytes");
+        //image = intent.getStringExtra("image");
+        if (imageAsBytes != null) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+            //Bitmap bitmap = decodeFromFirebaseBase64(image);
+            imageView.setImageBitmap(bmp);
+        }
 
         final String dueDateStr = intent.getStringExtra("dueDate");
 
@@ -165,9 +208,6 @@ public class EditReminderActivity extends AppCompatActivity {
                 String recurringText = recurring.getSelectedItem().toString();
                 String categoryText = category.getSelectedItem().toString();
                 String locationText = location.getText().toString();
-
-                // TODO: is this the right way to get the image name????
-                String image = addPicture.getText().toString();
 
                 // lol
                 boolean allGood = true;
@@ -348,6 +388,59 @@ public class EditReminderActivity extends AppCompatActivity {
     public void startCamera(View v) {
         Intent i = new Intent(this, CameraActivity.class);
         startActivity(i);
+    }
+
+    public static Bitmap decodeFromFirebaseBase64(String image) {
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            setPic();
+            System.out.println("got image");
+        }
+    }
+
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = 1250;
+        int targetH = 700;
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        imageView.setImageBitmap(bitmap);
+        encodeBitmapAndSaveToFirebase(bitmap);
+    }
+
+    public void encodeBitmapAndSaveToFirebase(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        image = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
     }
 
 

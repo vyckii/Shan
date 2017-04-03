@@ -75,16 +75,17 @@ public class AddReminderActivity extends AppCompatActivity {
     Calendar myCalendar = Calendar.getInstance();
     Calendar recurringCal = new GregorianCalendar();
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    //static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
     private ImageView imageView;
     String mCurrentPhotoPath;
-    private String image = "";
+    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reminder);
+        image = "";
 
         checkIfUserIsSignedIn();
 
@@ -93,6 +94,7 @@ public class AddReminderActivity extends AppCompatActivity {
         System.out.println("--------------------------");
 
         imageView = (ImageView) this.findViewById(R.id.imageView1);
+        imageView.setImageDrawable(null);
 
         // grab reminder input
         addReminder = (Button) findViewById((R.id.addReminder));
@@ -143,8 +145,6 @@ public class AddReminderActivity extends AppCompatActivity {
                 String recurringText = recurring.getSelectedItem().toString();
                 String categoryText = category.getSelectedItem().toString();
                 String locationText = location.getText().toString();
-                // TODO: is this the right way to get the image name????
-                        //addPicture.getText().toString();
 
                 // lol
                 boolean allGood = true;
@@ -309,7 +309,7 @@ public class AddReminderActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             setPic();
             System.out.println("got image");
         }
