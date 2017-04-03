@@ -187,7 +187,7 @@ public class NavigationMenu extends AppCompatActivity
 
         if (id == R.id.scheduled_category) {
 
-            Query query = mReminderReference.orderByChild("dueDate");
+            Query query = mReminderReference.orderByChild("isComplete").startAt(false).endAt(false);
             mAdapter = getAdapter(query);
 
             mRecyclerView.setAdapter(mAdapter);

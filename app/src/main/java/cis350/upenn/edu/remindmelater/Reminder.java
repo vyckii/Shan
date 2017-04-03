@@ -145,10 +145,11 @@ public class Reminder {
     }
 
 
-    public static void updateReminderInDatabase(FirebaseUser user, String oldTitle, String title, String notes, Long dueDate,
-                                                String location, String category, String recurring, Long recurringDate, String image, boolean isComplete) {
+    public static void updateReminderInDatabase(FirebaseUser user, String oldTitle, long OldDate, String title, String notes, Long dueDate,
+                                                String location, String category, String recurring, Long recurringDate, String image, final boolean isComplete) {
 
         final String rOldTitle = oldTitle;
+        final long rOldDate = OldDate;
         final FirebaseUser rUser = user;
         final String rTitle = title;
         final String rNotes = notes;
@@ -183,57 +184,26 @@ public class Reminder {
 
         }
 
-        // mark only one reminder as complete
-        if (isComplete) {
-            mDatabase.child("users").child(user.getUid()).child("reminders").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot d : dataSnapshot.getChildren()) {
-                        if (d.child("title").getValue().equals(rOldTitle)) {
-                            d.getRef().removeValue();
-                            System.out.println("deleted");
-                            String uid = mDatabase.child("reminders").push().getKey();
-                            Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate, rImage, rIsComplete);
-                            reminder.setUid(uid);
-                            mDatabase.child("users").child(rUser.getUid()).child("reminders").child(uid).setValue(reminder);
-                        }
+        mDatabase.child("users").child(user.getUid()).child("reminders").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    if (d.child("title").getValue().equals(rOldTitle) && Long.parseLong(d.child("dueDate").getValue().toString()) == (rOldDate)) {
+                        d.getRef().removeValue();
+                        System.out.println("deleted");
+                        String uid = mDatabase.child("reminders").push().getKey();
+                        Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate, rImage, rIsComplete);
+                        reminder.setUid(uid);
+                        mDatabase.child("users").child(rUser.getUid()).child("reminders").child(uid).setValue(reminder);
                     }
                 }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    System.out.println("Firebase error finding reminder to delete");
-                }
-            });
-
-            // update all reminders including recurring
-        } else {
-            for (Long i = dueDate; i <= recurringDate; i += delta) {
-
-                mDatabase.child("users").child(user.getUid()).child("reminders").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot d : dataSnapshot.getChildren()) {
-                            if (d.child("title").getValue().equals(rOldTitle)) {
-                                d.getRef().removeValue();
-                                System.out.println("deleted");
-                                String uid = mDatabase.child("reminders").push().getKey();
-                                Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate, rImage, rIsComplete);
-                                reminder.setUid(uid);
-                                mDatabase.child("users").child(rUser.getUid()).child("reminders").child(uid).setValue(reminder);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        System.out.println("Firebase error finding reminder to delete");
-                    }
-                });
-
-                dueDate += delta;
             }
-        }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("Firebase error finding reminder to delete");
+            }
+        });
     }
 
 

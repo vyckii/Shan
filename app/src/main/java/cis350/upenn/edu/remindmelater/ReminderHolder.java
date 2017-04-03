@@ -97,11 +97,13 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         if (!text.equals("")) {
             Bitmap image = decodeFromFirebaseBase64(text);
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            imageAsBytes = stream.toByteArray();
+            if (image != null) {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                imageAsBytes = stream.toByteArray();
 
-            reminderImage.setImageBitmap(image);
+                reminderImage.setImageBitmap(image);
+            }
         }
     }
 

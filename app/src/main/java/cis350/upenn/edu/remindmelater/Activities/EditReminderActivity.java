@@ -228,7 +228,7 @@ public class EditReminderActivity extends AppCompatActivity {
                     System.out.println("adding reminder to db");
 
                     //TODO: edit reminder, not create reminder
-                    Reminder.updateReminderInDatabase(mCurrentUser,reminderName, reminderText, notesText, dateToSaveToDB,
+                    Reminder.updateReminderInDatabase(mCurrentUser,reminderName, Long.parseLong(dueDateStr), reminderText, notesText, dateToSaveToDB,
                             locationText,categoryText, recurringText, dateToRecur, image, false);
 
                     //TODO add multiple for recurring
@@ -276,7 +276,7 @@ public class EditReminderActivity extends AppCompatActivity {
                 Long dateToSaveToDB = myCalendar.getTimeInMillis();
                 Long dateToRecur = recurringCal.getTimeInMillis();
 
-                Reminder.updateReminderInDatabase(mCurrentUser,reminderName, reminderText, notesText, dateToSaveToDB,
+                Reminder.updateReminderInDatabase(mCurrentUser,reminderName, Long.parseLong(dueDateStr), reminderText, notesText, dateToSaveToDB,
                         locationText,categoryText, recurringText, dateToRecur, image, true);
 
                 finish();
