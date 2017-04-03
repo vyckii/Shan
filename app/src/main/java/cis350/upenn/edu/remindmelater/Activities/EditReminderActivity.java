@@ -255,7 +255,7 @@ public class EditReminderActivity extends AppCompatActivity {
         completeReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Reminder.setComplete();
+                Reminder.updateComplete(mCurrentUser);
                 finish();
             }
         });

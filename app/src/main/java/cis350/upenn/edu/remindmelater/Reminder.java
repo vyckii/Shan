@@ -33,7 +33,7 @@ public class Reminder {
     public Long recurringDate;
     public String image;
     public String uid;
-    public static boolean isComplete;
+    public boolean isComplete;
 
     static DatabaseReference mDatabase;
     static ScheduleClient scheduleClient;
@@ -101,7 +101,7 @@ public class Reminder {
         return isComplete;
     }   
 
-    public static void setComplete() {
+    public void setComplete() {
         isComplete = true;
     }
 
@@ -250,6 +250,10 @@ public class Reminder {
 
     public static void setScheduleClient(ScheduleClient scheduleClient) {
         Reminder.scheduleClient = scheduleClient;
+    }
+
+    public static void updateComplete(FirebaseUser user) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
 }
