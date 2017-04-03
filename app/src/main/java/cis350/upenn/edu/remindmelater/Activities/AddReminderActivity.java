@@ -163,7 +163,7 @@ public class AddReminderActivity extends AppCompatActivity {
                     // add reminder to database
                     System.out.println("adding reminder to db");
                     Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
-                            locationText, categoryText, recurringText, dateToRecur, image, context);
+                            locationText, categoryText, recurringText, dateToRecur, image, context, false);
 
                     System.out.println(mUserReference.child("image").toString());
 

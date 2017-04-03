@@ -118,7 +118,6 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         intent.putExtra("category", reminderType.getText());
         intent.putExtra("location", reminderLoc.getText());
         intent.putExtra("imageBytes", imageAsBytes);
-        //intent.putExtra("image", imageText);
         context.startActivity(intent);
     }
 

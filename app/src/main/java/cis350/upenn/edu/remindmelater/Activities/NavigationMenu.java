@@ -219,9 +219,6 @@ public class NavigationMenu extends AppCompatActivity
 
             setTitle("School");
 
-
-
-
         } else if (id == R.id.work_category) {
 
             Query query = mReminderReference.orderByChild("category").startAt("Work").endAt("Work");

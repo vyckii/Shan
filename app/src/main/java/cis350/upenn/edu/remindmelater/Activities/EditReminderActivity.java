@@ -229,7 +229,7 @@ public class EditReminderActivity extends AppCompatActivity {
 
                     //TODO: edit reminder, not create reminder
                     Reminder.updateReminderInDatabase(mCurrentUser,reminderName, reminderText, notesText, dateToSaveToDB,
-                            locationText,categoryText, recurringText, dateToRecur, image);
+                            locationText,categoryText, recurringText, dateToRecur, image, false);
 
                     //TODO add multiple for recurring
 
@@ -255,7 +255,30 @@ public class EditReminderActivity extends AppCompatActivity {
         completeReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Reminder.updateComplete(mCurrentUser);
+
+                // get user inputs
+                String reminderText = reminder.getText().toString();
+                String notesText = notes.getText().toString();
+                String recurringText = recurring.getSelectedItem().toString();
+                String categoryText = category.getSelectedItem().toString();
+                String locationText = location.getText().toString();
+
+                // lol
+                boolean allGood = true;
+
+                // check if reminder name is empty
+                if (reminderText.isEmpty()) {
+                    allGood = false;
+                    Toast.makeText(editReminderActivity.getApplicationContext(), R.string.empty_fields,
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                Long dateToSaveToDB = myCalendar.getTimeInMillis();
+                Long dateToRecur = recurringCal.getTimeInMillis();
+
+                Reminder.updateReminderInDatabase(mCurrentUser,reminderName, reminderText, notesText, dateToSaveToDB,
+                        locationText,categoryText, recurringText, dateToRecur, image, true);
+
                 finish();
             }
         });

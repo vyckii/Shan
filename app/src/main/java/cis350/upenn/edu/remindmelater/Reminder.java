@@ -44,7 +44,7 @@ public class Reminder {
     }
 
     private Reminder(String uid, String title, String notes, Long dueDate, String location, String category,
-                     String recurring, Long recurringDate, String image) {
+                     String recurring, Long recurringDate, String image, boolean isComplete) {
 
         this.userIDs = new HashMap<>();
         this.userIDs.put(uid, true);
@@ -56,7 +56,7 @@ public class Reminder {
         this.dueDate = dueDate;
         this.recurringDate = recurringDate;
         this.image = image;
-        this.isComplete = false;
+        this.isComplete = isComplete;
     }
 
     public Map<String, Boolean> userIDs() {
@@ -105,9 +105,10 @@ public class Reminder {
         isComplete = true;
     }
 
+
     public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate,
                                                 String location, String category, String recurring, Long recurringDate,
-                                                String image, Context context) {
+                                                String image, Context context, boolean isComplete) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -135,7 +136,7 @@ public class Reminder {
 
         for (Long i = duedate; i <= recurringDate; i += delta) {
             String uid = mDatabase.child("reminders").push().getKey();
-            Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate, image);
+            Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate, image, false);
             reminder.setUid(uid);
             mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
 
@@ -145,7 +146,7 @@ public class Reminder {
 
 
     public static void updateReminderInDatabase(FirebaseUser user, String oldTitle, String title, String notes, Long dueDate,
-                                                String location, String category, String recurring, Long recurringDate, String image) {
+                                                String location, String category, String recurring, Long recurringDate, String image, boolean isComplete) {
 
         final String rOldTitle = oldTitle;
         final FirebaseUser rUser = user;
@@ -157,6 +158,7 @@ public class Reminder {
         final String rRecurring = recurring;
         final Long rRecurringDate = recurringDate;
         final String rImage = image;
+        final boolean rIsComplete = isComplete;
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -181,8 +183,8 @@ public class Reminder {
 
         }
 
-        for (Long i = dueDate; i <= recurringDate; i += delta) {
-
+        // mark only one reminder as complete
+        if (isComplete) {
             mDatabase.child("users").child(user.getUid()).child("reminders").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -191,7 +193,7 @@ public class Reminder {
                             d.getRef().removeValue();
                             System.out.println("deleted");
                             String uid = mDatabase.child("reminders").push().getKey();
-                            Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate, rImage);
+                            Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate, rImage, rIsComplete);
                             reminder.setUid(uid);
                             mDatabase.child("users").child(rUser.getUid()).child("reminders").child(uid).setValue(reminder);
                         }
@@ -204,7 +206,33 @@ public class Reminder {
                 }
             });
 
-            dueDate += delta;
+            // update all reminders including recurring
+        } else {
+            for (Long i = dueDate; i <= recurringDate; i += delta) {
+
+                mDatabase.child("users").child(user.getUid()).child("reminders").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot d : dataSnapshot.getChildren()) {
+                            if (d.child("title").getValue().equals(rOldTitle)) {
+                                d.getRef().removeValue();
+                                System.out.println("deleted");
+                                String uid = mDatabase.child("reminders").push().getKey();
+                                Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate, rImage, rIsComplete);
+                                reminder.setUid(uid);
+                                mDatabase.child("users").child(rUser.getUid()).child("reminders").child(uid).setValue(reminder);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println("Firebase error finding reminder to delete");
+                    }
+                });
+
+                dueDate += delta;
+            }
         }
     }
 
@@ -250,10 +278,6 @@ public class Reminder {
 
     public static void setScheduleClient(ScheduleClient scheduleClient) {
         Reminder.scheduleClient = scheduleClient;
-    }
-
-    public static void updateComplete(FirebaseUser user) {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
 }
