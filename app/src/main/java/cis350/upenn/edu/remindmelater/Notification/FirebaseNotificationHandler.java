@@ -30,8 +30,9 @@ public class FirebaseNotificationHandler {
                 System.out.println("onChildAdded:" + dataSnapshot.getKey());
 
                 Reminder reminder = dataSnapshot.getValue(Reminder.class);
+                System.out.println("Is reminder complete: " + reminder.isComplete());
                 if (!reminder.isComplete()) {
-                    scheduleClient.setAlarmForNotification(reminder);
+                    scheduleClient.setAlarmForNotification(reminder, dataSnapshot.getKey());
                     System.out.println("Set notification for: " + reminder.getTitle());
                 }
             }
@@ -41,8 +42,10 @@ public class FirebaseNotificationHandler {
                 System.out.println("onChildChanged:" + dataSnapshot.getKey());
 
                 Reminder reminder = dataSnapshot.getValue(Reminder.class);
+                System.out.println("Is reminder complete: " + reminder.isComplete());
+
                 if (!reminder.isComplete()) {
-                    scheduleClient.setAlarmForNotification(reminder);
+                    scheduleClient.setAlarmForNotification(reminder, dataSnapshot.getKey());
                     System.out.println("Set notification for: " + reminder.getTitle());
                 }
             }
@@ -53,7 +56,7 @@ public class FirebaseNotificationHandler {
 
                 Reminder reminder = dataSnapshot.getValue(Reminder.class);
                 if (!reminder.isComplete()) {
-                    scheduleClient.setAlarmForNotification(reminder);
+                    scheduleClient.setAlarmForNotification(reminder, dataSnapshot.getKey());
                     System.out.println("Set notification for: " + reminder.getTitle());
                 }
             }

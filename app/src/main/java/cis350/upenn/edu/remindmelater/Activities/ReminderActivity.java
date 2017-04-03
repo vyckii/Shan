@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
@@ -21,6 +23,7 @@ public class ReminderActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser mCurrentUser;
+    private String reminderKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class ReminderActivity extends AppCompatActivity {
         title.setText(intent.getStringExtra("reminderName"));
         notes.setText(intent.getStringExtra("notes"));
         location.setText(intent.getStringExtra("location"));
+        reminderKey = intent.getStringExtra("reminderKey");
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(intent.getLongExtra("dueDate", 0));
 
@@ -56,6 +61,11 @@ public class ReminderActivity extends AppCompatActivity {
     }
 
     public void onCompleteButtonClicked(View v) {
+
+        DatabaseReference mReminderReference = FirebaseDatabase.getInstance().getReference("users")
+                .child(mCurrentUser.getUid()).child("reminders").child(reminderKey).child("complete");
+
+        mReminderReference.setValue(true);
 
         this.finish();
 

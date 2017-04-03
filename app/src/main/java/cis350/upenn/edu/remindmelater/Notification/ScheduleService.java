@@ -42,9 +42,9 @@ public class ScheduleService extends Service {
     /**
      * Show an alarm for a certain date when the alarm is called it will pop up a notification
      */
-    public void setAlarm(Reminder reminder) {
+    public void setAlarm(Reminder reminder, String key) {
 
-        new AlarmTask(this, reminder).run();
+        new AlarmTask(this, reminder, key).run();
 
     }
 

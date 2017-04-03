@@ -85,6 +85,7 @@ public class NotifyService extends Service {
         resultIntent.putExtra("recurringUntil", intent.getLongExtra("recurringUntil", System.currentTimeMillis()));
         resultIntent.putExtra("category", intent.getStringExtra("category"));
         resultIntent.putExtra("location", intent.getStringExtra("location"));
+        resultIntent.putExtra("reminderKey", intent.getStringExtra("reminderKey"));
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

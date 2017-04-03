@@ -18,13 +18,15 @@ public class AlarmTask implements Runnable {
     private final AlarmManager am;
     private final Context context;
     private final Reminder reminder;
+    private final String key;
 
     private static int id = 0;
 
-    public AlarmTask(Context context, Reminder reminder) {
+    public AlarmTask(Context context, Reminder reminder, String key) {
         this.context = context;
         this.am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         this.reminder = reminder;
+        this.key = key;
     }
 
     @Override
@@ -42,6 +44,7 @@ public class AlarmTask implements Runnable {
         intent.putExtra("recurringUntil", reminder.getRecurringDate());
         intent.putExtra("category", reminder.getCategory());
         intent.putExtra("location", reminder.getLocation());
+        intent.putExtra("reminderKey", key);
 
 
         PendingIntent pendingIntent = PendingIntent.getService(context, id, intent, 0);

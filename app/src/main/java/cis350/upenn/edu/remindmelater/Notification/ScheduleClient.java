@@ -42,8 +42,8 @@ public class ScheduleClient {
             }
         };
 
-        public void setAlarmForNotification(Reminder reminder){
-            mBoundService.setAlarm(reminder);
+        public void setAlarmForNotification(Reminder reminder, String key){
+            mBoundService.setAlarm(reminder, key);
         }
 
         public void doUnbindService() {
