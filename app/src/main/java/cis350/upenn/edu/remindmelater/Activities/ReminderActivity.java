@@ -11,6 +11,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import cis350.upenn.edu.remindmelater.R;
 
 public class ReminderActivity extends AppCompatActivity {
@@ -36,7 +39,16 @@ public class ReminderActivity extends AppCompatActivity {
         title.setText(intent.getStringExtra("reminderName"));
         notes.setText(intent.getStringExtra("notes"));
         location.setText(intent.getStringExtra("location"));
-        String str = "Due date::: + " + intent.getLongExtra("dueDate", 0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(intent.getLongExtra("dueDate", 0));
+
+        SimpleDateFormat format1 = new SimpleDateFormat("h:mma EEEE, d MMMM yyyy");
+
+        String formatted = format1.format(calendar.getTime());
+
+        String str = "Due " + formatted;
+
+
         dueDate.setText(str);
         category.setText(intent.getStringExtra("location"));
 
