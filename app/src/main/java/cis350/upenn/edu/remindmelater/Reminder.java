@@ -99,7 +99,7 @@ public class Reminder {
 
     public boolean isComplete() {
         return isComplete;
-    }   
+    }
 
     public void setComplete() {
         isComplete = true;

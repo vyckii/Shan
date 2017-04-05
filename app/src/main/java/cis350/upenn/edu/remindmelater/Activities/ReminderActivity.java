@@ -62,10 +62,10 @@ public class ReminderActivity extends AppCompatActivity {
 
     public void onCompleteButtonClicked(View v) {
 
-        DatabaseReference mReminderReference = FirebaseDatabase.getInstance().getReference("users")
-                .child(mCurrentUser.getUid()).child("reminders").child(reminderKey).child("complete");
-
-        mReminderReference.setValue(true);
+//        DatabaseReference mReminderReference = FirebaseDatabase.getInstance().getReference("users")
+//                .child(mCurrentUser.getUid()).child("reminders").child(reminderKey).child("complete");
+//
+//        mReminderReference.setValue(true);
 
         this.finish();
 

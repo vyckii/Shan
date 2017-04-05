@@ -27,7 +27,7 @@
         android:layout_margin="30px"
         android:id="@+id/welcome"/>
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/reminderName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

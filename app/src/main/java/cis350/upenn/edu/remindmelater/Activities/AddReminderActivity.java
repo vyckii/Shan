@@ -19,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -60,7 +62,7 @@ public class AddReminderActivity extends AppCompatActivity {
 
     // variables for reminder input
     private Button addReminder;
-    private TextView reminder;
+    private AutoCompleteTextView reminder;
     private TextView notes;
     private Button timeButton;
     private Button dateButton;
@@ -98,7 +100,7 @@ public class AddReminderActivity extends AppCompatActivity {
 
         // grab reminder input
         addReminder = (Button) findViewById((R.id.addReminder));
-        reminder = (TextView) findViewById(R.id.reminderName);
+        reminder = (AutoCompleteTextView) findViewById(R.id.reminderName);
         notes = (TextView) findViewById(R.id.notes);
         timeButton = (Button) findViewById(R.id.timeDue);
         dateButton = (Button) findViewById(R.id.dateDue);
@@ -107,6 +109,15 @@ public class AddReminderActivity extends AppCompatActivity {
         category = (Spinner) findViewById(R.id.category);
         location = (TextView) findViewById(R.id.location);
         addPicture = (Button) findViewById(R.id.addPicture);
+
+
+        ArrayAdapter<String> suggestedAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, SUGGESTIONS);
+
+        reminder.setAdapter(suggestedAdapter);
+
+
+
 
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -364,4 +375,8 @@ public class AddReminderActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         image = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
     }
+
+    private static final String[] SUGGESTIONS = new String[] {
+            "Call", "Text", "Pay", "Buy", "Go to", "Get lunch with", "Get dinner with"
+    };
 }
