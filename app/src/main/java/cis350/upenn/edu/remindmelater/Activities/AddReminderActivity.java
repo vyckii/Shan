@@ -31,8 +31,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -77,7 +80,6 @@ public class AddReminderActivity extends AppCompatActivity {
     Calendar myCalendar = Calendar.getInstance();
     Calendar recurringCal = new GregorianCalendar();
 
-    //static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
     private ImageView imageView;
     String mCurrentPhotoPath;
@@ -94,6 +96,9 @@ public class AddReminderActivity extends AppCompatActivity {
         System.out.println("--------------------------");
         System.out.println("in add reminder");
         System.out.println("--------------------------");
+        checkUserExists("ajnandi@gmail.com");
+        checkUserExists("connorwen@gmail.com");
+        checkUserExists("fakeemail@gmail.com");
 
         imageView = (ImageView) this.findViewById(R.id.imageView1);
         imageView.setImageDrawable(null);
@@ -379,4 +384,30 @@ public class AddReminderActivity extends AppCompatActivity {
     private static final String[] SUGGESTIONS = new String[] {
             "Call", "Text", "Pay", "Buy", "Go to", "Get lunch with", "Get dinner with"
     };
+
+    public boolean checkUserExists(String email) {
+        final boolean[] exists = new boolean[1];
+        final String emailAdd = email;
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("users").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //for (DataSnapshot data: dataSnapshot.getChildren()) {
+                    //if (data.child(emailAdd).exists()) {
+                    if (dataSnapshot.exists()) {
+                        exists[0] = true;
+                    } else {
+                        exists[0] = false;
+                    }
+                //}
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        System.out.println(email + " " + exists[0]);
+        return exists[0];
+    }
 }

@@ -123,7 +123,9 @@
             android:id="@+id/addReminder"
             android:onClick="onButtonPress"
             android:layout_below="@+id/imageView1"
-            android:layout_alignStart="@+id/addPicture" />
+            android:layout_alignStart="@+id/addPicture"
+            android:textColor="#50a6fc"
+            android:textStyle="bold"/>
 
         <ImageView
             android:layout_width="match_parent"

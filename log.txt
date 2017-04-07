@@ -1,3 +1,210 @@
+commit 9c093c43356af168b41d16ac04dcbee41fa628ee
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Mon Apr 3 18:30:04 2017 -0400
+
+    edit reminder works
+
+commit 13d25303b1ba6b8735531877117c451850336b6f
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Mon Apr 3 17:59:05 2017 -0400
+
+    update reminder handles complete button
+
+commit ec5cbea718d4a1879e53c26559bcb7e846581f54
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Mon Apr 3 17:28:53 2017 -0400
+
+    reminder changes
+
+commit 6c3adfff5d5331859ede14d3da077acc922b4a8d
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Apr 3 14:39:33 2017 -0400
+
+    space
+
+commit 5c56365d97e673942801ae9cdb2f0580e3140502
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Apr 3 14:08:13 2017 -0400
+
+    fixed some reminder issues
+
+commit 15937124109d6664c1174cf37f0d01c7d6b62e1a
+Merge: 4a8d04c eda21eb
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Apr 2 23:28:09 2017 -0400
+
+    merge conflict, pix work Merge branch 'master' of https://github.com/cis-upenn/350S17-2-RemindMeLater
+
+commit 4a8d04cde083771f1a21b392444ad629eaa2b051
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Apr 2 23:27:59 2017 -0400
+
+    functional pix wooooo
+
+commit eda21eb4870e00ce340975eddc2879e422966d2f
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Sun Apr 2 20:03:45 2017 -0400
+
+    fixed date formatting
+
+commit 208f0a252d22a3bc21de00985d785bd6c9c90d65
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Apr 2 18:02:31 2017 -0400
+
+    pic display worksgit add .git add .
+
+commit 4a6664c9fea77f4bb51d7bd3cee970126b5e776b
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Apr 2 16:51:24 2017 -0400
+
+    pic string saved in firebase holla
+
+commit 708baad1f13b388d2da137f1051017a29ddb5333
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Sun Apr 2 01:54:48 2017 -0400
+
+    adding complete reminder
+
+commit b768fde727a0536b50757f73e6ad5b0c91cf5d27
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sat Apr 1 20:04:07 2017 -0400
+
+    c'mon camera
+
+commit 4961780df8c33a99955ce4d3c4d44edb93f8e299
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Thu Mar 30 15:19:12 2017 -0400
+
+    added image string to backend
+
+commit fe249572d09d2ce3195b2a0142458f7bacec4e3e
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Wed Mar 29 19:11:13 2017 -0400
+
+    Notification post click activity start
+
+commit 5be032dc91d69af309c29ff6aac638b63355853f
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Wed Mar 29 19:00:25 2017 -0400
+
+    Added new navigation menu and categories
+
+commit 23081233610946ffc9ee58c4fe54442e5972c6d9
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Wed Mar 29 16:47:17 2017 -0400
+
+    Fixed notification bugs
+
+commit 006e36d52a784272dd1fc56b2b6c45282c5aa254
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Wed Mar 29 14:59:30 2017 -0400
+
+    Notification click through works
+
+commit 9fec62cc77a864b798a6f9988b4337183d1fa052
+Merge: ae42910 18ee15e
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Wed Mar 29 13:34:34 2017 -0400
+
+    "camera? more like camerYAY"Merge branch 'master' of https://github.com/cis-upenn/350S17-2-RemindMeLater
+
+commit ae4291089a9f2bc0dc3fcfa715d4e1ca4e9274ef
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Wed Mar 29 13:34:19 2017 -0400
+
+    camera? more like camerYAY
+
+commit 18ee15ee6dfbad072d8ced8df29469669b0504d8
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Wed Mar 29 12:36:34 2017 -0400
+
+    Added multiple notification functionality
+
+commit dbdb0368043b92415d12b5ecbbe7ece397d53b5f
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Tue Mar 28 13:12:10 2017 -0400
+
+    Added reminders to notify at time of reminder
+
+commit 3e02c7df54f0364377b7938fe2338eaf7fd35657
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Mon Mar 27 19:02:30 2017 -0400
+
+    edit reminder stuff
+
+commit c3b9e4be05640e5cdea4f380e21b58c82fa87abe
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Mon Mar 27 16:18:02 2017 -0400
+
+    delete reminder button deletes from database
+
+commit 5999e5182ab02e4ae1ee05465ca08add10d14e11
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Mar 27 11:51:44 2017 -0400
+
+    Added notification skeleton
+
+commit 1847c5cd62bc4c4304e9ad44b588f0961b2aae92
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Mar 27 11:01:20 2017 -0400
+
+    Added UID field to reminders
+
+commit 69d800405f6dadbf0b5c3d03dd3b4a8d7d8d1c9a
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Mar 27 10:39:54 2017 -0400
+
+    fixed calendar and date picker on edit reminder
+
+commit c95a4578df950089fee840f8860dbdacf787da15
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Mon Mar 27 10:34:46 2017 -0400
+
+    IML -- SOMEONE PLZ UPDATE JDK to 1.8!!!!
+
+commit aa8421a9ea87ccaac1779ee499a6111180caccc9
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 26 20:34:14 2017 -0400
+
+    still working on camera
+
+commit 2b79ef9f502e67e31149d14da686c4c763155098
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 26 20:18:57 2017 -0400
+
+    working on camera
+
+commit 3d9e0bfe791c82cbe0a76390eb75ff2db8f9a6c1
+Merge: 62e617e b844b53
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 26 17:57:32 2017 -0400
+
+    merge conflict
+
+commit 62e617e7c57f0aa901874c1c8af9434f280de0e5
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Mar 26 17:45:18 2017 -0400
+
+    iml conflict
+
+commit b844b5350b115d232ad4b32ca53862b367317b67
+Author: mantrys <shoryamantry@gmail.com>
+Date:   Sun Mar 26 13:22:18 2017 -0400
+
+    drop down menu
+
+commit f36734e04333ea2453df7db3d58a59ee328a8eef
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Sat Mar 25 12:52:43 2017 -0400
+
+    changes to edit reminder to populate with reminder data and button to delete reminder
+
+commit 620832bb84042127bfc5ad7df6bf63df85aa094f
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Mon Mar 20 22:23:36 2017 -0400
+
+    added type and decription to reminder ui
+
 commit d19f49e4faa7501acbee32fc19281ad433b79a99
 Author: cristinabuenahora <crisb@seas.upenn.edu>
 Date:   Mon Mar 20 21:07:56 2017 -0400
