@@ -26,8 +26,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -79,6 +82,8 @@ public class EditReminderActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
     private String mCurrentPhotoPath;
     private String image;
+
+    private boolean exists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -464,6 +469,38 @@ public class EditReminderActivity extends AppCompatActivity {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         image = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+    }
+
+    //TODO if any changes to add reminder function, also need to be made here
+    public boolean checkUserExists(String email) {
+        //final boolean[] exists = new boolean[1];
+        exists = false;
+        final String emailAdd = email;
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("users").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //for (DataSnapshot data: dataSnapshot.getChildren()) {
+                //  if (data.child(emailAdd).exists()) {
+                if (dataSnapshot.exists()) {
+                    //exists[0] = true;
+                    System.out.println("yes");
+                    System.out.println(emailAdd);
+                    exists = true;
+                } else {
+                    //exists[0] = false;
+                    exists = false;
+                }
+                //}
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        System.out.println(email + " " + exists);
+        return exists;
     }
 
 

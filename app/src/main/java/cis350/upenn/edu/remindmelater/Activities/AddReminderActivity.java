@@ -85,6 +85,8 @@ public class AddReminderActivity extends AppCompatActivity {
     String mCurrentPhotoPath;
     private String image;
 
+    private boolean exists;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,9 +98,7 @@ public class AddReminderActivity extends AppCompatActivity {
         System.out.println("--------------------------");
         System.out.println("in add reminder");
         System.out.println("--------------------------");
-        checkUserExists("ajnandi@gmail.com");
-        checkUserExists("connorwen@gmail.com");
-        checkUserExists("fakeemail@gmail.com");
+
 
         imageView = (ImageView) this.findViewById(R.id.imageView1);
         imageView.setImageDrawable(null);
@@ -188,7 +188,9 @@ public class AddReminderActivity extends AppCompatActivity {
                 }
             }
         });
-
+        checkUserExists("ajnandi@gmail.com");
+        checkUserExists("connorwen@gmail.com");
+        checkUserExists("fakeemail@gmail.com");
     }
 
     @Override
@@ -385,19 +387,26 @@ public class AddReminderActivity extends AppCompatActivity {
             "Call", "Text", "Pay", "Buy", "Go to", "Get lunch with", "Get dinner with"
     };
 
+    //TODO i'm pretty sure this works but is being weird when testing - perhaps delayed by database creation
+    //needs to be tested when add user function is added
     public boolean checkUserExists(String email) {
-        final boolean[] exists = new boolean[1];
+        //final boolean[] exists = new boolean[1];
+        exists = false;
         final String emailAdd = email;
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("users").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //for (DataSnapshot data: dataSnapshot.getChildren()) {
-                    //if (data.child(emailAdd).exists()) {
+                  //  if (data.child(emailAdd).exists()) {
                     if (dataSnapshot.exists()) {
-                        exists[0] = true;
+                        //exists[0] = true;
+                        System.out.println("yes");
+                        System.out.println(emailAdd);
+                        exists = true;
                     } else {
-                        exists[0] = false;
+                        //exists[0] = false;
+                        exists = false;
                     }
                 //}
             }
@@ -407,7 +416,7 @@ public class AddReminderActivity extends AppCompatActivity {
 
             }
         });
-        System.out.println(email + " " + exists[0]);
-        return exists[0];
+        System.out.println(email + " " + exists);
+        return exists;
     }
 }
