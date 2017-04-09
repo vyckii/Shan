@@ -284,6 +284,7 @@ public class NavigationMenu extends AppCompatActivity
                 reminderMessageViewHolder.setReminderLoc(reminder.getLocation());
                 reminderMessageViewHolder.setReminderRec(reminder.getRecurring());
                 reminderMessageViewHolder.setReminderImage(reminder.getImage());
+                reminderMessageViewHolder.setReminderShareWith(reminder.getShareWith());
                 if (reminder.getRecurringDate() != null) {
                     reminderMessageViewHolder.setReminderRecDate(reminder.getRecurringDate().toString());
                 }

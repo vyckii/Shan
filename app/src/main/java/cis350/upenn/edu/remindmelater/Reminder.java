@@ -33,6 +33,7 @@ public class Reminder {
     public Long recurringDate;
     public String image;
     public String uid;
+    public String shareWith;
     public boolean isComplete;
 
     static DatabaseReference mDatabase;
@@ -44,7 +45,7 @@ public class Reminder {
     }
 
     private Reminder(String uid, String title, String notes, Long dueDate, String location, String category,
-                     String recurring, Long recurringDate, String image, boolean isComplete) {
+                     String recurring, Long recurringDate, String image, String shareWith, boolean isComplete) {
 
         this.userIDs = new HashMap<>();
         this.userIDs.put(uid, true);
@@ -57,6 +58,7 @@ public class Reminder {
         this.recurringDate = recurringDate;
         this.image = image;
         this.isComplete = isComplete;
+        this.shareWith = shareWith;
     }
 
     public Map<String, Boolean> userIDs() {
@@ -105,14 +107,17 @@ public class Reminder {
         isComplete = true;
     }
 
+    public String getShareWith() { return shareWith; }
+
 
     public static void createReminderInDatabase(FirebaseUser user, String title, String notes, Long duedate,
                                                 String location, String category, String recurring, Long recurringDate,
-                                                String image, Context context, boolean isComplete) {
+                                                String image, String shareWith, Context context, boolean isComplete) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         long delta = 0;
+        long dueDate = duedate;
 
         switch (recurring) {
             case "Once":
@@ -136,21 +141,73 @@ public class Reminder {
 
         for (Long i = duedate; i <= recurringDate; i += delta) {
             String uid = mDatabase.child("reminders").push().getKey();
-            Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate, image, false);
+            Reminder reminder = new Reminder(user.getUid(), title, notes, duedate, location, category, recurring, recurringDate, image, shareWith, false);
             reminder.setUid(uid);
             mDatabase.child("users").child(user.getUid()).child("reminders").child(uid).setValue(reminder);
 
             duedate += delta;
         }
+
+
+        if (!shareWith.equals("")) {
+
+            System.out.println("SHARING REMINDER WOO");
+
+                final String userEmail = shareWith;
+                final String rShareWith = user.getEmail();
+                final String rTitle = title;
+                final String rNotes = notes;
+                final Long rDueDate = dueDate;
+                final String rLocation = location;
+                final String rCategory = category;
+                final String rRecurring = recurring;
+                final Long rRecurringDate = recurringDate;
+                final String rImage = image;
+                final Long rDelta = delta;
+
+                // get user to share with
+                mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot d : dataSnapshot.getChildren()) {
+                            System.out.println(d.child("email").getValue());
+                            System.out.println(d.child("email").getValue().equals(userEmail));
+
+                            if (d.child("email").getValue().equals(userEmail)) {
+                                for (Long i = rDueDate; i <= rRecurringDate; i += rDelta) {
+
+                                    String userUid = d.getKey();
+                                    System.out.println("~~~~~~~~~~~~~~~~~");
+                                    System.out.println("userid " + userUid);
+
+                                    String uid = mDatabase.child("reminders").push().getKey();
+                                    Reminder reminder = new Reminder(userUid, rTitle, rNotes, i, rLocation, rCategory, rRecurring, rRecurringDate, rImage, rShareWith, false);
+                                    reminder.setUid(uid);
+                                    mDatabase.child("users").child(userUid).child("reminders").child(uid).setValue(reminder);
+
+                                }
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println("Firebase error finding reminder to delete");
+                    }
+                });
+        }
     }
 
 
-    public static void updateReminderInDatabase(FirebaseUser user, String oldTitle, long OldDate, String title, String notes, Long dueDate,
-                                                String location, String category, String recurring, Long recurringDate, String image, final boolean isComplete) {
+    public static void updateReminderInDatabase(final FirebaseUser user, String oldTitle, long OldDate, String title, String notes, Long dueDate,
+                                                String location, String category, String recurring, Long recurringDate, String image, final String shareWith, final boolean isComplete) {
 
         final String rOldTitle = oldTitle;
         final long rOldDate = OldDate;
         final FirebaseUser rUser = user;
+        final String rUserEmail = user.getEmail();
         final String rTitle = title;
         final String rNotes = notes;
         final Long rDueDate = dueDate;
@@ -159,6 +216,7 @@ public class Reminder {
         final String rRecurring = recurring;
         final Long rRecurringDate = recurringDate;
         final String rImage = image;
+        final String rShareWith = shareWith;
         final boolean rIsComplete = isComplete;
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -192,7 +250,7 @@ public class Reminder {
                         d.getRef().removeValue();
                         System.out.println("deleted");
                         String uid = mDatabase.child("reminders").push().getKey();
-                        Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate, rImage, rIsComplete);
+                        Reminder reminder = new Reminder(rUser.getUid(), rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate, rImage, rShareWith, rIsComplete);
                         reminder.setUid(uid);
                         mDatabase.child("users").child(rUser.getUid()).child("reminders").child(uid).setValue(reminder);
                     }
@@ -204,6 +262,57 @@ public class Reminder {
                 System.out.println("Firebase error finding reminder to delete");
             }
         });
+
+
+        if (!shareWith.equals("")) {
+            // get user to share with
+
+            System.out.println("UPDATING SHARED REMINDER");
+
+            mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot d : dataSnapshot.getChildren()) {
+                        if (d.child("email").getValue().equals(rShareWith)) {
+
+                            System.out.println("updating reminder for : " + rShareWith);
+
+                            final String userUid = d.getKey();
+                            System.out.println(userUid);
+
+                            mDatabase.child("users").child(userUid).child("reminders").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot d : dataSnapshot.getChildren()) {
+                                        if (d.child("title").getValue().equals(rOldTitle) && Long.parseLong(d.child("dueDate").getValue().toString()) == (rOldDate)) {
+                                            d.getRef().removeValue();
+                                            System.out.println("deleted");
+                                            String uid = mDatabase.child("reminders").push().getKey();
+                                            Reminder reminder = new Reminder(userUid, rTitle, rNotes, rDueDate, rLocation, rCategory, rRecurring, rRecurringDate, rImage, rUserEmail, rIsComplete);
+                                            reminder.setUid(uid);
+                                            mDatabase.child("users").child(userUid).child("reminders").child(uid).setValue(reminder);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    System.out.println("Firebase error finding reminder to delete");
+                                }
+                            });
+
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("Firebase error finding reminder to delete");
+                }
+            });
+        }
+
     }
 
 

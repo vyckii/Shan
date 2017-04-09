@@ -74,6 +74,7 @@ public class AddReminderActivity extends AppCompatActivity {
     private Spinner category;
     private TextView location;
     private Button addPicture;
+    private TextView shareWith;
 
     final Activity addReminderActivity = this;
 
@@ -114,6 +115,7 @@ public class AddReminderActivity extends AppCompatActivity {
         category = (Spinner) findViewById(R.id.category);
         location = (TextView) findViewById(R.id.location);
         addPicture = (Button) findViewById(R.id.addPicture);
+        shareWith = (TextView) findViewById(R.id.shareWith);
 
 
         ArrayAdapter<String> suggestedAdapter = new ArrayAdapter<String>(this,
@@ -156,11 +158,12 @@ public class AddReminderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // get user inputs
-                String reminderText = reminder.getText().toString();
-                String notesText = notes.getText().toString();
+                String reminderText = reminder.getText().toString().trim();
+                String notesText = notes.getText().toString().trim();
                 String recurringText = recurring.getSelectedItem().toString();
                 String categoryText = category.getSelectedItem().toString();
-                String locationText = location.getText().toString();
+                String locationText = location.getText().toString().trim();
+                String shareWithText = shareWith.getText().toString().trim().toLowerCase();
 
                 // lol
                 boolean allGood = true;
@@ -178,19 +181,30 @@ public class AddReminderActivity extends AppCompatActivity {
                 if (allGood && mCurrentUser != null) {
                     // add reminder to database
                     System.out.println("adding reminder to db");
-                    Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
-                            locationText, categoryText, recurringText, dateToRecur, image, context, false);
 
-                    System.out.println(mUserReference.child("image").toString());
+                    //boolean userExists = checkUserExists(shareWithText);
+                    boolean userExists = true;
 
-                    System.out.println("done adding reminder");
-                    finish();
+                    if (shareWithText.equals("") || userExists) {
+
+                        Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
+                                locationText, categoryText, recurringText, dateToRecur, image, shareWithText, context, false);
+
+                        System.out.println(mUserReference.child("image").toString());
+
+                        System.out.println("done adding reminder");
+                        finish();
+                    } else {
+                        Toast.makeText(addReminderActivity.getApplicationContext(), R.string.share_failed,
+                                Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         });
-        checkUserExists("ajnandi@gmail.com");
-        checkUserExists("connorwen@gmail.com");
-        checkUserExists("fakeemail@gmail.com");
+//        checkUserExists("ajnandi@gmail.com");
+//        checkUserExists("connorwen@gmail.com");
+//        checkUserExists("fakeemail@gmail.com");
     }
 
     @Override

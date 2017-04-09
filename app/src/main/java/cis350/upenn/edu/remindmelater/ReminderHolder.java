@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,6 +37,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
     private String reminderRec;
     private String reminderRecDate;
     private ImageView reminderImage;
+    private final TextView reminderShareWith;
     private byte[] imageAsBytes;
 
     private Context context;
@@ -52,6 +55,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         reminderType =  (TextView) itemView.findViewById(R.id.reminder_type);
         reminderLoc =  (TextView) itemView.findViewById(R.id.reminder_loc);
         reminderImage = (ImageView) itemView.findViewById(R.id.reminder_image);
+        reminderShareWith = (TextView) itemView.findViewById(R.id.reminder_shareWith);
     }
 
     public void setReminderTitle(String name) {
@@ -107,6 +111,12 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         }
     }
 
+    public void setReminderShareWith(String name) {
+        reminderShareWith.setText(name);
+    }
+
+
+
 
     public void onClick(View view) {
         System.out.println("clicked " + reminderTitle.getText());
@@ -120,6 +130,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder implements View.OnCl
         intent.putExtra("category", reminderType.getText());
         intent.putExtra("location", reminderLoc.getText());
         intent.putExtra("imageBytes", imageAsBytes);
+        intent.putExtra("shareWith", reminderShareWith.getText());
         context.startActivity(intent);
     }
 

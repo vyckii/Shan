@@ -7,6 +7,7 @@
     <string name="valid_date">Please enter a valid upcoming date.</string>
     <string name="pick_time">Pick Time</string>
     <string name="pick_date">Pick Date</string>
+    <string name="share_failed">Please share with a valid user by inputting their email.</string>
     <string-array name="RecurringOptions">
         <item>Once</item>
         <item>Daily</item>

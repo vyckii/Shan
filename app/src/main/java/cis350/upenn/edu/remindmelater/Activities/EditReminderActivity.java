@@ -32,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -69,6 +71,7 @@ public class EditReminderActivity extends AppCompatActivity {
     private Spinner category;
     private TextView location;
     private Button addPicture;
+    private TextView shareWith;
     private Button completeReminder;
     private ImageView imageView;
     private byte[] imageAsBytes;
@@ -113,6 +116,8 @@ public class EditReminderActivity extends AppCompatActivity {
         imageView.setImageDrawable(null);
 
         addPicture = (Button) findViewById(R.id.eAddPicture);
+        shareWith = (TextView) findViewById(R.id.eShareWith);
+
         completeReminder = (Button) findViewById(R.id.ecompleteReminder);
 
         addPicture.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +171,6 @@ public class EditReminderActivity extends AppCompatActivity {
 
         int selected = 0;
         String recurringText = intent.getStringExtra("recurring");
-        System.out.println("RECURRING TEXT = " + recurringText);
         if (recurringText == null) {
 
         } else if (recurringText.equals("Once")) {
@@ -202,6 +206,8 @@ public class EditReminderActivity extends AppCompatActivity {
         category.setSelection(selected);
 
         location.setText(intent.getStringExtra("location"));
+        final String reminderShareWith = intent.getStringExtra("shareWith");
+        shareWith.setText(reminderShareWith);
 
         saveReminder.setOnClickListener(new View.OnClickListener() {
 
@@ -213,6 +219,7 @@ public class EditReminderActivity extends AppCompatActivity {
                 String recurringText = recurring.getSelectedItem().toString();
                 String categoryText = category.getSelectedItem().toString();
                 String locationText = location.getText().toString();
+                String shareWithText = shareWith.getText().toString().trim().toLowerCase();
 
                 // lol
                 boolean allGood = true;
@@ -232,14 +239,19 @@ public class EditReminderActivity extends AppCompatActivity {
                     // add reminder to database
                     System.out.println("adding reminder to db");
 
-                    //TODO: edit reminder, not create reminder
-                    Reminder.updateReminderInDatabase(mCurrentUser,reminderName, Long.parseLong(dueDateStr), reminderText, notesText, dateToSaveToDB,
-                            locationText,categoryText, recurringText, dateToRecur, image, false);
+                    // boolean userExists = checkUserExists(shareWithText);
+                    boolean userExists = true;
 
-                    //TODO add multiple for recurring
+                    if (shareWithText.equals("") || userExists) {
 
-                    System.out.println("done adding reminder");
-                    finish();
+                        Reminder.updateReminderInDatabase(mCurrentUser,reminderName, Long.parseLong(dueDateStr), reminderText, notesText, dateToSaveToDB,
+                                locationText,categoryText, recurringText, dateToRecur, image, shareWithText, false);
+
+                        finish();
+                    } else {
+                        Toast.makeText(editReminderActivity.getApplicationContext(), R.string.share_failed,
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -267,6 +279,7 @@ public class EditReminderActivity extends AppCompatActivity {
                 String recurringText = recurring.getSelectedItem().toString();
                 String categoryText = category.getSelectedItem().toString();
                 String locationText = location.getText().toString();
+                String shareWithText = shareWith.getText().toString();
 
                 // lol
                 boolean allGood = true;
@@ -282,7 +295,7 @@ public class EditReminderActivity extends AppCompatActivity {
                 Long dateToRecur = recurringCal.getTimeInMillis();
 
                 Reminder.updateReminderInDatabase(mCurrentUser,reminderName, Long.parseLong(dueDateStr), reminderText, notesText, dateToSaveToDB,
-                        locationText,categoryText, recurringText, dateToRecur, image, true);
+                        locationText,categoryText, recurringText, dateToRecur, image, shareWithText, true);
 
                 finish();
             }
