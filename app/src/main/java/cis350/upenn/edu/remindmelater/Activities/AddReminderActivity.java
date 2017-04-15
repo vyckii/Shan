@@ -86,7 +86,13 @@ public class AddReminderActivity extends AppCompatActivity {
     String mCurrentPhotoPath;
     private String image;
 
-    private boolean exists;
+    private String reminderText;
+    private String notesText;
+    private String recurringText;
+    private String categoryText;
+    private String locationText;
+    private String shareWithText;
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,55 +157,21 @@ public class AddReminderActivity extends AppCompatActivity {
             }
         });
 
-        final Context context = this;
+//        final Context context = this;
 
         addReminder.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // get user inputs
-                String reminderText = reminder.getText().toString().trim();
-                String notesText = notes.getText().toString().trim();
-                String recurringText = recurring.getSelectedItem().toString();
-                String categoryText = category.getSelectedItem().toString();
-                String locationText = location.getText().toString().trim();
-                String shareWithText = shareWith.getText().toString().trim().toLowerCase();
+                reminderText = reminder.getText().toString().trim();
+                notesText = notes.getText().toString().trim();
+                recurringText = recurring.getSelectedItem().toString();
+                categoryText = category.getSelectedItem().toString();
+                locationText = location.getText().toString().trim();
+                shareWithText = shareWith.getText().toString().trim().toLowerCase();
+                checkUserExists(shareWithText);
 
-                // lol
-                boolean allGood = true;
-
-                // check if reminder name is empty
-                if (reminderText.isEmpty()) {
-                    allGood = false;
-                    Toast.makeText(addReminderActivity.getApplicationContext(), R.string.empty_fields,
-                            Toast.LENGTH_SHORT).show();
-                }
-
-                Long dateToSaveToDB = myCalendar.getTimeInMillis();
-                Long dateToRecur = recurringCal.getTimeInMillis();
-
-                if (allGood && mCurrentUser != null) {
-                    // add reminder to database
-                    System.out.println("adding reminder to db");
-
-                    //boolean userExists = checkUserExists(shareWithText);
-                    boolean userExists = true;
-
-                    if (shareWithText.equals("") || userExists) {
-
-                        Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
-                                locationText, categoryText, recurringText, dateToRecur, image, shareWithText, context, false);
-
-                        System.out.println(mUserReference.child("image").toString());
-
-                        System.out.println("done adding reminder");
-                        finish();
-                    } else {
-                        Toast.makeText(addReminderActivity.getApplicationContext(), R.string.share_failed,
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                }
             }
         });
 //        checkUserExists("ajnandi@gmail.com");
@@ -218,6 +190,44 @@ public class AddReminderActivity extends AppCompatActivity {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    private void finishAddingReminder(boolean userExists) {
+        // lol
+        boolean allGood = true;
+
+        // check if reminder name is empty
+        if (reminderText.isEmpty()) {
+            allGood = false;
+            Toast.makeText(addReminderActivity.getApplicationContext(), R.string.empty_fields,
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        Long dateToSaveToDB = myCalendar.getTimeInMillis();
+        Long dateToRecur = recurringCal.getTimeInMillis();
+
+        if (allGood && mCurrentUser != null) {
+            // add reminder to database
+            System.out.println("adding reminder to db");
+
+            //boolean userExists = checkUserExists(shareWithText);
+            //boolean userExists = true;
+
+            if (shareWithText.equals("") || userExists) {
+
+                Reminder.createReminderInDatabase(mCurrentUser, reminderText, notesText, dateToSaveToDB,
+                        locationText, categoryText, recurringText, dateToRecur, image, shareWithText, context, false);
+
+                System.out.println(mUserReference.child("image").toString());
+
+                System.out.println("done adding reminder");
+                finish();
+            } else {
+                Toast.makeText(addReminderActivity.getApplicationContext(), R.string.share_failed,
+                        Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
@@ -401,28 +411,17 @@ public class AddReminderActivity extends AppCompatActivity {
             "Call", "Text", "Pay", "Buy", "Go to", "Get lunch with", "Get dinner with"
     };
 
-    //TODO i'm pretty sure this works but is being weird when testing - perhaps delayed by database creation
-    //needs to be tested when add user function is added
-    public boolean checkUserExists(String email) {
-        //final boolean[] exists = new boolean[1];
-        exists = false;
-        final String emailAdd = email;
+    //TODO separate the rest of addReminder onclicklistener into a separate function called by this function in if/else statement
+    public void checkUserExists(String email) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("users").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //for (DataSnapshot data: dataSnapshot.getChildren()) {
-                  //  if (data.child(emailAdd).exists()) {
                     if (dataSnapshot.exists()) {
-                        //exists[0] = true;
-                        System.out.println("yes");
-                        System.out.println(emailAdd);
-                        exists = true;
+                        finishAddingReminder(true);
                     } else {
-                        //exists[0] = false;
-                        exists = false;
+                        finishAddingReminder(false);
                     }
-                //}
             }
 
             @Override
@@ -430,7 +429,5 @@ public class AddReminderActivity extends AppCompatActivity {
 
             }
         });
-        System.out.println(email + " " + exists);
-        return exists;
     }
 }
