@@ -109,12 +109,20 @@
         android:layout_alignStart="@+id/category"/>
 
         <Button
-            android:id="@+id/addPicture"
+            android:id="@+id/addCameraPic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/location"
             android:layout_below="@+id/location"
-            android:text="Add Picture" />
+            android:text="Add Picture (Camera)" />
+
+        <Button
+            android:id="@+id/addGalleryPic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/location"
+            android:layout_below="@+id/addCameraPic"
+            android:text="Add Picture (Gallery)" />
 
 
 
@@ -146,8 +154,8 @@
             android:ems="10"
             android:id="@+id/shareWith"
             android:hint="Share with"
-            android:layout_below="@+id/addPicture"
-            android:layout_alignStart="@+id/addPicture"/>
+            android:layout_below="@+id/addGalleryPic"
+            android:layout_alignStart="@+id/addGalleryPic"/>
 
         </RelativeLayout>
  </ScrollView>

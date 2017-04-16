@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         login = (Button) findViewById(R.id.btn_login);
         signupLink = (TextView) findViewById(R.id.link_signup);
-        retrievePWLink = (TextView) findViewById(R.id.link_retrievePW);
+//        retrievePWLink = (TextView) findViewById(R.id.link_retrievePW);
         email = (TextInputEditText) findViewById(R.id.input_email);
         password = (TextInputEditText) findViewById(R.id.input_password);
 

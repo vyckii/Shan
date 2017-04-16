@@ -73,7 +73,8 @@ public class AddReminderActivity extends AppCompatActivity {
     private Button recurringUntil;
     private Spinner category;
     private TextView location;
-    private Button addPicture;
+    private Button addCameraPicture;
+    private Button addGalleryPicture;
     private TextView shareWith;
 
     final Activity addReminderActivity = this;
@@ -82,6 +83,11 @@ public class AddReminderActivity extends AppCompatActivity {
     Calendar recurringCal = new GregorianCalendar();
 
     static final int REQUEST_TAKE_PHOTO = 1;
+    private static int RESULT_LOAD_IMG = 2;
+    String imgDecodableString;
+
+
+
     private ImageView imageView;
     String mCurrentPhotoPath;
     private String image;
@@ -120,7 +126,8 @@ public class AddReminderActivity extends AppCompatActivity {
         recurringUntil = (Button) findViewById(R.id.recurringUntil);
         category = (Spinner) findViewById(R.id.category);
         location = (TextView) findViewById(R.id.location);
-        addPicture = (Button) findViewById(R.id.addPicture);
+        addCameraPicture = (Button) findViewById(R.id.addCameraPic);
+        addGalleryPicture = (Button) findViewById(R.id.addGalleryPic);
         shareWith = (TextView) findViewById(R.id.shareWith);
 
 
@@ -129,33 +136,43 @@ public class AddReminderActivity extends AppCompatActivity {
 
         reminder.setAdapter(suggestedAdapter);
 
-        addPicture.setOnClickListener(new View.OnClickListener() {
+        addCameraPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Intent i = new Intent(AddReminderActivity.this, CameraActivity.class);
 
-                Intent i = new Intent(AddReminderActivity.this,PictureActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(AddReminderActivity.this,PictureActivity.class);
+//                startActivity(i);
 
 
-//                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//
-//                if (i.resolveActivity(getPackageManager()) != null) {
-//                    File photoFile = null;
-//                    try {
-//                        photoFile = createImageFile();
-//                    } catch (IOException e) {
-//                        System.out.println("oh no!");
-//                        e.printStackTrace();
-//                    }
-//                    if (photoFile != null) {
-//                        Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this, "com.example.android.fileprovider", photoFile);
-//                        i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                        startActivityForResult(i, REQUEST_TAKE_PHOTO);
-//                    }
-//                }
+                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                //startActivityForResult(i, REQUEST_TAKE_PHOTO);
+                if (i.resolveActivity(getPackageManager()) != null) {
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException e) {
+                        System.out.println("oh no!");
+                        e.printStackTrace();
+                    }
+                    if (photoFile != null) {
+                        Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this, "com.example.android.fileprovider", photoFile);
+                        i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(i, REQUEST_TAKE_PHOTO);
+                    }
+                }
+
+                startActivityForResult(i, REQUEST_TAKE_PHOTO);
+            }
+        });
+
+        addGalleryPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            // Start the Intent
+            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
             }
         });
 
@@ -353,9 +370,46 @@ public class AddReminderActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            setPic();
-            System.out.println("got image");
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+
+            // when an Image is taken
+
+            if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+                setPic();
+                System.out.println("got image");
+            }
+
+            // When an Image is picked
+
+            else if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+                    && null != data) {
+                // Get the Image from data
+
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imgDecodableString = cursor.getString(columnIndex);
+                cursor.close();
+                ImageView imgView = (ImageView) findViewById(R.id.imageView1); // should probably rename imageview into picture or some shit
+                // Set the Image in ImageView after decoding the String
+                imgView.setImageBitmap(BitmapFactory
+                        .decodeFile(imgDecodableString));
+
+            } else {
+                Toast.makeText(this, "You haven't picked Image",
+                        Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
+                    .show();
         }
     }
 
