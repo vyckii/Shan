@@ -117,21 +117,30 @@
             android:text="Add Picture" />
 
         <Button
+            android:id="@+id/addPictureLibrary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/addPicture"
+            android:layout_below="@+id/addPicture"
+            android:text="Add Picture (Library)" />
+
+
+        <Button
             android:text="Add Reminder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/addReminder"
             android:onClick="onButtonPress"
-            android:layout_below="@+id/shareWith"
-            android:layout_alignStart="@+id/shareWith"
+            android:layout_below="@+id/imageView1"
+            android:layout_alignStart="@+id/imageView1"
             android:textColor="#50a6fc"
             android:textStyle="bold"/>
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/addPicture"
-            android:layout_alignStart="@+id/addPicture"
+            android:layout_below="@+id/shareWith"
+            android:layout_alignStart="@+id/shareWith"
             android:id="@+id/imageView1"
             android:adjustViewBounds="true"
             android:layout_centerInParent="true"
@@ -144,8 +153,8 @@
             android:ems="10"
             android:id="@+id/shareWith"
             android:hint="Share with"
-            android:layout_below="@+id/addPicture"
-            android:layout_alignStart="@+id/addPicture"/>
+            android:layout_below="@+id/addPictureLibrary"
+            android:layout_alignStart="@+id/addPictureLibrary"/>
 
         </RelativeLayout>
  </ScrollView>
