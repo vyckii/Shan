@@ -175,15 +175,15 @@ public class AddReminderActivity extends AppCompatActivity {
 
 
 //                if (galleryIntent.resolveActivity(getPackageManager()) != null) {
-//                    File photoFile = null;
+//                    File photoFile2 = null;
 //                    try {
-//                        photoFile = createImageFile();
+//                        photoFile2 = createImageFile();
 //                    } catch (IOException e) {
 //                        System.out.println("oh no!");
 //                        e.printStackTrace();
 //                    }
-//                    if (photoFile != null) {
-//                        Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this, "com.example.android.fileprovider", photoFile);
+//                    if (photoFile2 != null) {
+//                        Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this, "com.example.android.fileprovider", photoFile2);
 //                        galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
 //                        startActivityForResult(galleryIntent, REQUEST_TAKE_PHOTO);
 //                    }
@@ -420,10 +420,34 @@ public class AddReminderActivity extends AppCompatActivity {
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 imgDecodableString = cursor.getString(columnIndex);
                 cursor.close();
-                ImageView imgView = (ImageView) findViewById(R.id.imageView1); // should probably rename imageview into picture or some shit
+//                ImageView imgView = (ImageView) findViewById(R.id.imageView1); // should probably rename imageview into picture or some shit
                 // Set the Image in ImageView after decoding the String
-                imgView.setImageBitmap(BitmapFactory
-                        .decodeFile(imgDecodableString));
+
+
+                // Get the dimensions of the View
+                int targetW = 1250;
+                int targetH = 700;
+
+                // Get the dimensions of the bitmap
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bmOptions.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(imgDecodableString, bmOptions);
+                int photoW = bmOptions.outWidth;
+                int photoH = bmOptions.outHeight;
+
+                // Determine how much to scale down the image
+                int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+                // Decode the image file into a Bitmap sized to fill the View
+                bmOptions.inJustDecodeBounds = false;
+                bmOptions.inSampleSize = scaleFactor;
+                bmOptions.inPurgeable = true;
+
+                Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, bmOptions);
+                imageView.setImageBitmap(bitmap);
+                encodeBitmapAndSaveToFirebase(bitmap);
+
+
 
             } else {
                 Toast.makeText(this, "You haven't picked Image",
