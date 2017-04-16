@@ -76,15 +76,6 @@ public class EditReminderActivity extends AppCompatActivity {
     private ImageView imageView;
     private byte[] imageAsBytes;
 
-    private String reminderText;
-    private String notesText;
-    private String recurringText;
-    private String categoryText;
-    private String locationText;
-    private String shareWithText;
-    private String reminderName;
-    private String dueDateStr;
-
 
     Calendar myCalendar = Calendar.getInstance();
     Calendar recurringCal = new GregorianCalendar();
@@ -153,7 +144,7 @@ public class EditReminderActivity extends AppCompatActivity {
 
         // set reminder details on screen
         Intent intent = getIntent();
-        reminderName = intent.getStringExtra("reminderName");
+        final String reminderName = intent.getStringExtra("reminderName");
         reminder.setText(reminderName);
         notes.setText(intent.getStringExtra("notes"));
         imageAsBytes = intent.getByteArrayExtra("imageBytes");
@@ -164,7 +155,7 @@ public class EditReminderActivity extends AppCompatActivity {
             imageView.setImageBitmap(bmp);
         }
 
-        dueDateStr = intent.getStringExtra("dueDate");
+        final String dueDateStr = intent.getStringExtra("dueDate");
 
         SimpleDateFormat f1 = new SimpleDateFormat("hh:mm a", Locale.US);
         SimpleDateFormat f2 = new SimpleDateFormat("EEEE, MMMM d", Locale.US);
@@ -179,7 +170,7 @@ public class EditReminderActivity extends AppCompatActivity {
         dateButton.setText(f2.format(myCalendar.getTime()));
 
         int selected = 0;
-        recurringText = intent.getStringExtra("recurring");
+        String recurringText = intent.getStringExtra("recurring");
         if (recurringText == null) {
 
         } else if (recurringText.equals("Once")) {
@@ -198,7 +189,7 @@ public class EditReminderActivity extends AppCompatActivity {
         recurringUntil.setText(f2.format(recurringCal.getTime()));
 
         selected = 0;
-        categoryText = intent.getStringExtra("recurring");
+        String categoryText = intent.getStringExtra("recurring");
         if (categoryText == null) {
 
         } else if (categoryText.equals("School")) {
@@ -223,13 +214,45 @@ public class EditReminderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // get user inputs
-                reminderText = reminder.getText().toString();
-                notesText = notes.getText().toString();
-                recurringText = recurring.getSelectedItem().toString();
-                categoryText = category.getSelectedItem().toString();
-                locationText = location.getText().toString();
-                shareWithText = shareWith.getText().toString().trim().toLowerCase();
-                checkUserExists(shareWithText);
+                String reminderText = reminder.getText().toString();
+                String notesText = notes.getText().toString();
+                String recurringText = recurring.getSelectedItem().toString();
+                String categoryText = category.getSelectedItem().toString();
+                String locationText = location.getText().toString();
+                String shareWithText = shareWith.getText().toString().trim().toLowerCase();
+
+                // lol
+                boolean allGood = true;
+
+                // check if reminder name is empty
+                if (reminderText.isEmpty()) {
+                    allGood = false;
+                    Toast.makeText(editReminderActivity.getApplicationContext(), R.string.empty_fields,
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                Long dateToSaveToDB = myCalendar.getTimeInMillis();
+                Long dateToRecur = recurringCal.getTimeInMillis();
+
+
+                if (allGood && mCurrentUser != null) {
+                    // add reminder to database
+                    System.out.println("adding reminder to db");
+
+                    // boolean userExists = checkUserExists(shareWithText);
+                    boolean userExists = true;
+
+                    if (shareWithText.equals("") || userExists) {
+
+                        Reminder.updateReminderInDatabase(mCurrentUser,reminderName, Long.parseLong(dueDateStr), reminderText, notesText, dateToSaveToDB,
+                                locationText,categoryText, recurringText, dateToRecur, image, shareWithText, false);
+
+                        finish();
+                    } else {
+                        Toast.makeText(editReminderActivity.getApplicationContext(), R.string.share_failed,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
@@ -278,38 +301,6 @@ public class EditReminderActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void finishEditingReminder(boolean userExists) {
-        // lol
-        boolean allGood = true;
-
-        // check if reminder name is empty
-        if (reminderText.isEmpty()) {
-            allGood = false;
-            Toast.makeText(editReminderActivity.getApplicationContext(), R.string.empty_fields,
-                    Toast.LENGTH_SHORT).show();
-        }
-
-        Long dateToSaveToDB = myCalendar.getTimeInMillis();
-        Long dateToRecur = recurringCal.getTimeInMillis();
-
-
-        if (allGood && mCurrentUser != null) {
-            // add reminder to database
-            System.out.println("adding reminder to db");
-
-            if (shareWithText.equals("") || userExists) {
-
-                Reminder.updateReminderInDatabase(mCurrentUser,reminderName, Long.parseLong(dueDateStr), reminderText, notesText, dateToSaveToDB,
-                        locationText,categoryText, recurringText, dateToRecur, image, shareWithText, false);
-
-                finish();
-            } else {
-                Toast.makeText(editReminderActivity.getApplicationContext(), R.string.share_failed,
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     @Override
@@ -494,16 +485,26 @@ public class EditReminderActivity extends AppCompatActivity {
     }
 
     //TODO if any changes to add reminder function, also need to be made here
-    public void checkUserExists(String email) {
+    public boolean checkUserExists(String email) {
+        //final boolean[] exists = new boolean[1];
+        exists = false;
+        final String emailAdd = email;
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("users").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //for (DataSnapshot data: dataSnapshot.getChildren()) {
+                //  if (data.child(emailAdd).exists()) {
                 if (dataSnapshot.exists()) {
-                    finishEditingReminder(true);
+                    //exists[0] = true;
+                    System.out.println("yes");
+                    System.out.println(emailAdd);
+                    exists = true;
                 } else {
-                    finishEditingReminder(false);
+                    //exists[0] = false;
+                    exists = false;
                 }
+                //}
             }
 
             @Override
@@ -511,6 +512,8 @@ public class EditReminderActivity extends AppCompatActivity {
 
             }
         });
+        System.out.println(email + " " + exists);
+        return exists;
     }
 
 

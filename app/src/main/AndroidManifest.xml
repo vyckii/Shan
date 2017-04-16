@@ -3,7 +3,7 @@
     package="cis350.upenn.edu.remindmelater">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -32,12 +32,13 @@
         <service android:name=".Notification.ScheduleService" />
         <service android:name=".Notification.NotifyService" />
 
-        <activity android:name=".Activities.ReminderActivity"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".Activities.ReminderActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activities.NavigationMenu"
             android:label="@string/title_activity_navigation_menu"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -46,8 +47,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/paths"></meta-data>
+                android:resource="@xml/paths" />
         </provider>
+
+        <activity android:name=".Activities.PictureActivity"></activity>
     </application>
 
 </manifest>
