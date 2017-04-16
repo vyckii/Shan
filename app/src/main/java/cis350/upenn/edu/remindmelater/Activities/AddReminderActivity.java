@@ -161,8 +161,6 @@ public class AddReminderActivity extends AppCompatActivity {
                         startActivityForResult(i, REQUEST_TAKE_PHOTO);
                     }
                 }
-
-                startActivityForResult(i, REQUEST_TAKE_PHOTO);
             }
         });
 
@@ -171,24 +169,6 @@ public class AddReminderActivity extends AppCompatActivity {
             public void onClick(View v) {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-
-
-//                if (galleryIntent.resolveActivity(getPackageManager()) != null) {
-//                    File photoFile2 = null;
-//                    try {
-//                        photoFile2 = createImageFile();
-//                    } catch (IOException e) {
-//                        System.out.println("oh no!");
-//                        e.printStackTrace();
-//                    }
-//                    if (photoFile2 != null) {
-//                        Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this, "com.example.android.fileprovider", photoFile2);
-//                        galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                        startActivityForResult(galleryIntent, REQUEST_TAKE_PHOTO);
-//                    }
-//                }
-
 
 
                 // Start the Intent
@@ -446,8 +426,6 @@ public class AddReminderActivity extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, bmOptions);
                 imageView.setImageBitmap(bitmap);
                 encodeBitmapAndSaveToFirebase(bitmap);
-
-
 
             } else {
                 Toast.makeText(this, "You haven't picked Image",
