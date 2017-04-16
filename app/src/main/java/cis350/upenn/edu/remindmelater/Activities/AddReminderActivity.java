@@ -171,7 +171,27 @@ public class AddReminderActivity extends AppCompatActivity {
             public void onClick(View v) {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            // Start the Intent
+
+
+
+//                if (galleryIntent.resolveActivity(getPackageManager()) != null) {
+//                    File photoFile = null;
+//                    try {
+//                        photoFile = createImageFile();
+//                    } catch (IOException e) {
+//                        System.out.println("oh no!");
+//                        e.printStackTrace();
+//                    }
+//                    if (photoFile != null) {
+//                        Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this, "com.example.android.fileprovider", photoFile);
+//                        galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//                        startActivityForResult(galleryIntent, REQUEST_TAKE_PHOTO);
+//                    }
+//                }
+
+
+
+                // Start the Intent
             startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
             }
         });
@@ -277,8 +297,6 @@ public class AddReminderActivity extends AppCompatActivity {
         };
     }
 
-
-
     public void showTimePickerDialog(View v) {
 
         TimePickerDialog tpd = new TimePickerDialog(AddReminderActivity.this, time,
@@ -363,10 +381,10 @@ public class AddReminderActivity extends AppCompatActivity {
         timeButton.setText(sdf.format(myCalendar.getTime()));
     }
 
-    public void startCamera(View v) {
-        Intent i = new Intent(this, CameraActivity.class);
-        startActivity(i);
-    }
+//    public void startCamera(View v) {
+//        Intent i = new Intent(this, CameraActivity.class);
+//        startActivity(i);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -385,6 +403,10 @@ public class AddReminderActivity extends AppCompatActivity {
             else if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
                     && null != data) {
                 // Get the Image from data
+
+
+//                setPic();
+//                System.out.println("got image fuck yea");
 
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
@@ -423,13 +445,13 @@ public class AddReminderActivity extends AppCompatActivity {
         return image;
     }
 
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
-    }
+//    private void galleryAddPic() {
+//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        File f = new File(mCurrentPhotoPath);
+//        Uri contentUri = Uri.fromFile(f);
+//        mediaScanIntent.setData(contentUri);
+//        this.sendBroadcast(mediaScanIntent);
+//    }
 
     private void setPic() {
         // Get the dimensions of the View

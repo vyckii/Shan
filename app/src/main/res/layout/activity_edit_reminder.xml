@@ -166,8 +166,8 @@
             android:ems="10"
             android:id="@+id/eShareWith"
             android:hint="Share with"
-            android:layout_below="@+id/eAddPicture"
-            android:layout_alignStart="@+id/eAddPicture"/>
+            android:layout_below="@+id/eImageView1"
+            android:layout_alignStart="@+id/eImageView1"/>
 
 
     </RelativeLayout>
