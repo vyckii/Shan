@@ -88,7 +88,7 @@ public class NavigationMenu extends AppCompatActivity
 
         mReminderReference = FirebaseDatabase.getInstance().getReference("users").child(uid).child("reminders");
 
-        Query query = mReminderReference.orderByChild("dueDate");
+        Query query = mReminderReference.orderByChild("isComplete").startAt(false).endAt(false);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
