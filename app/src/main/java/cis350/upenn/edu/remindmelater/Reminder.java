@@ -165,6 +165,7 @@ public class Reminder {
                 final String rImage = image;
                 final Long rDelta = delta;
 
+
                 // get user to share with
                 mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
