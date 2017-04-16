@@ -116,13 +116,6 @@
             android:layout_below="@+id/location"
             android:text="Add Picture" />
 
-        <Button
-            android:id="@+id/addPictureLibrary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/addPicture"
-            android:layout_below="@+id/addPicture"
-            android:text="Add Picture (Library)" />
 
 
         <Button
@@ -153,8 +146,8 @@
             android:ems="10"
             android:id="@+id/shareWith"
             android:hint="Share with"
-            android:layout_below="@+id/addPictureLibrary"
-            android:layout_alignStart="@+id/addPictureLibrary"/>
+            android:layout_below="@+id/addPicture"
+            android:layout_alignStart="@+id/addPicture"/>
 
         </RelativeLayout>
  </ScrollView>

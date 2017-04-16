@@ -129,29 +129,31 @@ public class AddReminderActivity extends AppCompatActivity {
 
         reminder.setAdapter(suggestedAdapter);
 
-
-
-
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Intent i = new Intent(AddReminderActivity.this, CameraActivity.class);
-                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                if (i.resolveActivity(getPackageManager()) != null) {
-                    File photoFile = null;
-                    try {
-                        photoFile = createImageFile();
-                    } catch (IOException e) {
-                        System.out.println("oh no!");
-                        e.printStackTrace();
-                    }
-                    if (photoFile != null) {
-                        Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this, "com.example.android.fileprovider", photoFile);
-                        i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                        startActivityForResult(i, REQUEST_TAKE_PHOTO);
-                    }
-                }
+                Intent i = new Intent(AddReminderActivity.this,PictureActivity.class);
+                startActivity(i);
+
+
+//                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//                if (i.resolveActivity(getPackageManager()) != null) {
+//                    File photoFile = null;
+//                    try {
+//                        photoFile = createImageFile();
+//                    } catch (IOException e) {
+//                        System.out.println("oh no!");
+//                        e.printStackTrace();
+//                    }
+//                    if (photoFile != null) {
+//                        Uri photoURI = FileProvider.getUriForFile(AddReminderActivity.this, "com.example.android.fileprovider", photoFile);
+//                        i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//                        startActivityForResult(i, REQUEST_TAKE_PHOTO);
+//                    }
+//                }
 
                 //startActivityForResult(i, REQUEST_TAKE_PHOTO);
             }
