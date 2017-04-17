@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -70,7 +71,8 @@ public class EditReminderActivity extends AppCompatActivity {
     private Button recurringUntil;
     private Spinner category;
     private TextView location;
-    private Button addPicture;
+    private Button addCameraPic;
+    private Button addGalleryPic;
     private TextView shareWith;
     private Button completeReminder;
     private ImageView imageView;
@@ -92,6 +94,8 @@ public class EditReminderActivity extends AppCompatActivity {
     final Activity editReminderActivity = this;
 
     static final int REQUEST_TAKE_PHOTO = 1;
+    private static int RESULT_LOAD_IMG = 2;
+    String imgDecodableString;
     private String mCurrentPhotoPath;
     private String image;
 
@@ -124,12 +128,15 @@ public class EditReminderActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.eImageView1);
         imageView.setImageDrawable(null);
 
-        addPicture = (Button) findViewById(R.id.eAddPicture);
+        addCameraPic = (Button) findViewById(R.id.eAddCameraPic);
+        addGalleryPic = (Button) findViewById(R.id.eAddGalleryPic);
+
+
         shareWith = (TextView) findViewById(R.id.eShareWith);
 
         completeReminder = (Button) findViewById(R.id.ecompleteReminder);
 
-        addPicture.setOnClickListener(new View.OnClickListener() {
+        addCameraPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -148,6 +155,16 @@ public class EditReminderActivity extends AppCompatActivity {
                         startActivityForResult(i, REQUEST_TAKE_PHOTO);
                     }
                 }
+            }
+        });
+
+        addGalleryPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                // Start the Intent
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
             }
         });
 
@@ -456,10 +473,73 @@ public class EditReminderActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            setPic();
-            System.out.println("got image");
+        try {
+
+            // when an Image is taken
+
+            if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+                setPic();
+                System.out.println("got image");
+            }
+
+            // When an Image is picked
+
+            else if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+                    && null != data) {
+                // Get the Image from data
+
+
+//                setPic();
+//                System.out.println("got image fuck yea");
+
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imgDecodableString = cursor.getString(columnIndex);
+                cursor.close();
+//                ImageView imgView = (ImageView) findViewById(R.id.imageView1); // should probably rename imageview into picture or some shit
+                // Set the Image in ImageView after decoding the String
+
+
+                // Get the dimensions of the View
+                int targetW = 1250;
+                int targetH = 700;
+
+                // Get the dimensions of the bitmap
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bmOptions.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(imgDecodableString, bmOptions);
+                int photoW = bmOptions.outWidth;
+                int photoH = bmOptions.outHeight;
+
+                // Determine how much to scale down the image
+                int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+                // Decode the image file into a Bitmap sized to fill the View
+                bmOptions.inJustDecodeBounds = false;
+                bmOptions.inSampleSize = scaleFactor;
+                bmOptions.inPurgeable = true;
+
+                Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, bmOptions);
+                imageView.setImageBitmap(bitmap);
+                encodeBitmapAndSaveToFirebase(bitmap);
+
+            } else {
+                Toast.makeText(this, "You haven't picked Image",
+                        Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
+                    .show();
         }
+
     }
 
     private void setPic() {
