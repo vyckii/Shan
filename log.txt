@@ -1,3 +1,131 @@
+commit 04903e64cd6cbe9f53c1c1aca7114b86ebc0369e
+Author: connorwen <CWEN@hnt_ve600_0009.wireless-pennnet.upenn.edu>
+Date:   Sun Apr 16 22:46:45 2017 -0400
+
+    loading picture from gallery should work for editReminderActivity as well
+
+commit 48c7902cf00a6637e8cc7b9857df13df33d8e66d
+Author: connorwen <CWEN@hnt_ve600_0009.wireless-pennnet.upenn.edu>
+Date:   Sun Apr 16 19:05:56 2017 -0400
+
+    fixed bug where camera wouldn’t close after taking the first picture
+
+commit ac0d04d89207aecba8a27e94f77839e22f82dcdf
+Author: connorwen <CWEN@hnt_ve600_0009.wireless-pennnet.upenn.edu>
+Date:   Sun Apr 16 18:39:09 2017 -0400
+
+    loading picture from gallery should work
+
+commit 0ae1436a68809e160ccd3909b0ae1b53a3e9be5d
+Author: connorwen <CWEN@hnt_ve600_0009.wireless-pennnet.upenn.edu>
+Date:   Sun Apr 16 18:10:13 2017 -0400
+
+    fixed formatting for edit reminder xml
+
+commit eaa48be781f1dee4310e1d209c2317ec9f31331f
+Author: connorwen <CWEN@hnt_ve600_0009.wireless-pennnet.upenn.edu>
+Date:   Sun Apr 16 17:44:52 2017 -0400
+
+    jk not using PictureActivity anymore - everything will be done on addReminderActivity
+
+commit 8625025f6811aeca6c0ee0905fd95edec45b7201
+Merge: 3ab80ac b866b9a
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Apr 16 16:37:58 2017 -0400
+
+    "merge conflict" erge branch 'master' of https://github.com/cis-upenn/350S17-2-RemindMeLater
+
+commit 3ab80ac0ab89b94deb8158d18abe193a3bada868
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Apr 16 16:37:30 2017 -0400
+
+    main screen doesn't show completed anymore
+
+commit b866b9a90d390ae97696c2eca78e62a3abf6ed7d
+Author: connorwen <CWEN@hnt_ve600_0009.wireless-pennnet.upenn.edu>
+Date:   Sun Apr 16 16:16:10 2017 -0400
+
+    moving camera functionality to PictureActivity class and gallery access
+
+commit 5a36e752f5c9caca7edfd1cc135ffc8a44d464c5
+Merge: 96e7c89 a49b6f3
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Apr 16 15:57:58 2017 -0400
+
+    merge conflict
+    Merge branch 'master' of https://github.com/cis-upenn/350S17-2-RemindMeLater
+
+commit a49b6f32a8f7ebd18a25937fd4b67608a3ba4ea3
+Author: connorwen <CWEN@hnt_ve600_0009.wireless-pennnet.upenn.edu>
+Date:   Sun Apr 16 15:57:06 2017 -0400
+
+    Revert "Revert "check user exists working""
+    
+    This reverts commit b8264b4a1d1e762d68f154ac0fd8a9674633f671.
+
+commit 96e7c89fa492a0eef3afde86a3dc551de8ba9f2a
+Merge: 4b3b58c d9b47fb
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Apr 16 15:45:41 2017 -0400
+
+    merge conflict Merge branch 'master' of https://github.com/cis-upenn/350S17-2-RemindMeLater
+
+commit 4b3b58cb4fb6abf99966f0328408c7b8f746442e
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sun Apr 16 15:45:25 2017 -0400
+
+    undo revert
+
+commit d9b47fb34edc40ae57f9c467802e1af9f0e5273f
+Author: connorwen <CWEN@Connors-MBP-2.home>
+Date:   Sun Apr 16 01:04:11 2017 -0400
+
+    added PictureActivity (overarching activity for camera pic and gallery pic)
+
+commit 3c50c2f91c09cc49b285477456eae359f8f8c302
+Author: connorwen <CWEN@Connors-MBP-2.home>
+Date:   Sat Apr 15 21:31:43 2017 -0400
+
+    add picture from library button
+
+commit b8264b4a1d1e762d68f154ac0fd8a9674633f671
+Author: connorwen <CWEN@Connors-MBP-2.home>
+Date:   Sat Apr 15 21:22:31 2017 -0400
+
+    Revert "check user exists working"
+    
+    This reverts commit 519cd212dea164247e03c7aeb143a5275428d1a3.
+
+commit 519cd212dea164247e03c7aeb143a5275428d1a3
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sat Apr 15 16:28:34 2017 -0400
+
+    check user exists working
+
+commit f255158be299ab0d98f1965440762fadbc2e367d
+Author: cristinabuenahora <crisb@seas.upenn.edu>
+Date:   Sun Apr 9 18:09:07 2017 -0400
+
+    sharing reminder + all 4 points for shorya and cristina
+
+commit ece7d615f6a79d732bbd087203fd9e56cc660740
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Sat Apr 8 17:18:31 2017 -0400
+
+    check user exists working (i think)
+
+commit 0d0840ae0e7b411e2421ae97545964698ad53308
+Author: stephaniefei <sfei@wharton.upenn.edu>
+Date:   Fri Apr 7 18:01:11 2017 -0400
+
+    working on check user exists
+
+commit 42456afd20ef9f9239db850130519815139d60af
+Author: AJNandi <ajnandi@gmail.com>
+Date:   Tue Apr 4 23:23:19 2017 -0400
+
+    added auto-complete for reminder text
+
 commit 9c093c43356af168b41d16ac04dcbee41fa628ee
 Author: cristinabuenahora <crisb@seas.upenn.edu>
 Date:   Mon Apr 3 18:30:04 2017 -0400

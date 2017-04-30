@@ -452,10 +452,6 @@ public class EditReminderActivity extends AppCompatActivity {
         timeButton.setText(sdf.format(myCalendar.getTime()));
     }
 
-    public void startCamera(View v) {
-        Intent i = new Intent(this, CameraActivity.class);
-        startActivity(i);
-    }
 
     public static Bitmap decodeFromFirebaseBase64(String image) {
         byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);

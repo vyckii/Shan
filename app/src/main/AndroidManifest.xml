@@ -27,7 +27,6 @@
         <activity android:name=".Activities.MainScreenActivity" />
         <activity android:name=".Activities.AddReminderActivity" />
         <activity android:name=".Activities.EditReminderActivity" />
-        <activity android:name=".Activities.CameraActivity" />
 
         <service android:name=".Notification.ScheduleService" />
         <service android:name=".Notification.NotifyService" />
@@ -50,7 +49,6 @@
                 android:resource="@xml/paths" />
         </provider>
 
-        <activity android:name=".Activities.PictureActivity"></activity>
     </application>
 
 </manifest>

@@ -139,11 +139,6 @@ public class AddReminderActivity extends AppCompatActivity {
         addCameraPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent i = new Intent(AddReminderActivity.this, CameraActivity.class);
-
-//                Intent i = new Intent(AddReminderActivity.this,PictureActivity.class);
-//                startActivity(i);
-
 
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -360,12 +355,7 @@ public class AddReminderActivity extends AppCompatActivity {
 
         timeButton.setText(sdf.format(myCalendar.getTime()));
     }
-
-//    public void startCamera(View v) {
-//        Intent i = new Intent(this, CameraActivity.class);
-//        startActivity(i);
-//    }
-
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
