@@ -136,9 +136,6 @@ public class User {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         System.out.println("signInWithEmail:onComplete:" + task.isSuccessful());
-                        // create an intent and pass to MainScreenActivity
-
-
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
